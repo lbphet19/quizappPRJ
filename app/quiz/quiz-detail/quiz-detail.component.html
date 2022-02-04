@@ -1,0 +1,99 @@
+<div id="__nuxt">
+  <div id="__layout">
+    <div class="flex flex-col font-sans">
+      <div class="fixed left-0 bottom-0 z-102 flex flex-col">
+        <div class="flex flex-col">
+        </div>
+      </div>
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+      <a aria-label="Skip to main content" href="https://quizizz.com/admin#app-body-container" class="skip-link">
+        <span class="_i18n-container">Chuyển đến nội dung</span>
+      </a>
+      <div class="flex flex-grow h-screen">
+        <app-sidebar></app-sidebar>
+        <div class="flex flex-col flex-grow w-full h-screen overflow-hidden border-l border-light-1">
+          <app-header></app-header>
+          <div id="app-body-container" class="flex flex-grow overflow-auto bg-light-1 content overflow-auto">
+            <div data-v-470c518d="" class="w-full">
+              <div data-v-470c518d="" class="w-full">
+                <div class="app">
+
+                  <div *ngIf = "quiz.quizImage !== null">
+                    <img [src]="quiz.quizImage" style = "width:calc(100%-10em)" alt="../../../assets/images/quiz-img-test.jfif">
+                  </div>
+                  <div *ngIf = "quiz.quizImage === null">
+                  <img src = "../../../assets/images/quiz-img-test.jfif" class="w-44 md:w-60 h-28 md:h-40 object-cover">
+                </div>
+
+                 <nav>
+                   <a href="#" aria-current="page" style="text-decoration: none;color:blue;font-size:1.5rem; margin:auto">{{quiz.quizName}}</a>
+                 <!--   <a href="#">Podcast</a>
+                   <a href="#">Contact</a> -->
+                 </nav>
+                 <main>
+                   <h1><span>{{quiz.quizCategory}}</span></h1>
+                   <p>{{quiz.descriptions}}</p>
+                   <p>What a wonderful joy it is to see,
+                     the beauty of nature and its majesty.
+                     Everything blends, entwines and embraces,
+                     Spaced precisely in their designated places.
+                     What a marvel to see, I wish I were a bee,
+                   flying free, smelling life’s roses, no particular place to be.</p>
+                   <button class="btn btn-primary" (click) = "attempt(quiz.quizId)">Attemp quiz now!</button>
+                 </main>
+               </div>
+                 <div class="row" style="padding:2em">
+                 <div class="card text-white bg-primary mb-3 col-3" style="max-width: 18rem;">
+                   <div class="card-header">Header</div>
+                   <div class="card-body">
+                     <h5 class="card-title">Primary card title</h5>
+                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                   </div>
+                 </div>
+                 <div class="card text-white bg-secondary mb-3 col-3" style="max-width: 18rem;">
+                   <div class="card-header">Header</div>
+                   <div class="card-body">
+                     <h5 class="card-title">Secondary card title</h5>
+                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                   </div>
+                 </div>
+                 <div class="card text-white bg-success mb-3 col-3" style="max-width: 18rem;">
+                   <div class="card-header">Header</div>
+                   <div class="card-body">
+                     <h5 class="card-title">Success card title</h5>
+                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                   </div>
+                 </div>
+                 <div class="card text-white bg-danger mb-3 col-3" style="max-width: 18rem;">
+                   <div class="card-header">Header</div>
+                   <div class="card-body">
+                     <h5 class="card-title">Danger card title</h5>
+                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                   </div>
+                 </div>
+               </div>
+                          </div>
+                          <!---->
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <script src=".assets/8031b5b.js.tải xuống" nonce=""> -->
+
+                      <!-- </script> -->
+                      <!-- <script src=".assets/57ec0ba.js.tải xuống" nonce=""> -->
+                        <!-- </script>
+                          <script src=".assets/8f7c8a8.js.tải xuống" nonce="">
+                          </script>
+                          <script src=".assets/b0bc513.js.tải xuống" nonce="">
+                          </script> -->
+                          <!-- <script src="script.js" nonce = ""></script> -->
+                          <!-- for jsFile in serverData.asyncJsFiles-->
+                          <!--   script(src="#{serverData.cdnPrefix}#{jsFile}")-->
+                          <!---->
+                        </div>
+                      </div>
+                    </div>
