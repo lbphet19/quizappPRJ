@@ -40,7 +40,7 @@ public class User {
 	@Column(name = "password")
 	private String password;
 	
-	@Column(name = "name", columnDefinition = "nvarchar(255)")
+	@Column(name = "name")
 	private String name;
 	
 	@OneToMany(mappedBy = "author",cascade = CascadeType.ALL)

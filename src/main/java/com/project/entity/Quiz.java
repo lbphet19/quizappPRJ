@@ -29,10 +29,10 @@ public class Quiz {
 	@Column(name = "QuizId")
 	private int quizId;
 	
-	@Column(name = "QuizName",columnDefinition = "nvarchar(255)")
+	@Column(name = "QuizName")
 	private String quizName;
 	
-	@Column(name = "Descriptions",columnDefinition = "nvarchar(255)")
+	@Column(name = "Descriptions")
 	private String descriptions;
 	
 //	quiz co nhieu question

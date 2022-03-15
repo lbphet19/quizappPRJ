@@ -27,7 +27,7 @@ public class Question {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "questionId")
 	private int questionId;
-	@Column(name = "questionContent",columnDefinition = "nvarchar(255)")
+	@Column(name = "questionContent")
 	private String questionContent;
 //	one to many voi answer
 	@Column(name = "questionType")

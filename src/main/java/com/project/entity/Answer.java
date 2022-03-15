@@ -22,7 +22,7 @@ public class Answer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "AnswerId")
 	private int answerId;
-	@Column(name = "AnswerContent", columnDefinition = "nvarchar(255)")
+	@Column(name = "AnswerContent")
 	private String answerContent;
 	@Column(name = "AnswerIsCorrect")
 	private boolean answerIsCorrect;

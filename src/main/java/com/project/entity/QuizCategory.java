@@ -25,7 +25,7 @@ public class QuizCategory {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name = "categoryName",columnDefinition = "nvarchar(255)")
+	@Column(name = "categoryName")
 	private String categoryName;
 	
 	@OneToMany(mappedBy = "quizCategory",fetch = FetchType.LAZY)
