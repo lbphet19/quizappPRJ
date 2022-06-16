@@ -3,7 +3,7 @@ package com.project.responseDTO;
 import java.util.List;
 
 import com.project.entity.Quiz;
-import com.project.entity.QuizCatDTO;
+import com.project.responseDTO.QuizCatDTO;
 
 public class CategoryWithQuiz {
 	private int catId;

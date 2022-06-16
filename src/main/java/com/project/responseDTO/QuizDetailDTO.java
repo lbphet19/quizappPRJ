@@ -1,6 +1,8 @@
-package com.project.entity;
+package com.project.responseDTO;
 
-public class QuizCatDTO {
+import com.project.entity.Quiz;
+
+public class QuizDetailDTO {
 	 private int quizId;
      private String quizName;
      private String descriptions;
@@ -9,6 +11,9 @@ public class QuizCatDTO {
      //author
      private int authorId;
      private String authorName;
+     //cate
+     private int catId;
+     private String catName;
      
 	public int getQuizId() {
 		return quizId;
@@ -65,8 +70,26 @@ public class QuizCatDTO {
 	public void setAuthorName(String authorName) {
 		this.authorName = authorName;
 	}
+	
+	
 
-	public QuizCatDTO(Quiz quiz) {
+	public int getCatId() {
+		return catId;
+	}
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
+
+	public String getCatName() {
+		return catName;
+	}
+
+	public void setCatName(String catName) {
+		this.catName = catName;
+	}
+
+	public QuizDetailDTO(Quiz quiz) {
 		this.quizId = quiz.getQuizId();
 		this.quizName = quiz.getQuizName();
 		this.descriptions = quiz.getDescriptions();
@@ -74,5 +97,8 @@ public class QuizCatDTO {
 		this.quizImage = quiz.getQuizImage();
 		this.authorId = quiz.getAuthor().getId();
 		this.authorName = quiz.getAuthor().getName();
+		this.catId = quiz.getQuizCategory().getId();
+		this.authorName = quiz.getQuizCategory().getCategoryName();
 	}
+
 }

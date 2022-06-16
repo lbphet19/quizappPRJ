@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.entity.QuizCategory;
 import com.project.repositories.QuizCategoryRepository;
+import com.project.responseDTO.QuizCatDTO;
 
 @Service
 public class QuizCategoryServiceImp implements QuizCategoryService {
@@ -50,5 +51,7 @@ public class QuizCategoryServiceImp implements QuizCategoryService {
 			return "error occurred!";
 		}
 	}
+
+	
 
 }

@@ -1,10 +1,15 @@
 package com.project.services;
 
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.project.entity.Quiz;
@@ -12,6 +17,7 @@ import com.project.entity.QuizCategory;
 import com.project.entity.User;
 import com.project.repositories.QuizCategoryRepository;
 import com.project.repositories.QuizRepository;
+import com.project.responseDTO.QuizCatDTO;
 
 @Service
 public class QuizServiceImp implements QuizService{
@@ -83,6 +89,16 @@ public class QuizServiceImp implements QuizService{
 			// TODO: handle exception
 		}
 		return "An error occurred!";
+	}
+	
+	@Override
+	public List<QuizCatDTO> getRelatedQuiz(int catId, int quizId) {
+		// TODO Auto-generated method stub
+		Pageable pageable = PageRequest.of(0, 6, Sort.by("quizName"));
+		Page<Quiz> page = this.quizRepo.getRelatedQuiz(catId, quizId, pageable);
+		List<QuizCatDTO> listResult = page.getContent().stream()
+				.map(quiz -> new QuizCatDTO(quiz)).collect(Collectors.toList());
+		return listResult;
 	}
 
 }

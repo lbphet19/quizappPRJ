@@ -25,7 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.entity.Quiz;
-import com.project.entity.QuizCatDTO;
+import com.project.responseDTO.QuizCatDTO;
+import com.project.responseDTO.QuizDetailDTO;
 import com.project.entity.QuizCategory;
 import com.project.entity.User;
 import com.project.repositories.QuizCategoryRepository;
@@ -82,6 +83,14 @@ public class QuizController {
 		return new ResponseEntity<List<Quiz>>(list, HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/quiz/getRelatedQuiz")
+	public ResponseEntity<List<QuizCatDTO>> getRelatedQuiz
+	(@RequestParam(name = "catId") int catId,
+	 @RequestParam(name = "quizId") int quizId){		
+		List<QuizCatDTO> relatedQuiz = this.quizService.getRelatedQuiz(catId, quizId);
+		return new ResponseEntity<List<QuizCatDTO>>(relatedQuiz,HttpStatus.OK);
+	}
+	
 	@GetMapping(value = "/quiz/getQuizByCatAtHomepage")
 	public ResponseEntity<Object> getCatTest(){
 		Sort sortQuiz = Sort.by("quizName");
@@ -131,11 +140,23 @@ public class QuizController {
 		return ResponseEntity.ok(res);
 	}
 
+//	@GetMapping(value = "/quiz/{id}")
+//	public ResponseEntity<Quiz> getById(@PathVariable(name = "id") int quizId) {
+//		try {
+//			Quiz quiz = quizService.getById(quizId);
+//			return new ResponseEntity<Quiz>(quiz, HttpStatus.OK);
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//		}
+//		return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
+//	}
+	
 	@GetMapping(value = "/quiz/{id}")
-	public ResponseEntity<Quiz> getById(@PathVariable(name = "id") int quizId) {
+	public ResponseEntity<QuizDetailDTO> getById(@PathVariable(name = "id") int quizId) {
 		try {
 			Quiz quiz = quizService.getById(quizId);
-			return new ResponseEntity<Quiz>(quiz, HttpStatus.OK);
+			return new ResponseEntity<QuizDetailDTO>(new QuizDetailDTO(quiz), HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

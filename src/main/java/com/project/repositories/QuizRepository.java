@@ -23,4 +23,7 @@ public interface QuizRepository extends JpaRepository<Quiz, Integer> {
 	
 	@Query("SELECT q FROM Quiz q WHERE q.quizCategory.id= ?1")
 	Page<Quiz> getQuizByCatId(int catId,Pageable page);
+	
+	@Query("SELECT q FROM Quiz q JOIN q.quizCategory cat WHERE cat.id = ?1 AND q.quizId != ?2")
+	Page<Quiz> getRelatedQuiz(int catId, int quizId,Pageable page);
 }
