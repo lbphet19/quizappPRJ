@@ -25,8 +25,7 @@ public class ExamQuestion {
 	@JoinColumn(name = "examId",referencedColumnName = "examId")
 	private Exam exam;
 //	quiz co nhieu question
-	@Column(name = "score")
-	private int score;
+	
 	
 	
 	public int getExamQuestionId() {
@@ -47,14 +46,14 @@ public class ExamQuestion {
 	public void setExam(Exam exam) {
 		this.exam = exam;
 	}
-	public int getScore() {
-		return score;
-	}
-	public void setScore(int score) {
-		this.score = score;
-	}
+	
 	public ExamQuestion() {
 		super();
+	}
+	public ExamQuestion(Question question, Exam exam) {
+		super();
+		this.question = question;
+		this.exam = exam;
 	}
 	
 	
