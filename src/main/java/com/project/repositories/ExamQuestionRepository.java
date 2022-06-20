@@ -11,7 +11,7 @@ import com.project.entity.Question;
 
 @Repository
 public interface ExamQuestionRepository extends JpaRepository<ExamQuestion, Integer> {
-	@Query("SELECT q FROM ExamQuestion exQuest JOIN exQuest.exam ex JOIN exQuest.question q"
+	@Query("SELECT q FROM ExamQuestion exQuest JOIN exQuest.exam ex JOIN exQuest.question q "
 			+ "WHERE ex.examId = ?1")
 	List<Question> getQuestionByExamId(int examId);
 }
