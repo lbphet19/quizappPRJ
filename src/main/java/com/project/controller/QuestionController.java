@@ -152,7 +152,7 @@ public class QuestionController {
 	@PostMapping(value = "/question/postAnswer/{examId}")
 	public ResponseEntity<AnswerResponseDTO> postAnswers(
 			@RequestBody AnswerRequestDTO[] answers,
-			@PathVariable(name = "quizId") int examId){
+			@PathVariable(name = "examID") int examId){
 		int totalScore = 0;
 		List<Question> correctAnswers = this.questionRepo.getCorrectAnswersFromExam(examId);
 		for(Question q:correctAnswers) {
