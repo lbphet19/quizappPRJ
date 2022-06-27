@@ -58,7 +58,7 @@ public class ExamController {
 	@GetMapping("/exam/{id}/getQuestion")
 	public ResponseEntity<List<Question>> getQuestionByExamId(@PathVariable(name = "id") int id){
 		List<Question> questions = this.examQuestionRepo.getQuestionByExamId(id);
-		return ResponseEntity.ok(questions);
+		return ResponseEntity.ok(questions); 
 	}
 	
 	@PostMapping("/exam")
