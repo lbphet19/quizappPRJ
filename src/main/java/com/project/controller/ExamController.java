@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.project.entity.Exam;
 import com.project.entity.ExamQuestion;
 import com.project.entity.Question;
+import com.project.repositories.ExamQuestionRepository;
 import com.project.repositories.ExamRepository;
 import com.project.repositories.QuestionRepository;
 import com.project.requestDTO.ExamQuestionRequestDTO;
@@ -31,14 +32,16 @@ public class ExamController {
 	private ExamService examService;
 	private QuestionRepository questionRepo;
 	private ExamQuestionService examQuestionService;
+	private ExamQuestionRepository examQuestionRepo;
 	
 	@Autowired
 	public ExamController(ExamService examService, QuestionRepository q, 
-			ExamQuestionService examQuestionService) {
+			ExamQuestionService examQuestionService, ExamQuestionRepository examQuestionRepo) {
 		super();
 		this.examService = examService;
 		this.questionRepo = q;
 		this.examQuestionService = examQuestionService;
+		this.examQuestionRepo = examQuestionRepo;
 	}
 	
 	@GetMapping("/exam")
@@ -50,6 +53,13 @@ public class ExamController {
 	public ResponseEntity<Exam> getById(@PathVariable(name = "id") int id){
 		Exam ex = this.examService.findById(id);
 		return ResponseEntity.ok(ex);
+//		abc
+	}
+	
+	@GetMapping("/exam/{id}/getQuestion")
+	public ResponseEntity<List<Question>> getQuestionByExamId(@PathVariable(name = "id") int id){
+		List<Question> questions = this.examQuestionRepo.getQuestionByExamId(id);
+		return ResponseEntity.ok(questions); 
 	}
 	
 	@PostMapping("/exam")
