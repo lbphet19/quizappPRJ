@@ -149,6 +149,42 @@ public class QuestionController {
 	
 		return ResponseEntity.ok(new AnswerResponseDTO(correctAnswerResponse,totalScore));
 	}
+	
+	@PostMapping(value = "/question/postAnswer/{examId}")
+	public ResponseEntity<AnswerResponseDTO> postAnswers(
+			@RequestBody AnswerRequestDTO[] answers,
+			@PathVariable(name = "quizId") int examId){
+		int totalScore = 0;
+		List<Question> correctAnswers = this.questionRepo.getCorrectAnswersFromExam(examId);
+		for(Question q:correctAnswers) {
+			System.out.println(q.getQuestionId());
+			for(Answer a:q.getAnswers()) {
+				System.out.println(a.getAnswerId());
+			}
+		}
+		List<List<Integer>> correctAnswerIds = this.questionService.getAnswerIds(correctAnswers);
+		List<CorrectAnswerResponseDTO> correctAnswerResponse = new ArrayList<CorrectAnswerResponseDTO>();
+		// so sanh
+//		Stream<AnswerRequestDTO> answerStream = Stream.of(answers);
+		List<AnswerRequestDTO> sortedAnswerRequestDTO = Arrays.asList(answers).stream().sorted(Comparator.comparingInt(AnswerRequestDTO::getQuestionId))
+				.collect(Collectors.toList());
+		for(int i = 0; i < sortedAnswerRequestDTO.size(); i++) {
+			if(this.answerService.equalsIngnoreOrder(sortedAnswerRequestDTO.get(i).getAnswerIds(),correctAnswerIds.get(i))) {
+				CorrectAnswerResponseDTO res = new CorrectAnswerResponseDTO
+						(true,correctAnswerIds.get(i),sortedAnswerRequestDTO.get(i).getQuestionId());
+				correctAnswerResponse.add(res);
+				totalScore++;
+			}
+			else {
+				CorrectAnswerResponseDTO res = new CorrectAnswerResponseDTO
+						(false,correctAnswerIds.get(i),sortedAnswerRequestDTO.get(i).getQuestionId());
+				correctAnswerResponse.add(res);
+			}
+		}
+	
+		return ResponseEntity.ok(new AnswerResponseDTO(correctAnswerResponse,totalScore));
+	}
+	
 	@GetMapping(value = "/question/quizId/{quizId}")
 	public ResponseEntity<List<Question>> get(@PathVariable(name = "quizId") Integer quizId){
 		List<Question> list = questionService.getByQuizId(quizId);

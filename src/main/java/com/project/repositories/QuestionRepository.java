@@ -26,6 +26,14 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 			+ " WHERE q.quiz.quizId = ?1 AND ans.answerIsCorrect = true"
 			+ " ORDER BY q.questionId")
 	List<Question> getCorrectAnswers(int quizId);
-
-
+	
+	@Query(value = "SELECT DISTINCT q"
+			+ " FROM Question q"
+			+ " JOIN FETCH q.answers ans"
+			+ " WHERE q.questionId IN (SELECT q.questionId FROM ExamQuestion exQuest JOIN"
+			+ " exQuest.exam ex JOIN exQuest.question q"
+			+ "	WHERE ex.examId = ?1 )"
+			+ " AND ans.answerIsCorrect = true"
+			+ " ORDER BY q.questionId")
+	List<Question> getCorrectAnswersFromExam(int examId);
 }
