@@ -53,7 +53,9 @@ public class ExamController {
 	public ResponseEntity<Exam> getById(@PathVariable(name = "id") int id){
 		Exam ex = this.examService.findById(id);
 		return ResponseEntity.ok(ex);
+//		abc
 	}
+	
 	
 	@GetMapping("/exam/{id}/getQuestion")
 	public ResponseEntity<List<Question>> getQuestionByExamId(@PathVariable(name = "id") int id){
