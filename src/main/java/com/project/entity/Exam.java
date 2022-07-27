@@ -2,6 +2,7 @@ package com.project.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class Exam {
 	@Column(name = "examImage")
 	private String examImage;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "quizId",referencedColumnName = "quizId")
 	private Quiz quiz;
 
