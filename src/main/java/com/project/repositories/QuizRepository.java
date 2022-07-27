@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.project.entity.Exam;
 import com.project.entity.Quiz;
 
 public interface QuizRepository extends JpaRepository<Quiz, Integer> {
@@ -26,4 +27,7 @@ public interface QuizRepository extends JpaRepository<Quiz, Integer> {
 	
 	@Query("SELECT q FROM Quiz q JOIN q.quizCategory cat WHERE cat.id = ?1 AND q.quizId != ?2")
 	Page<Quiz> getRelatedQuiz(int catId, int quizId,Pageable page);
+	
+	@Query("SELECT ex FROM Exam ex JOIN ex.quiz WHERE quiz.quizId = ?1")
+	List<Exam> getQuizExam(int quizId);
 }

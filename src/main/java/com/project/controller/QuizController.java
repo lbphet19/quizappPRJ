@@ -3,6 +3,8 @@ package com.project.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.entity.Exam;
 import com.project.entity.Quiz;
 import com.project.responseDTO.QuizCatDTO;
 import com.project.responseDTO.QuizDetailDTO;
@@ -139,7 +142,11 @@ public class QuizController {
 		List<Quiz> res = this.quizRepo.searchByName(keyword);
 		return ResponseEntity.ok(res);
 	}
-
+	@GetMapping(value = "/quiz/getQuizExam/{id}")
+	public ResponseEntity<List<Exam>> getQuizExam(@PathVariable(name = "id") int id){
+		List<Exam> list = this.quizRepo.getQuizExam(id);
+		return ResponseEntity.ok(list);
+	}
 //	@GetMapping(value = "/quiz/{id}")
 //	public ResponseEntity<Quiz> getById(@PathVariable(name = "id") int quizId) {
 //		try {
