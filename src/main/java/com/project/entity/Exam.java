@@ -34,7 +34,7 @@ public class Exam {
 	private String examImage;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@JoinColumn(name = "quizId",referencedColumnName = "quizId")
 	private Quiz quiz;
 
