@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.project.entity.Exam;
 import com.project.entity.ExamQuestion;
 import com.project.entity.Question;
@@ -62,6 +63,7 @@ public class ExamController {
 		return ResponseEntity.ok(questions); 
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping("/exam")
 	public ResponseEntity<Exam> save(@RequestBody Exam ex){
 		Exam insertEx = this.examService.save(ex);
