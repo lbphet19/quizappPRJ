@@ -1,0 +1,103 @@
+<div id="__nuxt">
+  <div id="__layout">
+    <div class="flex flex-col font-sans">
+      <div class="fixed left-0 bottom-0 z-102 flex flex-col">
+        <div class="flex flex-col">
+        </div>
+      </div>
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+      <a aria-label="Skip to main content" href="https://quizizz.com/admin#app-body-container" class="skip-link">
+        <span class="_i18n-container">Chuyển đến nội dung</span>
+      </a>
+      <div class="flex flex-grow h-screen">
+        <app-sidebar></app-sidebar>
+        <div class="flex flex-col flex-grow w-full h-screen overflow-hidden border-l border-light-1">
+          <app-header></app-header>
+          <div id="app-body-container" class="flex flex-grow overflow-auto bg-light-1 content overflow-auto">
+            <div data-v-470c518d="" class="w-full">
+              <div data-v-470c518d="" class="w-full">
+                <div style="margin:2em">
+                  Diem so cua ban la: {{score}}
+
+                  <!-- test -->
+                  <div *ngFor = "let question of questions|async;let i = index">
+                    <div class = "bg-green main-question"
+                     *ngIf = "answerResponses[i].true === true">
+                      Question {{i+1}}. {{question.questionContent}}
+                      <br>
+                      <div *ngIf = "question.questionType === 'single-choice'">
+                        <div  *ngFor = "let answer of question.answers">
+                          <input type ="radio" id="{{answer.answerId}}"
+                          name="{{question.questionId}}" value="{{answer.answerId}}"
+                          [checked]="isAnswerSelected(answer.answerId)">
+                            <label for="{{answer.answerId}}">{{answer.answerContent}}
+                            <span class="check" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
+                          </label><br>
+
+                        </div>
+                      </div>
+                      <div *ngIf = "question.questionType === 'multiple-choice'">
+                        <div *ngFor = "let answer of question.answers">
+                          <input type="checkbox" [checked]="isAnswerSelected(answer.answerId)"
+                          id="{{answer.answerId}}" name="answerId" value="{{answer.answerId}}">
+                          <label for="{{answer.answerId}}"> {{answer.answerContent}}
+                            <span class="check" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
+                          </label><br>
+                        </div>
+                      </div>
+                    </div>
+                    <div class = "bg-red main-question" *ngIf = "answerResponses[i].true === false">
+                      Question {{i+1}}. {{question.questionContent}}
+                      <br>
+                      <div *ngIf = "question.questionType === 'single-choice'">
+                        <div  *ngFor = "let answer of question.answers">
+                          <input type ="radio" id="{{answer.answerId}}"
+                          name="{{question.questionId}}" value="{{answer.answerId}}"
+                          [checked]="isAnswerSelected(answer.answerId)">
+                            <label for="{{answer.answerId}}">{{answer.answerContent}}
+                            <span class="check" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
+                          </label><br>
+                        </div>
+                      </div>
+                      <div *ngIf = "question.questionType === 'multiple-choice'">
+                        <div *ngFor = "let answer of question.answers">
+                          <input type="checkbox" [checked]="isAnswerSelected(answer.answerId)"
+                          id="{{answer.answerId}}" name="answerId" value="{{answer.answerId}}">
+                          <label for="{{answer.answerId}}"> {{answer.answerContent}}
+                            <span class="check" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
+                          </label><br>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- <button (click) = "submitForm()">Hoan thanh quiz</button> -->
+                    <!-- form add -->
+
+                    <!-- end test -->
+                  </div>
+
+                </div>
+                <!---->
+              </div>
+            </div>
+          </div>
+          <!-- <script src=".assets/8031b5b.js.tải xuống" nonce=""> -->
+
+            <!-- </script> -->
+            <!-- <script src=".assets/57ec0ba.js.tải xuống" nonce=""> -->
+              <!-- </script>
+                <script src=".assets/8f7c8a8.js.tải xuống" nonce="">
+                </script>
+                <script src=".assets/b0bc513.js.tải xuống" nonce="">
+                </script> -->
+                <!-- <script src="script.js" nonce = ""></script> -->
+                <!-- for jsFile in serverData.asyncJsFiles-->
+                <!--   script(src="#{serverData.cdnPrefix}#{jsFile}")-->
+                <!---->
+              </div>
+            </div>
+          </div>

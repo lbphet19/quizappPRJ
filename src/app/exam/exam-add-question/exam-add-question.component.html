@@ -1,0 +1,11 @@
+<!-- <div *ngIf = "questions|async"> -->
+  <h1>Choose questions for your exam:</h1>
+
+  <div *ngFor = "let q of questions|async">
+    <!-- <div *ngFor = "let q of questionTest"> -->
+      <input type = "checkbox" value="{{q.questionId}}" name="{{q.questionId}}"
+      (change) = "onChange(q.questionId,$event)">
+      {{q.questionContent}}
+  </div>
+  <button type="submit" class="btn btn-primary" (click) = "submit($event)">Submit</button>
+<!-- </div> -->
