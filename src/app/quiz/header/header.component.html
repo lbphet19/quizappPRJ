@@ -1,0 +1,84 @@
+<div data-v-8d679f4e="">
+  <div data-v-8d679f4e="" id="app-header" class="fixed border-light-1 main-header z-10 border-b">
+    <nav data-v-8d679f4e="" class="bg-light text-dark-3 flex flex-row relative justify-between space-x-2 h-auto p-2">
+      <!----> <!----> <div data-v-8d679f4e="" class="flex flex-row space-x-2 flex-none md:flex-grow">
+        <div data-v-8d679f4e="" class="ml-auto flex flex-grow">
+          <div data-v-279c77e4="" data-v-8d679f4e="" class="main-header-search-bar border-light-1">
+            <div data-v-279c77e4="" class="w-full">
+              <div data-v-4d9b13aa="" class="flex-grow relative w-full border-radius-inherit">
+                <!----> <div data-v-4d9b13aa="" class="relative border-radius-inherit">
+                  <div data-v-4d9b13aa="" class="w-6 h-6 flex items-center justify-center absolute left-2 top-2 text-dark-4">
+                    <i data-v-4d9b13aa="" class="fas fa-search text-purple mt-0.5" style="font-size: 12px;">
+                    </i>
+                  </div> <input data-v-4d9b13aa="" id="search-input" name="" placeholder="Tìm kiếm" autocomplete="off" lang="" maxlength="-1" type="text" class="focus:outline-none h-10  w-full py-2 text-sm placeholder-sm border-radius-inherit remove-number-selector rounded-tl-lg rounded-bl-lg bg-transparent text-dark-2 border-light-3 placeholder-dark-2 font-semibold pl-9 pr-2"> <!----> <!----> <!----> <!---->
+                </div> <!---->
+              </div> <!---->
+            </div> <div data-v-279c77e4="" class="divider border-r my-2 border-dark-5">
+            </div> <!----> <div data-v-279c77e4="" class="field w-40">
+              <div id="4" class="label sr-only">
+               (with selected value)
+             </div> <div class="select w-full inline-flex relative">
+              <button id="5" aria-haspopup="listbox" aria-labelledby="4 5" class="listbox-button flex items-center w-full cursor-pointer box-border text-left rounded font-semibold text-sm text-dark-2 pl-2 pr-1 py-2 h-10">
+                <!----> <div aria-live="assertive" class="title whitespace-nowrap w-full text-sm">
+                  Thư viện Quizizz
+                </div> <div aria-hidden="true" class="ml-auto flex items-center justify-center w-6 h-6">
+                  <i class="fas fa-caret-down" aria-hidden="true" style="font-size: 12px;">
+                  </i>
+                </div>
+              </button> <ul aria-labelledby="4" role="listbox" activedescendant="1" class="listbox max-h-44 overflow-y-auto z-10 list absolute bg-light-3 shadow-soft-high w-full transform rounded transition-transform scale-y-0  origin-top mt-10">
+                <li id="1" role="option" class="option cursor-pointer p-2 flex bg-lilac-faded text-lilac border-lilac-faded border-b-2 ">
+                  <!----> <div class="text-lilac">
+                    <div class="item-title font-semibold text-sm">
+                      Thư viện Quizizz
+                    </div> <!---->
+                  </div> <!----> <!---->
+                </li>
+                <li id="2" role="option" class="option cursor-pointer p-2 flex hover:bg-dark-5% border-b-2 border-dark-5% ">
+                  <!----> <div class="text-dark-2">
+                    <div class="item-title font-semibold text-sm">
+                      Thư viện của tôi
+                    </div> <!---->
+                  </div> <!----> <!---->
+                </li>
+                <li id="3" role="option" class="option cursor-pointer p-2 flex hover:bg-dark-5% border-2 border-transparent ">
+                  <!----> <div class="text-dark-2">
+                    <div class="item-title font-semibold text-sm">
+                      Báo cáo
+                    </div> <!---->
+                  </div> <!----> <!---->
+                </li>
+              </ul>
+            </div> <!---->
+          </div>
+        </div>
+      </div> <div data-v-8d679f4e="" class="flex space-x-2 flex-row pl-0 md:pl-2">
+        <!----> <button data-v-21793d1b="" data-v-8d679f4e="" class="flex items-center justify-center px-4 py-1 text-sm font-semibold h-auto bg-dark-5% active:bg-dark-10% text-dark-2 hover:text-dark-3  rounded other min-w-max relative transition-colors duration-200 ease-in-out flex">
+          <!----> <!---->  <span data-v-21793d1b="" class="title">
+            Nhập mã
+          </span> <!----> <!----> <!----> <!----> <!---->
+        </button> <div data-v-8d679f4e="" class="flex" *ngIf = "!isLoggedIn">
+          <button data-v-21793d1b="" data-v-8d679f4e="" class="mr-2 flex items-center justify-center px-4 py-1 text-sm font-semibold h-auto base bg-lilac-faded text-lilac hover:text-lilac-light active:text-lilac-dark rounded secondary min-w-max relative transition-colors duration-200 ease-in-out flex">
+            <!----> <!---->  <span data-v-21793d1b="" class="title" (click) = "navigateLogin()">
+              Đăng nhập
+            </span> <!----> <!----> <!----> <!----> <!---->
+          </button> <button data-v-21793d1b="" data-v-8d679f4e="" class="flex items-center justify-center px-4 py-1 text-sm font-semibold h-auto base bg-lilac text-light-3 hover:bg-lilac-light active:bg-lilac-dark rounded primary min-w-max relative transition-colors duration-200 ease-in-out flex">
+            <!----> <!---->  <span data-v-21793d1b="" class="title">
+              Đăng ký
+            </span> <!----> <!----> <!----> <!----> <!---->
+          </button>
+        </div>
+        <!----test-->
+        <div data-v-8d679f4e="" class="flex" *ngIf = "isLoggedIn">
+          xin chào {{user.name}}
+          <button data-v-21793d1b="" data-v-8d679f4e="" class="mr-2 flex items-center justify-center px-4 py-1 text-sm font-semibold h-auto base bg-lilac-faded text-lilac hover:text-lilac-light active:text-lilac-dark rounded secondary min-w-max relative transition-colors duration-200 ease-in-out flex">
+            <!----> <!---->  <span data-v-21793d1b="" class="title" (click) = "logout()">
+              Logout
+            </span> <!----> <!----> <!----> <!----> <!---->
+          </button>
+          </div>
+        <!------>
+      </div>
+    </div>
+  </nav>
+  </div> <!---->
+  </div>

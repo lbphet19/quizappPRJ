@@ -1,0 +1,92 @@
+<div *ngFor = "let question of questions;let i = index">
+  Question {{i+1}}. {{question.questionContent}}        <button (click) = openUpdateModal(updateForm,i) class = "btn btn-primary mr-1">Update</button><button (click) = deleteQuestion(question.questionId) class = "btn btn-primary">Delete</button>
+  <br>
+  <div *ngIf = "question.questionType === 'single-choice'">
+    <div  *ngFor = "let answer of question.answers">
+      <input type ="radio" id="{{answer.answerId}}" name="{{question.questionId}}" value="{{answer.answerId}}">
+        <label for="{{answer.answerId}}">{{answer.answerContent}}</label><br>
+    </div>
+  </div>
+  <div *ngIf = "question.questionType === 'multiple-choice'">
+    <div *ngFor = "let answer of question.answers">
+      <input type="checkbox" id="{{answer.answerId}}" name="answerId" value="{{answer.answerId}}">
+      <label for="{{answer.answerId}}"> {{answer.answerContent}}</label><br>
+    </div>
+  </div>
+</div>
+
+<!-- <button (click) = "submitForm()">Hoan thanh quiz</button> -->
+<!-- form add -->
+<form [formGroup] = "quizForm">
+  <div formArrayName = "questionForm">
+    <div *ngFor = "let question of this.questionForm().controls; let questionIndex = index">
+      <div
+      [formGroupName]="questionIndex"
+      style="border: 1px solid blue; padding: 10px; width: 1000px; margin: 5px;"
+      >
+      {{questionIndex+1}}. <input type = "text" style = "width:600px" formControlName = "questionContent"/>
+      Type: <select formControlName = "questionType">
+        <option value="multiple-choice">Nhieu dap an dung</option>
+        <option value="single-choice">Lua chon 1 dap an</option>
+      </select>
+      <button (click) = deleteQuestionAdd(questionIndex) class = "btn btn-primary">Delete</button>
+      <br>
+      <div formArrayName = "answers">
+        <div *ngFor = "let answer of this.getAnswerAtIndex(questionIndex).controls; let answerIndex = index">
+          <div [formGroupName] = "answerIndex">
+            Answer {{answerIndex+1}}.<input type = "text" formControlName = "answerContent"
+            style="margin-left: 5em;width:672px;margin-top:15px"/> <input type = "checkbox" formControlName = "answerIsCorrect"
+            (click) = "setAnswerStatus(answerIndex,questionIndex)">
+            <button (click) = deleteAnswerAdd(answerIndex,questionIndex) class = "btn btn-primary">Delete</button>
+            <!-- set true false khi click -->
+          </div>
+        </div>
+      </div>
+      <button (click) = "addAnswer(questionIndex)">Add answer</button>
+    </div>
+  </div>
+  <button (click) = "addQuestion()">Add question</button>
+</div>
+<input type = "submit" (click) = "viewForm()" value="Submit">
+</form>
+<!-- /formAdd -->
+
+<!-- formUpdate -->
+<ng-template #updateForm let-modal>
+  <form [formGroup] = "questionUpdateForm">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Question update</h4>
+      <!-- click = xoa het cac du lieu da luu, patch lai value -->
+      <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Câu hỏi: <input type = "text" formControlName = "questionContent" class = "form-control"/>
+      Type: <select formControlName = "questionType" class = "form-control">
+        <option value="multiple-choice">Nhieu dap an dung</option>
+        <option value="single-choice">Lua chon 1 dap an</option>
+      </select>
+      <br>
+      <div formArrayName = "answers">
+        <div *ngFor = "let answer of this.getAnswersFromQuestionUpdateForm().controls; let answerIndex = index">
+          <div [formGroupName] = "answerIndex">
+            Answer {{answerIndex}}.<input type = "text" formControlName = "answerContent"
+            style="margin-left: 5em;"/> <input type = "checkbox" formControlName = "answerIsCorrect"
+            (click) = "setAnswerStatus(answerIndex)">
+            <button (click) = "removeAnswer(answerIndex)">X</button>
+            <!-- set true false khi click -->
+          </div>
+        </div>
+      </div>
+      <button (click) = "addAnswer()">Add answer</button>
+    </div>
+    <div class="modal-footer">
+      <!-- click = save... -->
+      <button type="button" class="btn btn-outline-dark" (click)="saveUpdateQuestion()">Save</button>
+    </div>
+  </form>
+
+</ng-template>
+<!-- /formUpdate -->
+<br>
