@@ -16,6 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { QuizQuestionComponent } from './quiz-question/quiz-question.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuqizScoreComponent } from './auqiz-score/auqiz-score.component';
+import { CategoryListComponent } from './category-list/category-list.component';
+import { CategoryCreateComponent } from './category-create/category-create.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { AuqizScoreComponent } from './auqiz-score/auqiz-score.component';
   QuizFormComponent,
   QuestionComponent,
   QuizQuestionComponent,
-  AuqizScoreComponent],
+  AuqizScoreComponent,
+  CategoryListComponent,
+  CategoryCreateComponent],
   imports: [
     CommonModule,
     QuizRoutingModule,

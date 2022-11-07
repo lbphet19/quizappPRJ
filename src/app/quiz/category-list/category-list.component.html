@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!-- saved from url=(0025)https://quizizz.com/admin -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Find a Quiz - Quizizz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta hid="description" name="description" content="" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://quizizz.com/favicon.ico"
+    />
+    <meta
+      name="twitter:image"
+      content="https://cf.quizizz.com/img/q_og_generic.png"
+    />
+    <meta
+      property="og:image"
+      content="https://cf.quizizz.com/img/q_og_generic.png"
+    />
+    <meta
+      name="twitter:title"
+      content="Quizizz — The world’s most engaging learning platform"
+    />
+    <meta
+      property="og:title"
+      content="Quizizz — The world’s most engaging learning platform"
+    />
+    <meta
+      name="twitter:description"
+      content="Find and create gamified quizzes, lessons, presentations, and flashcards for students, employees, and everyone else. Get started for free!"
+    />
+    <meta
+      property="og:description"
+      content="Find and create gamified quizzes, lessons, presentations, and flashcards for students, employees, and everyone else. Get started for free!"
+    />
+    <!-- <script type="text/javascript" id="www-widgetapi-script" src=".assets/www-widgetapi.js.tải xuống" async="">
+  </script>
+  <script type="text/javascript" async="" src="../../../assets/analytics.js.tải xuống" nonce="">
+  </script>
+  <script async="" src="../../../assets/js">
+  </script>
+  <script charset="utf-8" src="../../../assets/719d2fd.js.tải xuống">
+  </script> -->
+    <link href="https://www.googletagmanager.com/" rel="preconnect" />
+    <!-- <script charset="utf-8" src=".assets/18ad2fd.js.tải xuống">
+  </script>
+  <script charset="utf-8" src=".assets/f25b24a.js.tải xuống">
+  </script> -->
+    <link
+      data-n-head="1"
+      rel="icon"
+      type="image/x-icon"
+      href="https://quizizz.com/favicon.ico"
+    />
+    <!-- <link data-n-head="1" rel="stylesheet" href="./css2.css"> -->
+    <meta
+      data-n-head="1"
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <meta
+      data-n-head="1"
+      data-hid="description"
+      name="description"
+      content=""
+    />
+    <meta
+      data-n-head="1"
+      data-hid="t-type"
+      name="twitter:image"
+      content="https://cf.quizizz.com/img/q_og_generic.png"
+    />
+  </head>
+  <body class="using-mouse">
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+        <button type="button" aria-label="Close" class="btn-close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="dateOfBirth">Date of birth</label>
+            <div class="input-group">
+              <input
+                type="text"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+      </div>
+    </ng-template>
+    
+    <div id="__nuxt">
+      <div id="__layout">
+        <div class="flex flex-col font-sans">
+          <div class="fixed left-0 bottom-0 z-102 flex flex-col">
+            <div class="flex flex-col"></div>
+          </div>
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <a
+            aria-label="Skip to main content"
+            href="https://quizizz.com/admin#app-body-container"
+            class="skip-link"
+          >
+            <span class="_i18n-container">Chuyển đến nội dung</span>
+          </a>
+          <div class="flex flex-grow h-screen">
+            <app-sidebar></app-sidebar>
+            <div
+              class="flex flex-col flex-grow w-full h-screen overflow-hidden border-l border-light-1"
+            >
+              <app-header></app-header>
+              <div
+                id="app-body-container"
+                class="flex flex-grow overflow-auto bg-light-1 content overflow-auto"
+              >
+                <div data-v-470c518d="" class="w-full">
+                  <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                     <h5 class="card-title"><b>Danh sách danh mục</b></h5>
+                     <button class="btn btn-primary" (click) = "createCategory()">Thêm mới</button>
+                        </div>
+                        <br>
+                     <!-- <div formControlNam> -->
+                     <!-- <a *ngFor=""></a> -->
+                     <div class="card-text" *ngFor = "let cat of catList">
+                        <a style="font-size:18px">{{cat.categoryName}}</a>
+                        <br>
+                        <ul>
+                            <li class="d-flex justify-content-between mb-3" style="list-style-type: circle;" *ngFor = "let child of cat.children"><a class="text-primary" style="cursor: pointer" > {{child.categoryName}} </a>
+                               <button class="btn btn-outline-primary" (click)="open(content,child.id)">Cập nhật</button>
+                            </li>
+                            
+                          </ul>
+                     </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <script src="script.js" nonce=""></script>
+              <!-- for jsFile in serverData.asyncJsFiles-->
+              <!--   script(src="#{serverData.cdnPrefix}#{jsFile}")-->
+              <!---->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

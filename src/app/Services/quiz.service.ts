@@ -25,6 +25,9 @@ export class QuizService {
   getQuizAtHomePage():Observable<QuizCategory[]>{
     return this.http.get<QuizCategory[]>(`${this.API_URL}/getQuizByCatAtHomepage`)
   }
+  getQuizWithQuestions(categoryId:number):Observable<any>{
+    return this.http.get<any>(`${this.API_URL}/${categoryId}/getQuestions`)
+  }
   getUserQuiz():Observable<Quiz[]>{
     return this.http.get<Quiz[]>(`${this.API_URL}/getUserQuiz`)
   }

@@ -1,0 +1,88 @@
+<div id="__nuxt">
+  <div id="__layout">
+    <div class="flex flex-col font-sans">
+      <div class="fixed left-0 bottom-0 z-102 flex flex-col">
+        <div class="flex flex-col"></div>
+      </div>
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+      <!---->
+      <a
+        aria-label="Skip to main content"
+        href="https://quizizz.com/admin#app-body-container"
+        class="skip-link"
+      >
+        <span class="_i18n-container">Chuyển đến nội dung</span>
+      </a>
+      <div class="flex flex-grow h-screen">
+        <app-sidebar></app-sidebar>
+        <div
+          class="flex flex-col flex-grow w-full h-screen overflow-hidden border-l border-light-1"
+        >
+          <app-header></app-header>
+          <div
+            id="app-body-container"
+            class="flex flex-grow overflow-auto bg-light-1 content overflow-auto"
+          >
+            <div data-v-470c518d="" class="w-full">
+              <div
+                data-v-470c518d=""
+                class="w-full"
+              >
+                <div class="card">
+                <div class="reactive-form card-body">
+                    <h5 class="card-title"><p>Thêm mới danh mục</p></h5>
+                    <br>
+                  <form [formGroup]="catForm" style="width: 80%">
+                    <div class="form-group">
+                      <label for="quizName">Category name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="categoryName"
+                        placeholder="Enter category name"
+                        formControlName="categoryName"
+                      />
+                      <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                    </div>
+                    <!-- cate -->
+                    <br />
+                    <div>
+                      Danh mục cha
+                      <select
+                        class="custom-select mr-sm-2"
+                        id="quizId"
+                        style="margin-top: 0.5em; margin-bottom: 1em"
+                        formControlName="id"
+                      >
+                        <option selected value="0">Không chọn</option>
+                        <option
+                          *ngFor="let cat of rootCategory"
+                          value="{{ cat.id }}"
+                        >
+                          {{ cat.categoryName }}
+                        </option>
+                      </select>
+                    </div>
+                    <br />
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      (click)="submit($event)"
+                    >
+                      Submit
+                    </button>
+                  </form>
+                </div>
+            </div>
+              </div>
+              <!---->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

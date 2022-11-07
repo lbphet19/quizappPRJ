@@ -18,6 +18,9 @@ export class SidebarComponent implements OnInit {
   createExam(){
     this.router.navigate(['exam','create'])
   }
+  categoryIndex(){
+    this.router.navigate(['quiz','category-list'])
+  }
   navigateHome(){
     this.router.navigate(['quiz','all'])
   }
