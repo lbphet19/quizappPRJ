@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 @Entity
@@ -34,9 +35,10 @@ public class Question {
 	private String questionType;
 //	type : checkbox, radio, text...
 	@OneToMany(mappedBy = "question",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@OrderBy("position ASC")
 	private List<Answer> answers = new ArrayList<Answer>();
 	
-	@JsonProperty(access =Access.WRITE_ONLY )
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@ManyToOne
 	@JoinColumn(name = "QuizId",referencedColumnName = "quizId")
 	private Quiz quiz;

@@ -31,13 +31,28 @@ public class Exam {
 //	@Column(name = "QuizStatus")
 //	private boolean quizStatus;
 	
+	@Column(name = "shuffleQuestion")
+	private boolean shuffleQuestion;
+	
+	@Column(name = "shuffleAnswer")
+	private boolean shuffleAnswer;
+	
+	@Column(name = "time")
+	private long time; // tinh thoi gian = giay -> client render ve HH:mm:ss
+	
+	
 	@Column(name = "examImage")
 	private String examImage;
 	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JsonProperty(access = Access.WRITE_ONLY)
+//	@JoinColumn(name = "quizId",referencedColumnName = "quizId")
+//	private Quiz quiz;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonProperty(access = Access.WRITE_ONLY)
-	@JoinColumn(name = "quizId",referencedColumnName = "quizId")
-	private Quiz quiz;
+	@JoinColumn(name = "quizCategoryId",referencedColumnName = "id")
+	private QuizCategory quizCategory;
 
 	public int getExamId() {
 		return examId;
@@ -45,6 +60,30 @@ public class Exam {
 
 	public void setExamId(int examId) {
 		this.examId = examId;
+	}
+
+	public boolean isShuffleQuestion() {
+		return shuffleQuestion;
+	}
+
+	public void setShuffleQuestion(boolean shuffleQuestion) {
+		this.shuffleQuestion = shuffleQuestion;
+	}
+
+	public boolean isShuffleAnswer() {
+		return shuffleAnswer;
+	}
+
+	public void setShuffleAnswer(boolean shuffleAnswer) {
+		this.shuffleAnswer = shuffleAnswer;
+	}
+
+	public long getTime() {
+		return time;
+	}
+
+	public void setTime(long time) {
+		this.time = time;
 	}
 
 	public String getExamName() {
@@ -71,12 +110,14 @@ public class Exam {
 		this.examImage = examImage;
 	}
 
-	public Quiz getQuiz() {
-		return quiz;
+
+
+	public QuizCategory getQuizCategory() {
+		return quizCategory;
 	}
 
-	public void setQuiz(Quiz quiz) {
-		this.quiz = quiz;
+	public void setQuizCategory(QuizCategory quizCategory) {
+		this.quizCategory = quizCategory;
 	}
 
 	public Exam() {

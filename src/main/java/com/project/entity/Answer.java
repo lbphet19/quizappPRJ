@@ -26,6 +26,8 @@ public class Answer {
 	private String answerContent;
 	@Column(name = "AnswerIsCorrect")
 	private boolean answerIsCorrect;
+	@Column(name = "Position")
+	private int position;
 	@ManyToOne
 //	@JsonIgnore()
 	@JsonProperty(access =Access.WRITE_ONLY )
@@ -49,18 +51,27 @@ public class Answer {
 	public void setAnswerIsCorrect(boolean answerIsCorrect) {
 		this.answerIsCorrect = answerIsCorrect;
 	}
+	
+	public int getPosition() {
+		return position;
+	}
+	public void setPosition(int position) {
+		this.position = position;
+	}
 	public Question getQuestion() {
 		return question;
 	}
 	public void setQuestion(Question question) {
 		this.question = question;
 	}
-	public Answer(int answerId, String answerContent, boolean answerIsCorrect, Question question) {
+	public Answer(int answerId, String answerContent, boolean answerIsCorrect, Question question,
+			int position) {
 		super();
 		this.answerId = answerId;
 		this.answerContent = answerContent;
 		this.answerIsCorrect = answerIsCorrect;
 		this.question = question;
+		this.position = position;
 	}
 	public Answer() {
 		super();

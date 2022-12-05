@@ -47,6 +47,7 @@ public class AnswerServiceImp implements AnswerService {
 		Answer ans = getById(updateAnswer.getAnswerId());
 		ans.setAnswerContent(updateAnswer.getAnswerContent());
 		ans.setAnswerIsCorrect(updateAnswer.isAnswerIsCorrect());
+		ans.setPosition(updateAnswer.getPosition());
 		answerRepo.save(ans);
 		return ans;
 	}

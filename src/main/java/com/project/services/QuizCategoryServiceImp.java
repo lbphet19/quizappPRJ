@@ -38,6 +38,11 @@ public class QuizCategoryServiceImp implements QuizCategoryService {
 		// TODO Auto-generated method stub
 		QuizCategory cate = this.quizCategoryRepo.findById(updateCat.getId()).get();
 		cate.setCategoryName(updateCat.getCategoryName());
+		if(updateCat != null) {
+		cate.setParent(this.quizCategoryRepo.findById(updateCat.getParent().getId()).get());
+		}else {
+			cate.setParent(null);
+		}
 		return this.quizCategoryRepo.save(cate);
 	}
 

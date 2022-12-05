@@ -51,6 +51,7 @@ public class Quiz {
 	//author -> user tao ra quiz
 	@ManyToOne
 	@JoinColumn(name = "authorId", referencedColumnName = "id")
+	@JsonIgnore
 	private User author;
 	
 	@JsonProperty(access = Access.WRITE_ONLY) 

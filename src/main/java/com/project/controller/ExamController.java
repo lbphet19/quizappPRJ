@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import com.project.entity.Exam;
 import com.project.entity.ExamQuestion;
 import com.project.entity.Question;
+import com.project.entity.Quiz;
 import com.project.repositories.ExamQuestionRepository;
 import com.project.repositories.ExamRepository;
 import com.project.repositories.QuestionRepository;
 import com.project.requestDTO.ExamQuestionRequestDTO;
+import com.project.responseDTO.QuizWithQuestionResponseDTO;
+import com.project.responseDTO.QuizWithQuestionsDTO;
 import com.project.services.ExamQuestionService;
 import com.project.services.ExamService;
 
@@ -34,15 +38,18 @@ public class ExamController {
 	private QuestionRepository questionRepo;
 	private ExamQuestionService examQuestionService;
 	private ExamQuestionRepository examQuestionRepo;
+	private ExamRepository examRepo;
 	
 	@Autowired
 	public ExamController(ExamService examService, QuestionRepository q, 
-			ExamQuestionService examQuestionService, ExamQuestionRepository examQuestionRepo) {
+			ExamQuestionService examQuestionService, ExamQuestionRepository examQuestionRepo,
+			ExamRepository examRepo) {
 		super();
 		this.examService = examService;
 		this.questionRepo = q;
 		this.examQuestionService = examQuestionService;
 		this.examQuestionRepo = examQuestionRepo;
+		this.examRepo = examRepo;
 	}
 	
 	@GetMapping("/exam")
@@ -56,6 +63,34 @@ public class ExamController {
 		return ResponseEntity.ok(ex);
 //		abc
 	}
+	@GetMapping("/exam/category/{categoryId}")
+	public ResponseEntity<List<Exam>> getByCategoryId(@PathVariable(name = "categoryId") int id){
+		List<Exam> list = this.examRepo.getExamByCategoryId(id);
+		return ResponseEntity.ok(list);
+//		abc
+	}
+	@GetMapping("/exam/{id}/getQuestionsIds")
+	public ResponseEntity<List<Integer>> getExamQuestionIds(@PathVariable(name = "id") int id){
+		List<Integer> res = this.examQuestionRepo.getExamQuestionIds(id);
+		return ResponseEntity.ok(res); 
+	}
+	
+//	{id}: lay quiz + questions
+	@GetMapping("/exam/{id}/getQuestions")
+	public ResponseEntity<Set<QuizWithQuestionsDTO>> getQuestionsByExamId(@PathVariable(name = "id") int id){
+		Exam ex = this.examRepo.findById(id).get();
+		Set<QuizWithQuestionsDTO> res = this.examRepo.getQuestionsByCatId(ex.getQuizCategory().getId());
+		return ResponseEntity.ok(res); 
+	}
+	
+	@GetMapping("/exam/{id}/getTest")
+	public ResponseEntity<List<Quiz>> getTest(@PathVariable(name = "id") int id){
+		Exam ex = this.examRepo.findById(id).get();
+		System.out.println(ex.getQuizCategory().getId());
+		List<Quiz> res = this.examRepo.getTest(ex.getQuizCategory().getId());
+		return ResponseEntity.ok(res); 
+	}
+	
 	
 	@GetMapping("/exam/{id}/getQuestion")
 	public ResponseEntity<List<Question>> getQuestionByExamId(@PathVariable(name = "id") int id){

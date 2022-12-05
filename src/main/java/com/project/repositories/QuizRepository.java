@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.project.entity.Exam;
 import com.project.entity.Quiz;
+import com.project.responseDTO.QuizWithQuestionResponseDTO;
 
 public interface QuizRepository extends JpaRepository<Quiz, Integer> {
 //	List<Quiz> getById(int quizId);
@@ -25,9 +26,13 @@ public interface QuizRepository extends JpaRepository<Quiz, Integer> {
 	@Query("SELECT q FROM Quiz q WHERE q.quizCategory.id= ?1")
 	Page<Quiz> getQuizByCatId(int catId,Pageable page);
 	
+	@Query("SELECT new com.project.responseDTO.QuizWithQuestionResponseDTO(q.quizId,q.quizName,q.questions) "
++ "FROM Quiz q WHERE q.quizCategory.id= ?1")
+	List<QuizWithQuestionResponseDTO> getQuizWithQuestionByCatId(int catId);
+	
 	@Query("SELECT q FROM Quiz q JOIN q.quizCategory cat WHERE cat.id = ?1 AND q.quizId != ?2")
 	Page<Quiz> getRelatedQuiz(int catId, int quizId,Pageable page);
 	
-	@Query("SELECT ex FROM Exam ex JOIN ex.quiz q WHERE q.quizId = ?1")
-	List<Exam> getQuizExam(int quizId);
+//	@Query("SELECT ex FROM Exam ex JOIN ex.quiz q WHERE q.quizId = ?1")
+//	List<Exam> getQuizExam(int quizId);
 }

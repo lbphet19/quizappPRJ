@@ -14,4 +14,9 @@ public interface ExamQuestionRepository extends JpaRepository<ExamQuestion, Inte
 	@Query("SELECT q FROM ExamQuestion exQuest JOIN exQuest.exam ex JOIN exQuest.question q "
 			+ "WHERE ex.examId = ?1")
 	List<Question> getQuestionByExamId(int examId);
+	
+	@Query("SELECT q.id FROM ExamQuestion exQuest JOIN exQuest.exam ex JOIN exQuest.question q "
+			+ "WHERE ex.examId = ?1")
+	List<Integer> getExamQuestionIds(int examId);
+	
 }
