@@ -46,7 +46,6 @@ export class CategoryCreateComponent implements OnInit {
 
      this.quizCatService.save(val).subscribe(
       (ex) => {
-        alert('hello')
         // error?
         this.router.navigate(['quiz','category-list'])
       },

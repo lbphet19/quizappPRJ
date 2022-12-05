@@ -3,11 +3,12 @@ import { mergeMap, toArray } from 'rxjs/operators';
 import { AnswerService } from './../../Services/answer.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionService } from './../../Services/question.service';
-import { FormGroup, FormBuilder, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
 import { Observable, of, forkJoin } from 'rxjs';
 import { Question } from './../../Model/question';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-user-quiz',
@@ -15,6 +16,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./user-quiz.component.css']
 })
 export class UserQuizComponent implements OnInit {
+
+  isSubmitting = false
+  isSubmittingUpdate = false
 
   // questionTest:Question[]
   updateAnswerIndex:number = 0 //last index cua mang cac phan tu can update
@@ -28,7 +32,8 @@ export class UserQuizComponent implements OnInit {
     private router:Router,
     private fb:FormBuilder,
     private answerService:AnswerService,
-    private modalService:NgbModal) { }
+    private modalService:NgbModal,
+    private location: Location) { }
 
   ngOnInit(): void {
     this.quizId = this.route.snapshot.params['id']
@@ -50,7 +55,7 @@ export class UserQuizComponent implements OnInit {
   createQuestionUpdateForm(){
     this.questionUpdateForm = this.fb.group({
           questionId:new FormControl(),
-          questionContent:new FormControl(),
+          questionContent:new FormControl('',Validators.required),
           questionType:new FormControl(),
           answers:new FormArray([])
     })
@@ -58,14 +63,17 @@ export class UserQuizComponent implements OnInit {
   getAnswersFromQuestionUpdateForm():FormArray{
     return this.questionUpdateForm.get('answers') as FormArray
   }
-  questionForm():FormArray{
+  questionFormArray():FormArray{
     return this.quizForm.get('questionForm') as FormArray
+  }
+  questionFormControl(){
+    return (this.quizForm.get('questionForm') as FormArray).controls
   }
   newQuestion(questionId?:number,questionContent?:string,questionType?:string):FormGroup{
     const question = new FormGroup({
       questionId: new FormControl(questionId?questionId:''),
-      questionContent: new FormControl(questionContent?questionContent:''),
-      questionType:new FormControl(questionType?questionType:''),
+      questionContent: new FormControl(questionContent?questionContent:'', Validators.required),
+      questionType:new FormControl('single-choice'),
       answers:new FormArray([])
     })
     return question
@@ -79,18 +87,10 @@ export class UserQuizComponent implements OnInit {
     })
     return answer
   }
-  // generateQuestion(questionId:number, questionContent:string,questionType:string){
-  //   const question = this.newQuestion(questionId,questionContent,questionType)
-  //   this.questionForm().push(question)
-  // }
-  // generateanswer(questionIndex:number,questionId:number,answerId:number,
-  //   answerContent:string,answerIsCorrect:boolean){
-  //   const answer = this.newAnswer(questionId,answerId,answerContent,answerIsCorrect)
-  //   this.getAnswerAtIndex(questionIndex).push(answer)
-  // }
+
   addQuestion(){
     const question = this.newQuestion();
-    this.questionForm().push(question)
+    this.questionFormArray().push(question)
   }
   addAnswer(questionIndex?:number){
     const answer = this.newAnswer()
@@ -100,13 +100,13 @@ export class UserQuizComponent implements OnInit {
       this.getAnswersFromQuestionUpdateForm().push(answer)
   }
   getQuestionAtIndex(questionIndex:number):FormGroup{
-    return this.questionForm().at(questionIndex) as FormGroup
+    return this.questionFormArray().at(questionIndex) as FormGroup
   }
-  getAnswerAtIndex(questionIndex:number){
+  getAnswerAtIndex(questionIndex:any){
     return this.getQuestionAtIndex(questionIndex).get('answers') as FormArray
   }
   removeQuestion(index:number){
-    this.questionForm().removeAt(index)
+    this.questionFormArray().removeAt(index)
   }
   test(){
     console.log( this.answerService.convertAnswerFormToAnswerRequest(
@@ -132,33 +132,68 @@ export class UserQuizComponent implements OnInit {
     }
     this.updateAnswerIndex = question.answers.length-1
   }
-  deleteQuestion(questionIndex:number){
+  deleteQuestion(questionId:number){
     //get question theo index cua listQuestion lay tu http, neu delete thi sau khi delete http cap nhat lai listQuestion
-    const question = this.questions[questionIndex]
-    console.log(question)
+    
+    console.log(questionId)
   }
   deleteQuestionAdd(questionIndex:number){
-    this.questionForm().removeAt(questionIndex)
+    this.questionFormArray().removeAt(questionIndex)
   }
-  deleteAnswerAdd(answserIndex:number,questionIndex:number){
+  deleteAnswerAdd(answerIndex:number,questionIndex:number){
     let answers = this.getAnswerAtIndex(questionIndex)
-    answers.removeAt(answserIndex)
+    answers.removeAt(answerIndex)
   }
   removeAnswer(index:number){
-    if(index <= this.updateAnswerIndex)
+    /* if(index <= this.updateAnswerIndex)
       {
         this.deleteAnswerIds.push(this.getAnswersFromQuestionUpdateForm().at(index).get('answerId')!.value)
         this.updateAnswerIndex--;
       }
-    this.getAnswersFromQuestionUpdateForm().removeAt(index)
+    this.getAnswersFromQuestionUpdateForm().removeAt(index) */
+    if(this.getAnswersFromQuestionUpdateForm()!.at(index)!.get('answerId')!.value !== null){
+      this.deleteAnswerIds.push(this.getAnswersFromQuestionUpdateForm().at(index).get('answerId')!.value)
+    }
+    this.getAnswersFromQuestionUpdateForm().removeAt(index) 
   }
+
+  moveAnswerUp(aIndex:any,qIndex?:any){
+    if(qIndex !== undefined){
+    let answers = this.getAnswerAtIndex(qIndex)
+    let selectAnswer = answers.at(aIndex)
+    answers.removeAt(aIndex)
+    answers.insert(aIndex-1,selectAnswer)
+    }
+    else{
+    let answers = this.getAnswersFromQuestionUpdateForm()
+    let selectAnswer = answers.at(aIndex)
+    answers.removeAt(aIndex)
+    answers.insert(aIndex-1,selectAnswer)
+    }
+  }
+  moveAnswerDown(aIndex:any,qIndex?:any){
+    if(qIndex !== undefined){
+      let answers = this.getAnswerAtIndex(qIndex)
+      let selectAnswer = answers.at(aIndex)
+      answers.removeAt(aIndex)
+      answers.insert(aIndex+1,selectAnswer)
+      }
+      else{
+      let answers = this.getAnswersFromQuestionUpdateForm()
+      let selectAnswer = answers.at(aIndex)
+      answers.removeAt(aIndex)
+      answers.insert(aIndex+1,selectAnswer)
+      }
+  }
+
   viewForm(){
+      this.isSubmitting = true
+      if(!this.questionFormArray().invalid){
       let questionRequest = this.questionService.convertQuestionFormToQuestionRequest(
         this.quizId,
-        this.questionForm().value
+        this.questionFormArray().value
       )
 
-      console.log(this.questionForm().value)
       // let questionReq = of(1,2,3)
       of(...questionRequest).pipe(
         mergeMap((question,index) => {
@@ -177,12 +212,15 @@ export class UserQuizComponent implements OnInit {
         }),
         toArray()
         ).subscribe(res => {alert('thanh cong')
-                    this.router.navigate(['quiz','all'])
+                    // this.router.navigate(['quiz','category-list'])
+                    this.location.back()
       })
-
+    }
+      // this.isSubmitting = false
   }
   setAnswerStatus(answerIndex:number,questionIndex?:number){
-    if(questionIndex){
+    console.log(questionIndex)
+    if(questionIndex !== undefined){
     if(this.getQuestionAtIndex(questionIndex).get('questionType')!.value === 'single-choice'){
       let answers = this.getAnswerAtIndex(questionIndex)
       for(let i = 0; i < answers.length; i++){
@@ -201,6 +239,22 @@ export class UserQuizComponent implements OnInit {
             answers.at(i).get('answerIsCorrect')!.setValue(false)
         }
         answers.at(answerIndex).get('answerIsCorrect')!.setValue(true)
+      }
+    }
+  }
+  resetAnswerStatus(questionIndex?:number){
+    if(questionIndex !== undefined){
+      let answers = this.getAnswerAtIndex(questionIndex)
+      for(let i = 0; i < answers.length; i++){
+          answers.at(i).get('answerIsCorrect')!.setValue(false)
+      }
+     }
+    
+    else{
+      // chi co answer Index nghia la dang update
+        let answers = this.getAnswersFromQuestionUpdateForm()
+        for(let i = 0; i < answers.length; i++){
+            answers.at(i).get('answerIsCorrect')!.setValue(false)
       }
     }
   }
@@ -233,11 +287,10 @@ export class UserQuizComponent implements OnInit {
     this.modalService.dismissAll('Cross click')
     this.updateAnswerIndex = -1
   }
-  saveUpdateQuestion(){
+  /* saveUpdateQuestion(){
     const answersFromQuestionUpdateForm = this.getAnswersFromQuestionUpdateForm().value
-    console.log('deletes: ' + this.deleteAnswerIds) //delete IDs
+    console.log(answersFromQuestionUpdateForm)
     let deleted = this.deleteAnswerIds
-    console.log(deleted)
     let updateAnswers:any[] = []
     let newAnswers:any[] = []
     for(let i = 0; i <= this.updateAnswerIndex;i++){
@@ -257,12 +310,61 @@ export class UserQuizComponent implements OnInit {
       this.answerService.saveMultipleAnswers(newAnswers),
       this.answerService.deleteMultiple(deleted),
       this.questionService.update(questionUpdate)
-    ).subscribe(res => console.log('success'),
-                err => console.log('Error'))
+    ).subscribe(res => {
+        window.location.reload()
+    },
+    err => {
+      window.location.reload()
+    }
+    )
+    this.deleteAnswerIds = []
+    this.updateAnswerIndex = -1
+    this.modalService.dismissAll('Saved')
+    //delete + update ans+ insert  + update quest
+  } */
+  saveUpdateQuestion(){
+    this.isSubmittingUpdate = true
+    if(!this.questionUpdateForm.invalid){
+    const answersFromQuestionUpdateForm = this.getAnswersFromQuestionUpdateForm().value
+    let deleted = this.deleteAnswerIds
+    let updateAnswers:any[] = []
+    let newAnswers:any[] = []
+    for(let i = 0; i < answersFromQuestionUpdateForm.length;i++){
+      if(answersFromQuestionUpdateForm[i].answerId === null){
+        newAnswers.push({
+          ...answersFromQuestionUpdateForm[i],
+          position:i
+        })
+      }
+      else{
+      // updateAnswers.push(answersFromQuestionUpdateForm[i])
+      updateAnswers.push({
+        ...answersFromQuestionUpdateForm[i],
+        position:i
+      })
+      }
+      // newAnswers
+    }
+    // sau khi update+create+delete thi reset du lieu
+    updateAnswers = this.answerService.convertAnswerUpdateForm(updateAnswers,this.questionUpdateForm.controls['questionId'].value)
+    newAnswers = this.answerService.convertAnswerUpdateForm(newAnswers,this.questionUpdateForm.controls['questionId'].value)
+    let questionUpdate = this.questionService.convertQuestionUpdate(this.questionUpdateForm.value)
+    forkJoin(
+    this.answerService.updateMultipleAnswers(updateAnswers),
+      this.answerService.saveMultipleAnswers(newAnswers),
+      this.answerService.deleteMultiple(deleted),
+      this.questionService.update(questionUpdate)
+    ).subscribe(res => {
+        window.location.reload()
+    },
+    err => {
+      window.location.reload()
+    }
+    )
     this.deleteAnswerIds = []
     this.updateAnswerIndex = -1
     this.modalService.dismissAll('Saved')
     //delete + update ans+ insert  + update quest
   }
-
+}
 }

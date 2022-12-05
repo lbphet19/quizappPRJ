@@ -19,56 +19,65 @@
           <app-header></app-header>
           <div id="app-body-container" class="flex flex-grow overflow-auto bg-light-1 content overflow-auto">
             <div data-v-470c518d="" class="w-full">
-              <div data-v-470c518d="" class="w-full" style="margin:50px 50px 0 50px">
-                <div class="reactive-form">
-                <form [formGroup] = "examForm">
-                  <div class="form-group">
-                    <label for="quizName">Exam name</label>
-                    <input type="text" class="form-control" id="examName" placeholder="Enter exam name"
-                    formControlName="examName">
-                    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+              <div data-v-470c518d="" class="w-full">
+                <div class="card">
+                  <div class="card-title">
+                    <h3 class = "pl-16 pt-5">Tạo exam</h3>
                   </div>
-                  <!-- cate -->
-
-                  <div class="form-group">
-                    <label for="descriptions">Descriptions</label>
-                    <input type="text" class="form-control" id="descriptions" placeholder="descriptions"
-                    formControlName="descriptions">
-                    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                  <div class="card-body">   
+                    <div class="reactive-form row pl-5 pb-5 pr-5">
+                      <form [formGroup] = "examForm">
+                        <div class="form-group">
+                          <label for="quizName">Tên exam</label>
+                          <input type="text" class="form-control" id="examName" placeholder="Enter exam name"
+                          formControlName="examName">
+                          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                        </div>
+                        <!-- cate -->
+                        
+                        <div class="form-group">
+                          <label for="descriptions">Mô tả</label>
+                          <input type="text" class="form-control" id="descriptions" placeholder="descriptions"
+                          formControlName="descriptions">
+                          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                        </div>
+                        
+                        <div formGroupName = "quizCategory">
+                          Danh mục:
+                          <select class="custom-select mr-sm-2" id="quizCategoryId"
+                          style="margin-top:0.5em; margin-bottom: 1em;" formControlName = "id">
+                          <option selected>Choose...</option>
+                          <option *ngFor = "let cat of categories|async" value={{cat.id}}>
+                            {{cat.categoryName}}
+                          </option>
+                        </select>
+                      </div>
+                      <br>
+                      <button type="submit" class="btn btn-primary" (click) = "submit($event)">Lưu</button>
+                    </form> 
+                    </div>
                   </div>
-                  <br>
-                  <div formGroupName = "quiz">
-                  Choose quiz:
-                  <select class="custom-select mr-sm-2" id="quizId"
-                  style="margin-top:0.5em; margin-bottom: 1em;" formControlName = "quizId">
-                    <option selected>Choose...</option>
-                    <option *ngFor = "let quiz of quizzes|async" value={{quiz.quizId}}>
-                      {{quiz.quizName}}
-                    </option>
-                  </select>
                 </div>
-                  <br>
-                  <button type="submit" class="btn btn-primary" (click) = "submit($event)">Submit</button>
-                </form>
               </div>
-              </div>
-              <!---->
             </div>
+            <!---->
           </div>
         </div>
-        <!-- <script src=".assets/8031b5b.js.tải xuống" nonce=""> -->
-
-          <!-- </script> -->
-          <!-- <script src=".assets/57ec0ba.js.tải xuống" nonce=""> -->
-            <!-- </script>
-              <script src=".assets/8f7c8a8.js.tải xuống" nonce="">
-              </script>
-              <script src=".assets/b0bc513.js.tải xuống" nonce="">
-              </script> -->
-              <!-- <script src="script.js" nonce = ""></script> -->
-              <!-- for jsFile in serverData.asyncJsFiles-->
-              <!--   script(src="#{serverData.cdnPrefix}#{jsFile}")-->
-              <!---->
-            </div>
+      </div>
+      <!-- <script src=".assets/8031b5b.js.tải xuống" nonce=""> -->
+        
+        <!-- </script> -->
+        <!-- <script src=".assets/57ec0ba.js.tải xuống" nonce=""> -->
+          <!-- </script>
+            <script src=".assets/8f7c8a8.js.tải xuống" nonce="">
+            </script>
+            <script src=".assets/b0bc513.js.tải xuống" nonce="">
+            </script> -->
+            <!-- <script src="script.js" nonce = ""></script> -->
+            <!-- for jsFile in serverData.asyncJsFiles-->
+            <!--   script(src="#{serverData.cdnPrefix}#{jsFile}")-->
+            <!---->
           </div>
         </div>
+      </div>
+      

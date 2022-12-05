@@ -29,7 +29,7 @@ export class QuizCreateComponent implements OnInit {
     private router:Router) { }
 
   ngOnInit(): void {
-    this.quizCategories = this.QuizCategoryService.get()
+    this.quizCategories = this.QuizCategoryService.getChildCategory()
     this.QuizService.get().subscribe(
       quiz => this.quizzez = quiz
     )

@@ -38,15 +38,16 @@ export class AnswerService {
   }
   convertAnswerFormToAnswerRequest(questionId:number,answers:any[]){
     const answerRequest:any[] = []
-    for(let answer of answers){
+    answers.forEach((answer,index) => {
         answerRequest.push({
           question:{
             questionId:questionId
           },
           answerContent:answer.answerContent,
-          answerIsCorrect:answer.answerIsCorrect
+          answerIsCorrect:answer.answerIsCorrect,
+          position: index
         })
-    }
+      })
     return answerRequest
 
   }

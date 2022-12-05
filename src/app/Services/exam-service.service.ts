@@ -17,8 +17,14 @@ export class ExamServiceService {
   getById(id:number):Observable<Exam>{
     return this.http.get<Exam>(`${this.API_URL}/${id}`)
   }
-  getQuizWithQuestions(categoryId:number):Observable<any>{
-    return this.http.get<any>(`${this.API_URL}/${categoryId}/getQuestions`)
+  getByCategoryId(categoryId:number):Observable<Exam[]>{
+    return this.http.get<Exam[]>(`${this.API_URL}/category/${categoryId}`)
+  }
+  getQuizWithQuestions(examId:number):Observable<any>{
+    return this.http.get<any>(`${this.API_URL}/${examId}/getQuestions`)
+  }
+  getQuestionIds(examId:number):Observable<any>{
+    return this.http.get<any>(`${this.API_URL}/${examId}/getQuestionsIds`)
   }
   addQuestion(obj:any):Observable<any>{
     return this.http.post<any>(`${this.API_URL}/addQuestion`,obj)

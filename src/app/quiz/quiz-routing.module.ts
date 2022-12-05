@@ -10,6 +10,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { QuizComponent } from './quiz.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryCreateComponent } from './category-create/category-create.component';
+import { QuizIndexComponent } from './quiz-index/quiz-index.component';
+import { CategoryViewExamComponent } from './category-view-exam/category-view-exam.component';
+import { CategoryViewQuizComponent } from './category-view-quiz/category-view-quiz.component';
 
 const routes: Routes = [
   { path: '', component: QuizListComponent },
@@ -22,9 +25,10 @@ const routes: Routes = [
   {path:'score',component:AuqizScoreComponent},
   {path:'category-list',component:CategoryListComponent},
   {path:'createCategory',component:CategoryCreateComponent},
-  
+  {path:'index',component:QuizIndexComponent},
+  {path:'category/:id/viewExam',component:CategoryViewExamComponent},
+  {path:'category/:id/viewQuiz',component:CategoryViewQuizComponent},
 
-  
 ];
 
 @NgModule({

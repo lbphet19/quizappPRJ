@@ -3,13 +3,13 @@
   <br>
   <div *ngIf = "question.questionType === 'single-choice'">
     <div  *ngFor = "let answer of question.answers">
-      <input type ="radio" id="{{answer.answerId}}" name="{{question.questionId}}" value="{{answer.answerId}}">
+      <input type ="radio"  disabled id="{{answer.answerId}}" name="{{question.questionId}}" value="{{answer.answerId}}">
         <label for="{{answer.answerId}}">{{answer.answerContent}}</label><br>
     </div>
   </div>
   <div *ngIf = "question.questionType === 'multiple-choice'">
     <div *ngFor = "let answer of question.answers">
-      <input type="checkbox" id="{{answer.answerId}}" name="answerId" value="{{answer.answerId}}">
+      <input type="checkbox" disabled id="{{answer.answerId}}" name="answerId" value="{{answer.answerId}}">
       <label for="{{answer.answerId}}"> {{answer.answerContent}}</label><br>
     </div>
   </div>
@@ -19,35 +19,60 @@
 <!-- form add -->
 <form [formGroup] = "quizForm">
   <div formArrayName = "questionForm">
-    <div *ngFor = "let question of this.questionForm().controls; let questionIndex = index">
+    <div *ngFor = "let question of this.questionFormArray().controls; let questionIndex = index">
       <div
       [formGroupName]="questionIndex"
       style="border: 1px solid blue; padding: 10px; width: 1000px; margin: 5px;"
-      >
-      {{questionIndex+1}}. <input type = "text" style = "width:600px" formControlName = "questionContent"/>
-      Type: <select formControlName = "questionType">
-        <option value="multiple-choice">Nhieu dap an dung</option>
-        <option value="single-choice">Lua chon 1 dap an</option>
+      > 
+      <div class="row">
+        
+        <div class="col-6 flex flex-wrap">
+          {{questionIndex+1}}.   
+       <input type = "text" (focus)="isSubmitting=false" class="form-control col-11" style = "margin-left:12px" formControlName = "questionContent"/>
+       <!-- <div *ngIf="getQuestionAtIndex(questionIndex).get('questionContent')?.value === ''">Required</div> -->
+       <div *ngIf="isSubmitting && question.get('questionContent')?.hasError('required')" style="width: 100%;margin-top: .25rem;font-size: .875em;color: #dc3545">Dữ liệu không được bỏ trống</div>
+    </div>
+    <div class="col-5 flex" style="max-height:38px">
+      Loại câu: <select  class="form-select" style="width:80%;margin-left:15px" formControlName = "questionType" (change)=resetAnswerStatus(questionIndex)>
+        <option value="multiple-choice">Nhiều đáp án đúng</option>
+        <option value="single-choice">Lựa chọn 1 đáp án</option>
       </select>
-      <button (click) = deleteQuestionAdd(questionIndex) class = "btn btn-primary">Delete</button>
+    </div>
+    <div class="col-1">
+      <button (click) = deleteQuestionAdd(questionIndex) class = "btn btn-primary">Xóa</button>
+    </div>
+    </div>
       <br>
       <div formArrayName = "answers">
         <div *ngFor = "let answer of this.getAnswerAtIndex(questionIndex).controls; let answerIndex = index">
           <div [formGroupName] = "answerIndex">
-            Answer {{answerIndex+1}}.<input type = "text" formControlName = "answerContent"
-            style="margin-left: 5em;width:672px;margin-top:15px"/> <input type = "checkbox" formControlName = "answerIsCorrect"
-            (click) = "setAnswerStatus(answerIndex,questionIndex)">
-            <button (click) = deleteAnswerAdd(answerIndex,questionIndex) class = "btn btn-primary">Delete</button>
+            <div class="row p-2"> 
+            Answer {{answerIndex+1}}.
+            <div class="col-10 flex">
+              <input type = "text" formControlName = "answerContent" class="form-control"
+              /> <input type = "checkbox" formControlName = "answerIsCorrect"
+              (click) = "setAnswerStatus(answerIndex,questionIndex)" style="margin-left:5px">
+              <i class="fa fa-trash" (click) = "deleteAnswerAdd(answerIndex,questionIndex)" style="margin-left:5px
+              ;display:flex;align-items: center"
+              aria-hidden="true"></i> 
+              <i class="fa fa-arrow-up" aria-hidden="true" style="margin-left:10px
+              ;display:flex;align-items: center" *ngIf="answerIndex !== 0"  (click)="moveAnswerUp(answerIndex,questionIndex)"></i>
+              <i class="fa fa-arrow-down" aria-hidden="true" style="margin-left:5px
+              ;display:flex;align-items: center" *ngIf="answerIndex !== this.getAnswerAtIndex(questionIndex).length-1" (click)="moveAnswerDown(answerIndex,questionIndex)"></i>
+           </div>
             <!-- set true false khi click -->
+          </div>
           </div>
         </div>
       </div>
-      <button (click) = "addAnswer(questionIndex)">Add answer</button>
+      <br>
+      <button (click) = "addAnswer(questionIndex)">Thêm câu trả lời</button>
     </div>
   </div>
-  <button (click) = "addQuestion()">Add question</button>
+  <button class="btn-primary btn" (click) = "addQuestion()">Thêm câu hỏi</button>
 </div>
-<input type = "submit" (click) = "viewForm()" value="Submit">
+<br>
+<input type = "submit" class="btn btn-success" (click) = "viewForm()" value="Lưu thay đổi">
 </form>
 <!-- /formAdd -->
 
@@ -62,28 +87,40 @@
       </button>
     </div>
     <div class="modal-body">
-      Câu hỏi: <input type = "text" formControlName = "questionContent" class = "form-control"/>
-      Type: <select formControlName = "questionType" class = "form-control">
-        <option value="multiple-choice">Nhieu dap an dung</option>
-        <option value="single-choice">Lua chon 1 dap an</option>
+      Câu hỏi: <input type = "text" (focus)="isSubmittingUpdate = false" formControlName = "questionContent" class = "form-control"/>
+      <div *ngIf="isSubmittingUpdate && questionUpdateForm.get('questionContent')?.hasError('required')" style="width: 100%;margin-top: .25rem;font-size: .875em;color: #dc3545">Dữ liệu không được bỏ trống</div>
+      Type: <select  class="form-select"  formControlName = "questionType" class = "form-control" (change)="resetAnswerStatus()">
+        <option value="multiple-choice">Nhiều đáp án đúng</option>
+        <option value="single-choice">Lựa chọn 1 đáp án</option>
       </select>
       <br>
       <div formArrayName = "answers">
         <div *ngFor = "let answer of this.getAnswersFromQuestionUpdateForm().controls; let answerIndex = index">
-          <div [formGroupName] = "answerIndex">
-            Answer {{answerIndex}}.<input type = "text" formControlName = "answerContent"
-            style="margin-left: 5em;"/> <input type = "checkbox" formControlName = "answerIsCorrect"
-            (click) = "setAnswerStatus(answerIndex)">
-            <button (click) = "removeAnswer(answerIndex)">X</button>
+          <div [formGroupName] = "answerIndex" class="row">
+            <div class="col-2"> 
+            Answer {{answerIndex + 1}}.
+          </div>
+            <div class="col-10 flex">
+            <input type = "text" formControlName = "answerContent" class="form-control"
+            /> <input type = "checkbox" formControlName = "answerIsCorrect"
+            (click) = "setAnswerStatus(answerIndex)" style="margin-left:5px">
+            <i class="fa fa-trash" (click) = "removeAnswer(answerIndex)" style="margin-left:5px
+            ;display:flex;align-items: center"
+            aria-hidden="true"></i> 
+            <i class="fa fa-arrow-up" aria-hidden="true" style="margin-left:10px
+            ;display:flex;align-items: center" (click)="moveAnswerUp(answerIndex)"></i>
+            <i class="fa fa-arrow-down" aria-hidden="true" style="margin-left:5px
+            ;display:flex;align-items: center" (click)="moveAnswerDown(answerIndex)"></i>
+          </div>
             <!-- set true false khi click -->
           </div>
         </div>
       </div>
-      <button (click) = "addAnswer()">Add answer</button>
+      <button (click) = "addAnswer()">Thêm câu trả lời</button>
     </div>
     <div class="modal-footer">
       <!-- click = save... -->
-      <button type="button" class="btn btn-outline-dark" (click)="saveUpdateQuestion()">Save</button>
+      <button type="button" class="btn btn-outline-dark" (click)="saveUpdateQuestion()">Lưu</button>
     </div>
   </form>
 

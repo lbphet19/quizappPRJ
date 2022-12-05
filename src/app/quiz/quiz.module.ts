@@ -18,6 +18,9 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuqizScoreComponent } from './auqiz-score/auqiz-score.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryCreateComponent } from './category-create/category-create.component';
+import { QuizIndexComponent } from './quiz-index/quiz-index.component';
+import { CategoryViewQuizComponent } from './category-view-quiz/category-view-quiz.component';
+import { CategoryViewExamComponent } from './category-view-exam/category-view-exam.component';
 
 
 @NgModule({
@@ -30,7 +33,10 @@ import { CategoryCreateComponent } from './category-create/category-create.compo
   QuizQuestionComponent,
   AuqizScoreComponent,
   CategoryListComponent,
-  CategoryCreateComponent],
+  CategoryCreateComponent,
+  QuizIndexComponent,
+  CategoryViewQuizComponent,
+  CategoryViewExamComponent],
   imports: [
     CommonModule,
     QuizRoutingModule,

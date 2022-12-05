@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ExamServiceService } from 'src/app/Services/exam-service.service';
+import { QuizCategoryService } from 'src/app/Services/quiz-category.service';
 
 @Component({
   selector: 'app-exam-create',
@@ -14,14 +15,15 @@ export class ExamCreateComponent implements OnInit {
 
   constructor(private quizService:QuizService,
               private examService:ExamServiceService,
+              private categoryService: QuizCategoryService,
               private router:Router
     ) { }
 
-  quizzes!:Observable<any[]>
+  categories!:Observable<any[]>
   examForm!:FormGroup
   ngOnInit(): void {
     this.initForm()
-    this.quizzes = this.quizService.get()
+    this.categories = this.categoryService.getChildCategory()
 
   }
 
@@ -30,18 +32,15 @@ export class ExamCreateComponent implements OnInit {
       examName: new FormControl(''),
       descriptions:new FormControl(''),
       examImage:new FormControl('https://cdn.pixabay.com/photo/2021/02/03/05/37/question-mark-5976736_960_720.png'),
-      quiz:new FormGroup({
-        quizId:new FormControl()
+      quizCategory:new FormGroup({
+        id:new FormControl()
       }
       )
     })
   }
   submit(event:any){
     event.preventDefault()
-    // console.log(this.examForm.get('quiz')?.get('quizId')?.value);
-    const val = {...this.examForm.value,quiz:{
-      quizId:+this.examForm.get('quiz')?.get('quizId')?.value
-    }}
+    const val = this.examForm.value
     // console.log(val);
 
     this.examService.save(val).subscribe(ex => {
@@ -51,6 +50,7 @@ export class ExamCreateComponent implements OnInit {
         examId:ex.examId
         }
       })
+      this.router.navigate(['exam',ex.examId,'addQuestion'])
     },
     err => alert(err))
   }

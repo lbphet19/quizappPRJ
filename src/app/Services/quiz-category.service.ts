@@ -12,8 +12,14 @@ export class QuizCategoryService {
   save(category:any):Observable<Category>{
     return this.http.post<Category>(`${API_URL}`,category)
   }
+  put(category:any):Observable<Category>{
+    return this.http.put<Category>(`${API_URL}`,category)
+  }
   get():Observable<Category[]>{
     return this.http.get<Category[]>(`${API_URL}`)
+  }  
+  getById(id:any):Observable<Category>{
+    return this.http.get<Category>(`${API_URL}/${id}`)
   }  
   getRootCategory():Observable<Category[]>{
     return this.http.get<Category[]>(`${API_URL}/rootCategory`)

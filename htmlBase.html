@@ -63,46 +63,6 @@
     />
   </head>
   <body class="using-mouse">
-    <ng-template #content let-modal>
-      <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Cập nhật danh mục</h4>
-        <button type="button" aria-label="Close" class="btn-close" (click)="closeModal()"></button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="catUpdateForm">
-          <div class="mb-3">
-            <label for="dateOfBirth">Tên danh mục</label>
-            <div class="input-group mt-2 mb-2">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="categoryName"
-              />
-            </div>
-            <div>
-              Danh mục cha
-              <select
-                class="form-select mr-sm-2 mt-2"
-                id="quizId"
-                style=" margin-bottom: 1em"
-                formControlName="id"
-              >
-                <option selected value="0">Không chọn</option>
-                <option
-                  *ngFor="let cat of rootCategory"
-                  value="{{ cat.id }}"
-                >
-                  {{ cat.categoryName }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="updateModal()">Save</button>
-      </div>
-    </ng-template>
     
     <div id="__nuxt">
       <div id="__layout">
@@ -135,26 +95,8 @@
                 <div data-v-470c518d="" class="w-full">
                   <div class="card">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                     <h5 class="card-title"><b>Danh sách danh mục</b></h5>
-                     <button class="btn btn-primary" (click) = "createCategory()">Thêm mới</button>
-                        </div>
-                        <br>
-                     <!-- <div formControlNam> -->
-                     <!-- <a *ngFor=""></a> -->
-                     <div class="card-text" *ngFor = "let cat of catList">
-                        <a style="font-size:18px">{{cat.categoryName}}</a>
-                        <br>
-                        <ul>
-                            <li class="d-flex mb-3" style="list-style-type: circle;" *ngFor = "let child of cat.children"><a class="text-primary" style="cursor: pointer" > {{child.categoryName}} </a>
-                              <div class="ml-auto">
-                                <button class="btn btn-outline-primary" style="margin-right: 10px"(click)="viewExam(child)">Danh sách exam</button>
-                                <button class="btn btn-outline-primary" style="margin-right: 10px"(click)="view(child)">Danh sách quiz</button>
-                               <button class="btn btn-outline-primary" (click)="open(content,cat,child)">Cập nhật</button>
-                              </div>
-                            </li>
-                        </ul>
-                     </div>
+                       
+                     
                     </div>
                   </div>
                 </div>

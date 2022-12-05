@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from './../../Model/question';
 import { Observable } from 'rxjs';
 import { QuestionService } from './../../Services/question.service';
@@ -15,26 +15,28 @@ import { ExamServiceService } from 'src/app/Services/exam-service.service';
 export class ExamAddQuestionComponent implements OnInit {
   examId!:any
   quizId!:any
-  questions!:Observable<any[]>
+  quizzes!:any[]
   questionTest!:any
 
   //add q to exam
   questionId:any[]=[]
   constructor(private location:Location,private quizService:QuizService,
     private questionService:QuestionService, private examService:ExamServiceService,
-    private router:Router) { }
+    private router:Router,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     const state:any = this.location.getState()
-    this.examId = state['examId'];
-    this.quizId = state['quizId'];
-    this.generateQuestions(this.quizId)
+    this.examId = this.route.snapshot.params['id']
+    this.generateQuestions(this.examId)
   }
   generateQuestions(quizId:any){
-    this.questions = this.questionService.getByQuizId(quizId)
-    // this.questionService.getByQuizId(quizId).subscribe(data => this.questionTest = data);
-
-    // console.log(quizId)   asasd
+    this.examService.getQuizWithQuestions(this.examId).subscribe(data => {
+      this.quizzes = data
+      console.log(data) 
+    })
+//  this.examService.getQuizWithQuestions(this.examId).subscribe(
+//   data => console.log(data)
+//  ) 
   }
   onChange(questionId:any,event:any){
     if(!event.target.checked){
@@ -50,6 +52,7 @@ export class ExamAddQuestionComponent implements OnInit {
     console.log(this.questionId)
 
   }
+  // update: lay tat ca id -> check tat ca
   submit(e:any){
     e.preventDefault()
     this.examService.addQuestion({
