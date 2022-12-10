@@ -29,11 +29,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.project.entity.Answer;
 import com.project.entity.Question;
 import com.project.entity.QuizScore;
+import com.project.entity.UserExamScore;
 import com.project.entity.UserFavourites;
 import com.project.repositories.AnswerRepository;
 import com.project.repositories.QuestionRepository;
 import com.project.repositories.QuizRepository;
 import com.project.repositories.QuizScoreRepository;
+import com.project.repositories.UserExamScoreRepository;
 import com.project.repositories.UserRepository;
 import com.project.requestDTO.AnswerRequestDTO;
 import com.project.responseDTO.AnswerResponseDTO;
@@ -54,6 +56,9 @@ public class QuestionController {
 	
 	@Autowired
 	private QuestionRepository questionRepo;
+	
+	@Autowired
+	private UserExamScoreRepository userExamRepo;
 	
 	@Autowired
 	private QuestionService questionService;
@@ -118,7 +123,7 @@ public class QuestionController {
 				userRepo.findById(userDetails.getId()).get(),Date.valueOf(LocalDate.now()),
 						score);
 		this.quizScoreRepo.save(quizScore);
-		return ResponseEntity.ok(new AnswerResponseDTO(correctAnswerResponse,totalScore));
+		return ResponseEntity.ok(new AnswerResponseDTO(correctAnswerResponse,totalScore+"/"));
 	}
 	
 	@PostMapping(value = "/question/postAnswersTest/{quizId}")
@@ -147,21 +152,22 @@ public class QuestionController {
 			}
 		}
 	
-		return ResponseEntity.ok(new AnswerResponseDTO(correctAnswerResponse,totalScore));
+		return ResponseEntity.ok(new AnswerResponseDTO(correctAnswerResponse,totalScore+"/"));
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping(value = "/question/postAnswer/{examId}")
 	public ResponseEntity<AnswerResponseDTO> postAnswers(
 			@RequestBody AnswerRequestDTO[] answers,
 			@PathVariable(name = "examId") int examId){
 		int totalScore = 0;
 		List<Question> correctAnswers = this.questionRepo.getCorrectAnswersFromExam(examId);
-		for(Question q:correctAnswers) {
-			System.out.println(q.getQuestionId());
-			for(Answer a:q.getAnswers()) {
-				System.out.println(a.getAnswerId());
-			}
-		}
+//		for(Question q:correctAnswers) {
+//			System.out.println(q.getQuestionId());
+//			for(Answer a:q.getAnswers()) {
+//				System.out.println(a.getAnswerId());
+//			}
+//		}
 		List<List<Integer>> correctAnswerIds = this.questionService.getAnswerIds(correctAnswers);
 		List<CorrectAnswerResponseDTO> correctAnswerResponse = new ArrayList<CorrectAnswerResponseDTO>();
 		// so sanh
@@ -181,8 +187,17 @@ public class QuestionController {
 				correctAnswerResponse.add(res);
 			}
 		}
-	
-		return ResponseEntity.ok(new AnswerResponseDTO(correctAnswerResponse,totalScore));
+		
+//		set status
+		Authentication authenication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authenication.getPrincipal();
+		List<UserExamScore> userExamScore = userExamRepo.findUserLastAttempt(examId, userDetailsImpl.getId());
+		if(userExamScore.size() > 0) {
+		userExamScore.get(0).setStatus("finished");
+		userExamScore.get(0).setScore(totalScore+"/"+correctAnswers.size());
+		userExamRepo.save(userExamScore.get(0));
+		}
+		return ResponseEntity.ok(new AnswerResponseDTO(correctAnswerResponse,totalScore+"/"+correctAnswers.size()));
 	}
 	
 	@GetMapping(value = "/question/quizId/{quizId}")

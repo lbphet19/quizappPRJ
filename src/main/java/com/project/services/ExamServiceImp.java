@@ -55,6 +55,9 @@ public class ExamServiceImp implements ExamService {
 		oldExam.setExamName(updateEx.getExamName());
 		oldExam.setDescriptions(updateEx.getDescriptions());
 		oldExam.setExamImage(updateEx.getExamImage());
+		oldExam.setShuffleAnswer(updateEx.isShuffleAnswer());
+		oldExam.setShuffleQuestion(updateEx.isShuffleQuestion());
+		oldExam.setTime(updateEx.getTime());
 		return this.examRepo.save(oldExam);
 	}
 

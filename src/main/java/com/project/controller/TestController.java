@@ -1,5 +1,9 @@
 package com.project.controller;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +31,11 @@ public class TestController {
 	@GetMapping("/all")
 	public String allAccess() {
 		return "Public Content.";
+	}
+	
+	@GetMapping("/testDate")
+	public ResponseEntity<Object> getDate() {
+		return ResponseEntity.ok((LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)));
 	}
 	
 	@GetMapping("/user/{id}")

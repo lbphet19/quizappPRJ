@@ -36,4 +36,8 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 			+ " AND ans.answerIsCorrect = true"
 			+ " ORDER BY q.questionId")
 	List<Question> getCorrectAnswersFromExam(int examId);
+	
+//	@Query(value = "SELECT q FROM Question q JOIN q.quiz"
+//			+ " WHERE q.quiz.quizId = ?1")
+//	List<Question> findQuestionByQuizId(int quizId);
 }

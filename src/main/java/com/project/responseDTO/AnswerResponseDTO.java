@@ -5,20 +5,20 @@ import java.util.List;
 public class AnswerResponseDTO {
 	
 	private List<CorrectAnswerResponseDTO> answerResponses;
-	private int score;
+	private String score;
 	public List<CorrectAnswerResponseDTO> getAnswerResponses() {
 		return answerResponses;
 	}
 	public void setAnswerResponses(List<CorrectAnswerResponseDTO> answerResponses) {
 		this.answerResponses = answerResponses;
 	}
-	public int getScore() {
+	public String getScore() {
 		return score;
 	}
-	public void setScore(int score) {
+	public void setScore(String score) {
 		this.score = score;
 	}
-	public AnswerResponseDTO(List<CorrectAnswerResponseDTO> answerResponses, int score) {
+	public AnswerResponseDTO(List<CorrectAnswerResponseDTO> answerResponses, String score) {
 		super();
 		this.answerResponses = answerResponses;
 		this.score = score;

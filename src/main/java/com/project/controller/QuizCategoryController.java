@@ -40,6 +40,10 @@ public class QuizCategoryController {
 	public ResponseEntity<QuizCategory> getById(@PathVariable(name = "id") int catId){
 		return ResponseEntity.ok(this.quizCatRepo.findById(catId).get());
 	}
+//	@GetMapping("/category/{id}/withExam")
+//	public ResponseEntity<QuizCategory> getByIdWithExam(@PathVariable(name = "id") int catId){
+//		return ResponseEntity.ok(this.quizCatRepo.getByIdWithExam(catId));
+//	}
 	@GetMapping("/category/childCategory")
 	public ResponseEntity<List<QuizCategory>> getChildCat(){
 		return ResponseEntity.ok(this.quizCatRepo.getChildQuizCategory());

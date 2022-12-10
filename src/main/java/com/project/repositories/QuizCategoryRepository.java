@@ -14,4 +14,7 @@ public interface QuizCategoryRepository extends JpaRepository<QuizCategory, Inte
 	
 	@Query("SELECT cat FROM QuizCategory cat WHERE cat.parent = NULL")
 	List<QuizCategory> getRootQuizCategory();
+	
+//	@Query("SELECT cat FROM QuizCategory cat WHERE cat.id = ?1")
+//	List<QuizCategory> getByIdWithExam(int id);
 }

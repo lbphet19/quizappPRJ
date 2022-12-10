@@ -98,7 +98,7 @@ public class QuizDetailDTO {
 		this.authorId = quiz.getAuthor().getId();
 		this.authorName = quiz.getAuthor().getName();
 		this.catId = quiz.getQuizCategory().getId();
-		this.authorName = quiz.getQuizCategory().getCategoryName();
+		this.catName = quiz.getQuizCategory().getCategoryName();
 	}
 
 }
