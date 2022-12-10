@@ -20,6 +20,10 @@ export class AuqizScoreComponent implements OnInit {
     private fb:FormBuilder,
     private answerService:AnswerService,
     private examService:ExamServiceService) { }
+    // questionTest:Question[]
+    examId!:number
+    questions!:Observable<Question[]>
+    quizForm!:FormGroup;
   score!:any
   answerResponses!:CorrectAnswerResponseDTO[]
   correctAnswerIds:number[] = []
@@ -30,21 +34,18 @@ export class AuqizScoreComponent implements OnInit {
     if(tmp !== null){
       tmp = JSON.parse(tmp)
     this.score = tmp.score
-    console.log(this.score)
     this.answerResponses = tmp.answerResponses
     this.initAnswerIds()
-    console.log(this.answerResponses)
     // console.log(this.correctAnswerIds)
     }
-    this.quizId = this.route.snapshot.params['quiz']
-    this.getQuestionFromExamId(this.quizId)
+    this.examId = +JSON.parse(window.sessionStorage.getItem('examId')!)
+    this.getQuestionFromExamId(this.examId)
     this.createQuizForm()
   }
   initAnswerIds() {
     for(let i of this.answerResponses){
       this.correctAnswerIds.push(...i.correctAnswerIds)
     }
-    console.log(this.correctAnswerIds)
   }
   isAnswerSelected(id:number){
     return this.selected.indexOf(id) > -1
@@ -52,21 +53,21 @@ export class AuqizScoreComponent implements OnInit {
   isAnswerCorrect(id:number){
     return this.correctAnswerIds.indexOf(id) > -1
   }
-  // questionTest:Question[]
-  quizId!:number
-  questions!:Observable<Question[]>
-  quizForm!:FormGroup;
 
 
 
-  getQuestionFromExamId(quizId:number){
-    this.questions = this.examService.getQuestionByExamId(quizId)
+
+  getQuestionFromExamId(examId:number){
+    // this.examService.getQuestionForResult(examId).subscribe(
+    //   data => console.log(data)
+    // )
+    this.questions = this.examService.getQuestionForResult(examId)
   }
   createQuizForm(){
     this.quizForm = this.fb.group({
-      questionForm : new FormArray([])
-    })
-  }
+      questionForm : this.fb.array([])
+    })  
+  } 
   questionForm():FormArray{
     return this.quizForm.get('questionForm') as FormArray
   }

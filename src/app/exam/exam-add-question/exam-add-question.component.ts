@@ -17,7 +17,7 @@ export class ExamAddQuestionComponent implements OnInit {
   quizId!:any
   quizzes!:any[]
   questionTest!:any
-
+  category!: any
   //add q to exam
   questionId:any[]=[]
   constructor(private location:Location,private quizService:QuizService,
@@ -28,11 +28,20 @@ export class ExamAddQuestionComponent implements OnInit {
     const state:any = this.location.getState()
     this.examId = this.route.snapshot.params['id']
     this.generateQuestions(this.examId)
+    this.getExamQuestions(this.examId)
+    this.route.queryParams.subscribe(params => this.category = params.category)
   }
-  generateQuestions(quizId:any){
+  getExamQuestions(examId:any){
+    this.examService.getQuestionIds(examId).subscribe(data =>
+      this.questionId = data
+      )
+  }
+  contains(id:any){
+    return this.questionId.includes(id)
+  }
+  generateQuestions(examId:any){
     this.examService.getQuizWithQuestions(this.examId).subscribe(data => {
       this.quizzes = data
-      console.log(data) 
     })
 //  this.examService.getQuizWithQuestions(this.examId).subscribe(
 //   data => console.log(data)
@@ -59,8 +68,9 @@ export class ExamAddQuestionComponent implements OnInit {
       examId:this.examId,
       questionId:this.questionId
     }).subscribe(data => {
-      alert('scuccess')
-      this.router.navigate(['quiz/all'])
+      alert('success')
+      this.router.navigate(['quiz','category',this.category,'viewExam'])
     })
+
   }
 }

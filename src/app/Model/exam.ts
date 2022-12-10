@@ -5,5 +5,8 @@ export class Exam {
   examName!:string
   descriptions!:string
   examImage!:string
+  time!:string
+  shuffleQuestion!:boolean
+  shuffleAnswer!:boolean
   // quiz!:Quiz
 }

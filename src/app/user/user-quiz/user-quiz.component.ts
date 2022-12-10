@@ -9,6 +9,8 @@ import { Question } from './../../Model/question';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Location } from '@angular/common';
+import { QuizCategoryService } from 'src/app/Services/quiz-category.service';
+import { QuizService } from 'src/app/Services/quiz.service';
 
 @Component({
   selector: 'app-user-quiz',
@@ -18,6 +20,8 @@ import { Location } from '@angular/common';
 export class UserQuizComponent implements OnInit {
 
   isSubmitting = false
+  isValidating = false
+  isValidatingUpdate = false
   isSubmittingUpdate = false
 
   // questionTest:Question[]
@@ -33,7 +37,8 @@ export class UserQuizComponent implements OnInit {
     private fb:FormBuilder,
     private answerService:AnswerService,
     private modalService:NgbModal,
-    private location: Location) { }
+    private location: Location,
+    private quizService:QuizService) { }
 
   ngOnInit(): void {
     this.quizId = this.route.snapshot.params['id']
@@ -186,8 +191,9 @@ export class UserQuizComponent implements OnInit {
       }
   }
 
-  viewForm(){
-      this.isSubmitting = true
+   async viewForm(){
+    this.isSubmitting = true
+    this.isValidating = true
       if(!this.questionFormArray().invalid){
       let questionRequest = this.questionService.convertQuestionFormToQuestionRequest(
         this.quizId,
@@ -211,13 +217,21 @@ export class UserQuizComponent implements OnInit {
           return answerResponse
         }),
         toArray()
-        ).subscribe(res => {alert('thanh cong')
+        ).subscribe(res => {
+                    alert('thanh cong')
+                    this.isSubmitting = false
                     // this.router.navigate(['quiz','category-list'])
-                    this.location.back()
+        
+        this.quizService.getById(this.quizId).subscribe(data => 
+          this.router.navigate(['quiz','category',data.catId,'viewQuiz']))
       })
     }
+    else{
+      this.isSubmitting = false
+    }
+    // this.isSubmitting = false
       // this.isSubmitting = false
-  }
+  } 
   setAnswerStatus(answerIndex:number,questionIndex?:number){
     console.log(questionIndex)
     if(questionIndex !== undefined){
@@ -287,44 +301,10 @@ export class UserQuizComponent implements OnInit {
     this.modalService.dismissAll('Cross click')
     this.updateAnswerIndex = -1
   }
-  /* saveUpdateQuestion(){
-    const answersFromQuestionUpdateForm = this.getAnswersFromQuestionUpdateForm().value
-    console.log(answersFromQuestionUpdateForm)
-    let deleted = this.deleteAnswerIds
-    let updateAnswers:any[] = []
-    let newAnswers:any[] = []
-    for(let i = 0; i <= this.updateAnswerIndex;i++){
-      // updateAnswers.push(answersFromQuestionUpdateForm[i])
-      updateAnswers.push(this.getAnswersFromQuestionUpdateForm().at(i).value)
-    }
-    for(let i = this.updateAnswerIndex + 1; i < answersFromQuestionUpdateForm.length; i++){
-      // newAnswers.push(answersFromQuestionUpdateForm[i])
-      newAnswers.push(this.getAnswersFromQuestionUpdateForm().at(i).value)
-    }
-    // sau khi update+create+delete thi reset du lieu
-    updateAnswers = this.answerService.convertAnswerUpdateForm(updateAnswers,this.questionUpdateForm.controls['questionId'].value)
-    newAnswers = this.answerService.convertAnswerUpdateForm(newAnswers,this.questionUpdateForm.controls['questionId'].value)
-    let questionUpdate = this.questionService.convertQuestionUpdate(this.questionUpdateForm.value)
-    forkJoin(
-    this.answerService.updateMultipleAnswers(updateAnswers),
-      this.answerService.saveMultipleAnswers(newAnswers),
-      this.answerService.deleteMultiple(deleted),
-      this.questionService.update(questionUpdate)
-    ).subscribe(res => {
-        window.location.reload()
-    },
-    err => {
-      window.location.reload()
-    }
-    )
-    this.deleteAnswerIds = []
-    this.updateAnswerIndex = -1
-    this.modalService.dismissAll('Saved')
-    //delete + update ans+ insert  + update quest
-  } */
   saveUpdateQuestion(){
-    this.isSubmittingUpdate = true
+    this.isValidatingUpdate = true
     if(!this.questionUpdateForm.invalid){
+    this.isSubmittingUpdate = true
     const answersFromQuestionUpdateForm = this.getAnswersFromQuestionUpdateForm().value
     let deleted = this.deleteAnswerIds
     let updateAnswers:any[] = []
@@ -365,6 +345,9 @@ export class UserQuizComponent implements OnInit {
     this.updateAnswerIndex = -1
     this.modalService.dismissAll('Saved')
     //delete + update ans+ insert  + update quest
+  }
+  else{
+    this.isSubmittingUpdate = false
   }
 }
 }

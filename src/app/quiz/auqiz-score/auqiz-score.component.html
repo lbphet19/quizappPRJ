@@ -20,84 +20,82 @@
           <div id="app-body-container" class="flex flex-grow overflow-auto bg-light-1 content overflow-auto">
             <div data-v-470c518d="" class="w-full">
               <div data-v-470c518d="" class="w-full">
-                <div style="margin:2em">
-                  Diem so cua ban la: {{score}}
-
-                  <!-- test -->
-                  <div *ngFor = "let question of questions|async;let i = index">
-                    <div class = "bg-green main-question"
-                     *ngIf = "answerResponses[i].true === true">
-                      Question {{i+1}}. {{question.questionContent}}
-                      <br>
-                      <div *ngIf = "question.questionType === 'single-choice'">
-                        <div  *ngFor = "let answer of question.answers">
-                          <input type ="radio" id="{{answer.answerId}}"
-                          name="{{question.questionId}}" value="{{answer.answerId}}"
-                          [checked]="isAnswerSelected(answer.answerId)">
-                            <label for="{{answer.answerId}}">{{answer.answerContent}}
-                            <span class="check" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
-                          </label><br>
-
+                <div class = "card">
+                  <div class="card-body">  
+                    <div style="margin:2em">
+                      Điểm số của bạn là: {{score}}
+                      
+                      <!-- test -->
+                      <div *ngFor = "let question of questions|async;let i = index">
+                        <div class = "answer-true main-question p-3"
+                        *ngIf = "answerResponses[i].true === true">
+                        Question {{i+1}}. {{question.questionContent}}
+                        <br>
+                        <div *ngIf = "question.questionType === 'single-choice'">
+                          <div  *ngFor = "let answer of question.answers">
+                            <input disabled type ="radio" id="{{answer.answerId}}"
+                            name="{{question.questionId}}" value="{{answer.answerId}}"
+                            [checked]="isAnswerSelected(answer.answerId)">
+                              <label for="{{answer.answerId}}">{{answer.answerContent}}
+                              <span class="check" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
+                            </label><br>
+                            
+                          </div>
+                        </div>
+                        <div *ngIf = "question.questionType === 'multiple-choice'">
+                          <div *ngFor = "let answer of question.answers">
+                            <input disabled type="checkbox" [checked]="isAnswerSelected(answer.answerId)"
+                            id="{{answer.answerId}}" name="answerId" value="{{answer.answerId}}">
+                            <label for="{{answer.answerId}}"> {{answer.answerContent}}
+                              <span class="check" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
+                            </label><br>
+                          </div>
                         </div>
                       </div>
-                      <div *ngIf = "question.questionType === 'multiple-choice'">
-                        <div *ngFor = "let answer of question.answers">
-                          <input type="checkbox" [checked]="isAnswerSelected(answer.answerId)"
-                          id="{{answer.answerId}}" name="answerId" value="{{answer.answerId}}">
-                          <label for="{{answer.answerId}}"> {{answer.answerContent}}
-                            <span class="check" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
-                          </label><br>
+                      <div class = "answer-false main-question p-3" *ngIf = "answerResponses[i].true === false">
+                        Question {{i+1}}. {{question.questionContent}}
+                        <br>
+                        <div *ngIf = "question.questionType === 'single-choice'">
+                          <div  *ngFor = "let answer of question.answers">
+                            <div class="form-check">
+                              <input type ="radio" class="form-check-input" id="{{answer.answerId}}"
+                              name="{{question.questionId}}" value="{{answer.answerId}}"
+                              [checked]="isAnswerSelected(answer.answerId)">
+                                <label for="{{answer.answerId}}" class="form-check-label">{{answer.answerContent}}
+                                <span class="check ml-2" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
+                              </label><br>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf = "question.questionType === 'multiple-choice'">
+                          <div *ngFor = "let answer of question.answers">
+                            <div class="form-check">
+                              <input type="checkbox" [checked]="isAnswerSelected(answer.answerId)" class="form-check-input"
+                              id="{{answer.answerId}}" name="answerId" value="{{answer.answerId}}">
+                              <label for="{{answer.answerId}}" class="form-check-label"> {{answer.answerContent}}
+                                <span class="check ml-2" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
+                              </label><br>
+                            </div>
+                          </div>
                         </div>
                       </div>
+                      
+                      <!-- <button (click) = "submitForm()">Hoan thanh quiz</button> -->
+                      <!-- form add -->
+                      
+                      <!-- end test -->
                     </div>
-                    <div class = "bg-red main-question" *ngIf = "answerResponses[i].true === false">
-                      Question {{i+1}}. {{question.questionContent}}
-                      <br>
-                      <div *ngIf = "question.questionType === 'single-choice'">
-                        <div  *ngFor = "let answer of question.answers">
-                          <input type ="radio" id="{{answer.answerId}}"
-                          name="{{question.questionId}}" value="{{answer.answerId}}"
-                          [checked]="isAnswerSelected(answer.answerId)">
-                            <label for="{{answer.answerId}}">{{answer.answerContent}}
-                            <span class="check" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
-                          </label><br>
-                        </div>
-                      </div>
-                      <div *ngIf = "question.questionType === 'multiple-choice'">
-                        <div *ngFor = "let answer of question.answers">
-                          <input type="checkbox" [checked]="isAnswerSelected(answer.answerId)"
-                          id="{{answer.answerId}}" name="answerId" value="{{answer.answerId}}">
-                          <label for="{{answer.answerId}}"> {{answer.answerContent}}
-                            <span class="check" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
-                          </label><br>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- <button (click) = "submitForm()">Hoan thanh quiz</button> -->
-                    <!-- form add -->
-
-                    <!-- end test -->
+                    
                   </div>
-
+                  <button class="btn btn-primary" style="margin-left:2em">Về trang chủ</button>
+                  
                 </div>
-                <!---->
               </div>
+              <!---->
             </div>
           </div>
-          <!-- <script src=".assets/8031b5b.js.tải xuống" nonce=""> -->
-
-            <!-- </script> -->
-            <!-- <script src=".assets/57ec0ba.js.tải xuống" nonce=""> -->
-              <!-- </script>
-                <script src=".assets/8f7c8a8.js.tải xuống" nonce="">
-                </script>
-                <script src=".assets/b0bc513.js.tải xuống" nonce="">
-                </script> -->
-                <!-- <script src="script.js" nonce = ""></script> -->
-                <!-- for jsFile in serverData.asyncJsFiles-->
-                <!--   script(src="#{serverData.cdnPrefix}#{jsFile}")-->
-                <!---->
-              </div>
-            </div>
-          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

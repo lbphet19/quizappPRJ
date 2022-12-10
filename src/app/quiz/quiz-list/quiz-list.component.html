@@ -139,16 +139,16 @@
                         </div>
                       </div>
                     </div>
-
+                    
                     <div class="sections w-full mx-auto flex md:mt-16 px-4 py-1 md:p-8 ">
                       <div class="max-w-full mx-auto">
-                        <div *ngFor = "let cat of quizCatList; let i = index">
+                        <div *ngFor = "let cat of catList; let i = index">
                           <div class="mb-4">
                             <div class="flex items-center">
                               <i class="text-brand-c fas fa-star" style="font-size: 20px;">
                               </i>
                               <h2 aria-label="Mathematics" class="text-sm md:text-2xl text-dark-2 ml-2 font-semibold">
-                                {{cat.catName}}
+                                {{cat.categoryName}}
                               </h2>
                               <div class="hidden md:block ml-auto">
                                 <button data-v-21793d1b="" aria-label="See more" class="ml-auto flex items-center justify-center px-4 py-1 text-sm font-semibold h-8 base bg-lilac-faded text-lilac hover:text-lilac-light active:text-lilac-dark rounded-full secondary min-w-max relative transition-colors duration-200 ease-in-out flex">
@@ -190,16 +190,16 @@
                                     <!---->
                                   </div>
                                   <div class="w-full flex overflow-auto smooth-scroll no-scrollbar" id = "my-scroll-item-{{i}}">
-                                    <a *ngFor = "let quiz of cat.quizzes" (click) = "navigate(quiz.quizId)" class="rounded-xl bg-light-3 m-2 text-left ring-1 ring-dark-10% flex-shrink-0 mb-4 md:mb-8 cursor-pointer hover:shadow-lg h-60 md:h-72 max-w-56 md:max-w-72" title="Luyện tập " aria-label="Luyện tập , 17 Slides">
-
-
+                                    <a *ngFor = "let child of cat.children" (click) = "navigate(child.id)" class="rounded-xl bg-light-3 m-2 text-left ring-1 ring-dark-10% flex-shrink-0 mb-4 md:mb-8 cursor-pointer hover:shadow-lg h-60 md:h-72 max-w-56 md:max-w-72" title="Luyện tập " aria-label="Luyện tập , 17 Slides">
+                                      
+                                      
                                       <div class="overflow-hidden rounded-t-xl h-full">
-                                        <div *ngIf = "quiz.quizImage !== null">
+                                        <!-- <div *ngIf = "child.quizImage !== null">
                                           <img [src]="quiz.quizImage" alt="../../../assets/images/quiz-img-test.jfif" class="w-44 md:w-60 h-28 md:h-40 object-cover">
                                         </div>
-                                        <div *ngIf = "quiz.quizImage === null">
-                                        <img src = "https://cdn.pixabay.com/photo/2021/02/03/05/37/question-mark-5976736_960_720.png" class="w-44 md:w-60 h-28 md:h-40 object-cover">
-                                      </div>
+                                        <div *ngIf = "quiz.quizImage === null"> -->
+                                          <img src = "https://cdn.pixabay.com/photo/2021/02/03/05/37/question-mark-5976736_960_720.png" class="w-44 md:w-60 h-28 md:h-40 object-cover">
+                                       
                                         <div aria-hidden="true" class="px-2.5 pt-2.5 pb-3.5 flex flex-col h-30">
                                           <div class="flex items-center">
                                             <div data-v-61563e2e="" class="bg-light-1 text-dark-3 lozenge inline-flex items-center text-tn font-semibold rounded-full px-1.5 ">
@@ -207,11 +207,11 @@
                                               <!---->
                                               <span data-v-61563e2e="" class="">QUIZ</span>
                                             </div>
-
+                                            
                                             <!---->
                                           </div>
-                                          <div title="{{quiz.quizName}} " class="mt-2 mb-4 text-sm md:text-base text-dark-2 font-semibold">
-                                            {{quiz.quizName}}
+                                          <div title="{{child.categoryName}} " class="mt-2 mb-4 text-sm md:text-base text-dark-2 font-semibold">
+                                            {{child.categoryName}}
                                           </div>
                                           <div class="flex text-tn md:text-xs text-dark-4 font-semibold mt-auto">
                                             <div class="mr-1.5">
@@ -220,42 +220,43 @@
                                             </div>
                                             •
                                             <div class="mr-1.5 ml-1.5">
-                                              By {{quiz.authorName}}
+                                              <!-- By {{quiz.authorName}} -->
+                                              By ...
                                             </div>
                                           </div>
                                         </div>
                                       </div>
                                     </a>
-
+                                    </div>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
+                        
                       </div>
                     </div>
                   </div>
-
-                </div>
-              </div>
-            </div>
-            <!-- <script src=".assets/8031b5b.js.tải xuống" nonce=""> -->
-
-              <!-- </script> -->
-              <!-- <script src=".assets/57ec0ba.js.tải xuống" nonce=""> -->
-                <!-- </script>
-                  <script src=".assets/8f7c8a8.js.tải xuống" nonce="">
-                  </script>
-                  <script src=".assets/b0bc513.js.tải xuống" nonce="">
-                  </script> -->
-                  <script src="script.js" nonce = ""></script>
-                  <!-- for jsFile in serverData.asyncJsFiles-->
-                  <!--   script(src="#{serverData.cdnPrefix}#{jsFile}")-->
-                  <!---->
-                </div>
-              </div>
-            </div>
-          </body>
-          </html>
-
+                  <!-- <script src=".assets/8031b5b.js.tải xuống" nonce=""> -->
+                    
+                    <!-- </script> -->
+                    <!-- <script src=".assets/57ec0ba.js.tải xuống" nonce=""> -->
+                      <!-- </script>
+                        <script src=".assets/8f7c8a8.js.tải xuống" nonce="">
+                        </script>
+                        <script src=".assets/b0bc513.js.tải xuống" nonce="">
+                        </script> -->
+                        <script src="script.js" nonce = ""></script>
+                        <!-- for jsFile in serverData.asyncJsFiles-->
+                        <!--   script(src="#{serverData.cdnPrefix}#{jsFile}")-->
+                        <!---->
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </body>
+                </html>
+                
+                

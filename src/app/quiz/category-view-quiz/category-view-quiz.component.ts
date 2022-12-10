@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { QuizCategoryService } from 'src/app/Services/quiz-category.service';
@@ -11,7 +12,8 @@ import { QuizService } from 'src/app/Services/quiz.service';
 export class CategoryViewQuizComponent implements OnInit {
 
   constructor(private router:Router, private route:ActivatedRoute,
-    private quizService: QuizService, private categoryService: QuizCategoryService) { }
+    private quizService: QuizService, private categoryService: QuizCategoryService,
+    private location: Location) { }
 
   quizList :any[] = []
   category:any
@@ -32,5 +34,8 @@ export class CategoryViewQuizComponent implements OnInit {
   }
   view(id:any){
     this.router.navigate(['user','quiz',id])
+  }
+  back(){
+    this.router.navigate(['quiz','category-list'])
   }
 }

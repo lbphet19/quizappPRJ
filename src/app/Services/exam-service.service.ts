@@ -29,6 +29,9 @@ export class ExamServiceService {
   addQuestion(obj:any):Observable<any>{
     return this.http.post<any>(`${this.API_URL}/addQuestion`,obj)
   }
+  put(exam:any):Observable<any>{
+    return this.http.put<any>(`${this.API_URL}`,exam)
+  }
   // getByCategory(catId:number):Observable<Quiz[]>{
   //   return this.http.get<Quiz[]>(`${this.API_URL}/category/${catId}`)
   // }
@@ -44,11 +47,18 @@ export class ExamServiceService {
   // update(quiz:Quiz):Observable<Quiz>{
   //   return this.http.put<Quiz>(`${this.API_URL}/update`,quiz)
   // }
-  save(exam:Exam):Observable<Exam>{
+  save(exam:any):Observable<Exam>{
     return this.http.post<Exam>(`${this.API_URL}`,exam)
   }
-  getQuestionByExamId(examId:number):Observable<Question[]>{
-    return this.http.get<Question[]>(`${this.API_URL}/${examId}/getQuestion`)
+  getQuestionByExamId(examId:number):Observable<any>{
+    return this.http.get<any>(`${this.API_URL}/${examId}/getQuestion`)
+  }
+  getQuestionForResult(examId:number):Observable<any>{
+    return this.http.get<any>(`${this.API_URL}/${examId}/getQuestionForResult`)
+  }
+  getExamCategoryId(examId:number):Observable<number>{
+    return this.http.get<number>(`${this.API_URL}/${examId}/getCategoryId`)
+
   }
   // saveMultipleQuiz(quiz:Quiz[]):Observable<Quiz[]>{
   //   return this.http.post<Quiz[]>(`${this.API_URL}/multiple`,quiz)

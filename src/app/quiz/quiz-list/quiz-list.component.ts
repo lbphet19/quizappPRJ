@@ -5,6 +5,8 @@ import { QuizService } from './../../Services/quiz.service';
 import { Answer } from './../../Model/answer';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ExamServiceService } from 'src/app/Services/exam-service.service';
+import { QuizCategoryService } from 'src/app/Services/quiz-category.service';
 
 declare var sliderr:any;
 @Component({
@@ -14,13 +16,14 @@ declare var sliderr:any;
 })
 export class QuizListComponent implements OnInit {
   // quizCatList!:Observable<QuizCategory[]>
-  quizCatList!:QuizCategory[]
-  constructor(private QuizService:QuizService,
-    private router:Router) { }
+  // quizCatList!:QuizCategory[]
+  catList!: any[]
+  constructor(private QuizService:QuizService,private catService:QuizCategoryService,
+    private router:Router, private examService: ExamServiceService) { }
 
   ngOnInit(): void {
-     this.QuizService.getQuizAtHomePage().subscribe(data =>
-      this.quizCatList = data)
+     this.catService.getRootCategory().subscribe(data =>
+      this.catList = data)
   }
   navigate(id:string){
     this.router.navigate(['quiz','detail',id])

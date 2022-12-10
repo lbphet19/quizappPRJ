@@ -1,3 +1,27 @@
+<ng-template #content let-modal>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Bắt đầu làm bài</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close button"
+    aria-describedby="modal-title"
+    (click)="modal.dismiss('Cross click')"
+  ></button>
+</div>
+<div class="modal-body">
+  <p>
+    <strong>Bạn xác nhận muốn làm bài <span class="text-primary">{{item.examName}}</span>?</strong>
+  </p>
+  <p>
+    Sau khi bắt đầu làm bài sẽ đếm ngược thời gian
+  </p>
+</div>
+<div class="modal-footer">
+  <button type="button" ngbAutofocus class="btn btn-danger" (click)="attempt(item.examId)">Ok</button>
+  <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+</div>
+</ng-template>
 <div id="__nuxt">
   <div id="__layout">
     <div class="flex flex-col font-sans">
@@ -20,85 +44,43 @@
           <div id="app-body-container" class="flex flex-grow overflow-auto bg-light-1 content overflow-auto">
             <div data-v-470c518d="" class="w-full">
               <div data-v-470c518d="" class="w-full">
-                <div class="app">
-
-                  <div *ngIf = "quiz.quizImage !== null">
-                    <img [src]="quiz.quizImage" style = "width:calc(100%-10em)" alt="../../../assets/images/quiz-img-test.jfif">
+                <div class="card">
+                  <div class="card-title mt-4 ml-4">
+                    <a (click)="back()" class="link-secondary" style="cursor: pointer">Quay lại</a>
+                    <h5 class="mt-2">{{category.categoryName}}/Danh sách exam</h5>
                   </div>
-                  <div *ngIf = "quiz.quizImage === null">
-                  <img src = "../../../assets/images/quiz-img-test.jfif" class="w-44 md:w-60 h-28 md:h-40 object-cover">
-                </div>
-
-                 <nav>
-                   <a href="#" aria-current="page" style="text-decoration: none;color:blue;font-size:1.5rem; margin:auto">{{quiz.quizName}}</a>
-                 <!--   <a href="#">Podcast</a>
-                   <a href="#">Contact</a> -->
-                 </nav>
-                 <main>
-                   <h1><span>{{quiz.quizCategory}}</span></h1>
-                   <p>{{quiz.descriptions}}</p>
-                   <p>What a wonderful joy it is to see,
-                     the beauty of nature and its majesty.
-                     Everything blends, entwines and embraces,
-                     Spaced precisely in their designated places.
-                     What a marvel to see, I wish I were a bee,
-                   flying free, smelling life’s roses, no particular place to be.</p>
-                   <p>Available exams:</p>
-                   <div *ngFor = "let exam of exams">
-                      <p style="font-weight: bold;">{{exam.examName}}<button class="btn btn-primary" style="margin-left: 20px;" (click) = "attemptExam(exam.examId)">Attemp exam now!</button></p>
-
-                   </div>
-                   <!-- <button class="btn btn-primary" (click) = "attempt(quiz.quizId)">Attemp quiz now!</button> -->
-                 </main>
-               </div>
-                 <div class="row" style="padding:2em">
-                 <div class="card text-white bg-primary mb-3 col-3" style="max-width: 18rem;">
-                   <div class="card-header">Header</div>
-                   <div class="card-body">
-                     <h5 class="card-title">Primary card title</h5>
-                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                   </div>
-                 </div>
-                 <div class="card text-white bg-secondary mb-3 col-3" style="max-width: 18rem;">
-                   <div class="card-header">Header</div>
-                   <div class="card-body">
-                     <h5 class="card-title">Secondary card title</h5>
-                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                   </div>
-                 </div>
-                 <div class="card text-white bg-success mb-3 col-3" style="max-width: 18rem;">
-                   <div class="card-header">Header</div>
-                   <div class="card-body">
-                     <h5 class="card-title">Success card title</h5>
-                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                   </div>
-                 </div>
-                 <div class="card text-white bg-danger mb-3 col-3" style="max-width: 18rem;">
-                   <div class="card-header">Header</div>
-                   <div class="card-body">
-                     <h5 class="card-title">Danger card title</h5>
-                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                   </div>
-                 </div>
-               </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-lg-10 mx-auto">
+                        <div class="career-search mb-60">
+                          <div class="filter-result">
+                            <div *ngFor="let exam of exams" class="job-box d-md-flex align-items-center justify-content-between mb-30" style = "background-color: #dee9ed;">
+                              <div class="job-left my-4 d-md-flex align-items-center flex-wrap">
+                                <div class="img-holder mr-md-4 mb-md-0 mb-4 mx-auto mx-md-0 d-md-none d-lg-flex"> EXAM</div>
+                                <div class="job-content">
+                                  <h5 class="text-center text-md-left">{{exam.examName}}</h5>
+                                  <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
+                                    <li class="mr-md-4"> <i class="zmdi zmdi-pin mr-2"></i> Danh mục : {{category.categoryName}} |</li>
+                                    <li class="mr-md-4"> <i class="zmdi zmdi-pin mr-2"></i> Thời gian : {{exam.hours}} giờ {{exam.mins}} phút {{exam.secs}} giây</li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <div class="job-right my-4 flex-shrink-0"> <a (click)="open(content,exam)" class="btn d-block w-100 d-sm-inline-block btn-light">Làm bài</a></div>
+                            </div>
                           </div>
-                          <!---->
                         </div>
+                        
                       </div>
                     </div>
-                    <!-- <script src=".assets/8031b5b.js.tải xuống" nonce=""> -->
-
-                      <!-- </script> -->
-                      <!-- <script src=".assets/57ec0ba.js.tải xuống" nonce=""> -->
-                        <!-- </script>
-                          <script src=".assets/8f7c8a8.js.tải xuống" nonce="">
-                          </script>
-                          <script src=".assets/b0bc513.js.tải xuống" nonce="">
-                          </script> -->
-                          <!-- <script src="script.js" nonce = ""></script> -->
-                          <!-- for jsFile in serverData.asyncJsFiles-->
-                          <!--   script(src="#{serverData.cdnPrefix}#{jsFile}")-->
-                          <!---->
-                        </div>
-                      </div>
-                    </div>
+                  </div>
+                </div>
+              </div>
+              <!---->
+            </div>
+          </div>
+        </div>
+       
+            </div>
+          </div>
+        </div>
+        

@@ -1,3 +1,16 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Thông báo!</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="back()"></button>
+  </div>  
+  <div class="modal-body">
+    <p>Đã hết thời gian làm bài, nếu có thắc mắc xin vui lòng liên hệ ...</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="back()">Đóng</button>
+  </div>
+  
+</ng-template>
 
 <div id="__nuxt">
   <div id="__layout">
@@ -20,34 +33,66 @@
           <app-header></app-header>
           <div id="app-body-container" class="flex flex-grow overflow-auto bg-light-1 content overflow-auto">
             <div data-v-470c518d="" class="w-full">
-              <div data-v-470c518d="" class="w-full">
-                <ngb-carousel #myCarousel>
-                  <ng-template ngbSlide *ngFor = "let question of questions; let i = index">
-                <app-quiz-question
-                [question] = question [index] = i (out) = updateAnswer($event)>
-                </app-quiz-question>
-              </ng-template>
-                </ngb-carousel>
-                <button class = "btn btn-primary" style = "margin-left: 12em ;" (click) = "submit()">Submit</button>
-                          </div>
-                          <!---->
-                        </div>
+              <div data-v-470c518d="" class="w-full row">
+                <div class="col-9">
+                  <div class="card m-4">
+                  <ngb-carousel #myCarousel [showNavigationArrows]="false" [interval]="0">
+                    <ng-template ngbSlide *ngFor = "let question of questions; let i = index" id="{{i}}">
+                      <app-quiz-question
+                      [question] = question [index] = i (out) = updateAnswer($event)>
+                    </app-quiz-question>
+                  </ng-template>
+                  </ngb-carousel>
+                  <div class="flex justify-between">
+                  <button type="button" class ="btn btn-sm btn-outline-secondary ml-2 mb-2 mr-auto" *ngIf="currentIndex > 0" >Câu trước</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary mr-2 mb-2 ml-auto" *ngIf="currentIndex + 1 < examSize" >Tiếp theo</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <section id="mod_quiz_navblock" class=" block block_fake m-4 card" role="navigation" data-block="_fake" aria-labelledby="instance-fakeid-6392ab1c7a7aa-header">
+                  <div class="card-body p-3" id="yui_3_17_2_1_1670556444761_179">
+                    <h5 id="instance-fakeid-6392ab1c7a7aa-header" class="card-title d-inline"><span id="mod_quiz_navblock_title">Quiz navigation</span></h5>
+                    <div class="card-text content mt-3">
+                      <!-- ngFor here -->
+                      <div class="qn_buttons clearfix allquestionsononepage">
+                        <a *ngFor = "let question of questions; let i = index" (click)="jumpTo(i)"
+                        class="qnbutton correct free btn btn-secondary thispage" id="quiznavbutton1" title="Correct" data-quiz-page="0"><span class="thispageholder" style="color: black;">
+                        </span>
+                        <span class="accesshide" style="color: black;">Question </span>
+                        <span style = "color:black;">{{i+1}}</span></a>
+                        
                       </div>
-                    </div>
-                    <!-- <script src=".assets/8031b5b.js.tải xuống" nonce=""> -->
-
-                      <!-- </script> -->
-                      <!-- <script src=".assets/57ec0ba.js.tải xuống" nonce=""> -->
-                        <!-- </script>
-                          <script src=".assets/8f7c8a8.js.tải xuống" nonce="">
-                          </script>
-                          <script src=".assets/b0bc513.js.tải xuống" nonce="">
-                          </script> -->
-                          <!-- <script src="script.js" nonce = ""></script> -->
-                          <!-- for jsFile in serverData.asyncJsFiles-->
-                          <!--   script(src="#{serverData.cdnPrefix}#{jsFile}")-->
-                          <!---->
-                        </div>
+                      <!-- endFor -->
+                      <div class="othernav">
+                        <button class = "btn btn-primary mt-2" (click) = "submit()">Submit</button>
                       </div>
+                      <div class="footer"></div>
                     </div>
-
+                  </div>
+                </section>
+              </div>
+            </div>
+            <!---->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <script src=".assets/8031b5b.js.tải xuống" nonce=""> -->
+      
+      <!-- </script> -->
+      <!-- <script src=".assets/57ec0ba.js.tải xuống" nonce=""> -->
+        <!-- </script>
+          <script src=".assets/8f7c8a8.js.tải xuống" nonce="">
+          </script>
+          <script src=".assets/b0bc513.js.tải xuống" nonce="">
+          </script> -->
+          <!-- <script src="script.js" nonce = ""></script> -->
+          <!-- for jsFile in serverData.asyncJsFiles-->
+          <!--   script(src="#{serverData.cdnPrefix}#{jsFile}")-->
+          <!---->
+        </div>
+      </div>
+    </div>
+    
+    

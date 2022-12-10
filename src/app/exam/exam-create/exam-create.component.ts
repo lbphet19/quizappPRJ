@@ -26,7 +26,12 @@ export class ExamCreateComponent implements OnInit {
     this.categories = this.categoryService.getChildCategory()
 
   }
-
+  convertTimeToSec(){
+    let hrs = Number(this.examForm.get('hours')?.value)
+    let mins = Number(this.examForm.get('mins')?.value)
+    let secs = Number(this.examForm.get('secs')?.value)
+    return hrs * 3600 + mins * 60 + secs
+  }
   initForm(){
     this.examForm = new FormGroup({
       examName: new FormControl(''),
@@ -34,23 +39,37 @@ export class ExamCreateComponent implements OnInit {
       examImage:new FormControl('https://cdn.pixabay.com/photo/2021/02/03/05/37/question-mark-5976736_960_720.png'),
       quizCategory:new FormGroup({
         id:new FormControl()
-      }
-      )
+      }),
+      shuffleQuestion:new FormControl(false),
+      shuffleAnswer:new FormControl(false),
+      hours:new FormControl(0),
+      mins: new FormControl(0),
+      secs: new FormControl(0)
     })
   }
   submit(event:any){
     event.preventDefault()
-    const val = this.examForm.value
+    const val = {
+      examName: this.examForm.get('examName')?.value,
+      descriptions: this.examForm.get('descriptions')?.value,
+      examImage: this.examForm.get('examImage')?.value,
+      quizCategory: {
+        id: this.examForm.get('quizCategory')?.get('id')?.value
+      },
+      shuffleQuestion: this.examForm.get('shuffleQuestion')?.value,
+      shuffleAnswer: this.examForm.get('shuffleAnswer')?.value,
+      time: this.convertTimeToSec(),
+}
     // console.log(val);
 
     this.examService.save(val).subscribe(ex => {
-      this.router.navigateByUrl('/exam/addQuestion',{state:
-        {
-        quizId:Number(this.examForm.get('quiz')?.get('quizId')?.value),
-        examId:ex.examId
-        }
-      })
-      this.router.navigate(['exam',ex.examId,'addQuestion'])
+      // this.router.navigateByUrl('/exam/addQuestion',{state:
+      //   {
+      //   quizId:Number(this.examForm.get('quiz')?.get('quizId')?.value),
+      //   examId:ex.examId
+      //   }
+      // })
+      this.router.navigate(['exam',ex.examId,'addQuestion'],{queryParams:{category:val.quizCategory.id}})
     },
     err => alert(err))
   }

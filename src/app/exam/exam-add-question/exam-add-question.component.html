@@ -1,23 +1,137 @@
-<!-- <div *ngIf = "questions|async"> -->
-  <h1>Lựa chọn từ ngân hàng câu hỏi:</h1>
-
-    <div class="accordion" id="accordionExample">
-      <div class="accordion-item" *ngFor="let quiz of quizzes; let i = index">
-        <h2 class="accordion-header" id="headingOne">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse'+i" aria-expanded="true" aria-controls="collapseOne">
-            {{quiz.quizName}}
-          </button>
-        </h2>
-        <div [attr.id]="'collapse'+i" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <div *ngFor="let q of quiz.questions">
-              <input type = "checkbox" value="{{q.questionId}}" name="{{q.questionId}}"
-              (change) = "onChange(q.questionId,$event)">
-              {{q.questionContent}}
+<!DOCTYPE html>
+<!-- saved from url=(0025)https://quizizz.com/admin -->
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Find a Quiz - Quizizz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta hid="description" name="description" content="" />
+  <link
+  rel="icon"
+  type="image/x-icon"
+  href="https://quizizz.com/favicon.ico"
+  />
+  <meta
+  name="twitter:image"
+  content="https://cf.quizizz.com/img/q_og_generic.png"
+  />
+  <meta
+  property="og:image"
+  content="https://cf.quizizz.com/img/q_og_generic.png"
+  />
+  <meta
+  name="twitter:title"
+  content="Quizizz — The world’s most engaging learning platform"
+  />
+  <meta
+  property="og:title"
+  content="Quizizz — The world’s most engaging learning platform"
+  />
+  <meta
+  name="twitter:description"
+  content="Find and create gamified quizzes, lessons, presentations, and flashcards for students, employees, and everyone else. Get started for free!"
+  />
+  <meta
+  property="og:description"
+  content="Find and create gamified quizzes, lessons, presentations, and flashcards for students, employees, and everyone else. Get started for free!"
+  />
+  
+  <link href="https://www.googletagmanager.com/" rel="preconnect" />
+  <link
+  data-n-head="1"
+  rel="icon"
+  type="image/x-icon"
+  href="https://quizizz.com/favicon.ico"
+  />
+  <!-- <link data-n-head="1" rel="stylesheet" href="./css2.css"> -->
+  <meta
+  data-n-head="1"
+  name="viewport"
+  content="width=device-width, initial-scale=1"
+  />
+  <meta
+  data-n-head="1"
+  data-hid="description"
+  name="description"
+  content=""
+  />
+  <meta
+  data-n-head="1"
+  data-hid="t-type"
+  name="twitter:image"
+  content="https://cf.quizizz.com/img/q_og_generic.png"
+  />
+</head>
+<body class="using-mouse">
+  
+  <div id="__nuxt">
+    <div id="__layout">
+      <div class="flex flex-col font-sans">
+        <div class="fixed left-0 bottom-0 z-102 flex flex-col">
+          <div class="flex flex-col"></div>
+        </div>
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <!---->
+        <a
+        aria-label="Skip to main content"
+        href="https://quizizz.com/admin#app-body-container"
+        class="skip-link"
+        >
+        <span class="_i18n-container">Chuyển đến nội dung</span>
+      </a>
+      <div class="flex flex-grow h-screen">
+        <app-sidebar></app-sidebar>
+        <div
+        class="flex flex-col flex-grow w-full h-screen overflow-hidden border-l border-light-1"
+        >
+        <app-header></app-header>
+        <div
+        id="app-body-container"
+        class="flex flex-grow overflow-auto bg-light-1 content overflow-auto"
+        >
+        <div data-v-470c518d="" class="w-full">
+          <div class="card">
+            <div class="card-body">
+              <!-- <div *ngIf = "questions|async"> -->
+                <h1>Lựa chọn từ ngân hàng câu hỏi:</h1>
+                
+                <div class="accordion" id="accordionExample">
+                  <div class="accordion-item" *ngFor="let quiz of quizzes; let i = index">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse'+i" aria-expanded="true" aria-controls="collapseOne">
+                        {{quiz.quizName}}
+                      </button>
+                    </h2>
+                    <div [attr.id]="'collapse'+i" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <div *ngFor="let q of quiz.questions">
+                          <input type = "checkbox" value="{{q.questionId}}" name="{{q.questionId}}" class="form-check-input"
+                          (change) = "onChange(q.questionId,$event)" [checked] = "contains(q.questionId)">
+                          {{q.questionContent}}
+                        </div>
+                      </div>
+                    </div> 
+                    
+                  </div>
+                  
+                  <button type="submit" class="btn btn-primary mt-5" (click) = "submit($event)">Lưu</button>
+                </div>
+                
+              </div>
+            </div>
           </div>
         </div>
-      </div> 
-     
+        <script src="script.js" nonce=""></script>
+        <!-- for jsFile in serverData.asyncJsFiles-->
+        <!--   script(src="#{serverData.cdnPrefix}#{jsFile}")-->
+        <!---->
+      </div>
     </div>
-
-  <button type="submit" class="btn btn-primary" (click) = "submit($event)">Submit</button>
+  </div>
+</div>
+</div>
+</body>
+</html>

@@ -13,8 +13,8 @@ export class QuizService {
   get():Observable<Quiz[]>{
     return this.http.get<Quiz[]>(this.API_URL)
   }
-  getById(id:number):Observable<Quiz>{
-    return this.http.get<Quiz>(`${this.API_URL}/${id}`)
+  getById(id:number):Observable<any>{
+    return this.http.get<any>(`${this.API_URL}/${id}`)
   }
   getExamByQuizId(id:number):Observable<any[]>{
     return this.http.get<any[]>(`${this.API_URL}/getQuizExam/${id}`)

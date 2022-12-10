@@ -1,1 +1,206 @@
-<p>category-view-exam works!</p>
+<!DOCTYPE html>
+<!-- saved from url=(0025)https://quizizz.com/admin -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Find a Quiz - Quizizz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta hid="description" name="description" content="" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://quizizz.com/favicon.ico"
+    />
+    <meta
+      name="twitter:image"
+      content="https://cf.quizizz.com/img/q_og_generic.png"
+    />
+    <meta
+      property="og:image"
+      content="https://cf.quizizz.com/img/q_og_generic.png"
+    />
+    <meta
+      name="twitter:title"
+      content="Quizizz — The world’s most engaging learning platform"
+    />
+    <meta
+      property="og:title"
+      content="Quizizz — The world’s most engaging learning platform"
+    />
+    <meta
+      name="twitter:description"
+      content="Find and create gamified quizzes, lessons, presentations, and flashcards for students, employees, and everyone else. Get started for free!"
+    />
+    <meta
+      property="og:description"
+      content="Find and create gamified quizzes, lessons, presentations, and flashcards for students, employees, and everyone else. Get started for free!"
+    />
+    
+    <link href="https://www.googletagmanager.com/" rel="preconnect" />
+    <link
+      data-n-head="1"
+      rel="icon"
+      type="image/x-icon"
+      href="https://quizizz.com/favicon.ico"
+    />
+    <!-- <link data-n-head="1" rel="stylesheet" href="./css2.css"> -->
+    <meta
+      data-n-head="1"
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <meta
+      data-n-head="1"
+      data-hid="description"
+      name="description"
+      content=""
+    />
+    <meta
+      data-n-head="1"
+      data-hid="t-type"
+      name="twitter:image"
+      content="https://cf.quizizz.com/img/q_og_generic.png"
+    />
+  </head>
+  <body class="using-mouse">
+    <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Cập nhật exam</h4>
+          <button type="button" aria-label="Close" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="examUpdateForm">
+            <div class="row">
+                <div class="form-group mb-2 col-6">
+                  <label for="quizName">Tên exam</label>
+                  <input type="text" class="form-control mt-2" id="examName" placeholder="Enter exam name"
+                  formControlName="examName">
+                  <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                </div>
+                <div class="form-group mb-2 col-6">
+                    <label for="quizName">Thời gian</label>
+                    <div class="row mt-2">
+                            <!-- <div class="col-4 row align-items-center">
+                            <input type="text" class="form-control col-4 mr-1" id="examName" placeholder="Giờ"
+                              formControlName="hours" style="max-width:70%">
+                             Giờ
+                            </div>
+                            <div class="col-4 align-items-center row ">
+                              <input type="text" class="form-control col-4 mr-1" id="examName" placeholder="Phút"
+                              formControlName="mins" style="max-width:70%">
+                              Phút
+                            </div>
+                            <div class="col-4 align-items-center row ">
+                              <input type="text" class="form-control col-4 mr-1" id="examName" placeholder="Giây"
+                              formControlName="secs" style="max-width:70%">
+                              Giây
+                            </div> -->
+                            <div class="col-4 flex align-items-center"> 
+                                <input type="text" class="form-control mr-1" id="examName" placeholder="Giờ"
+                                formControlName="hours" style="max-width:70%">
+                               Giờ
+                            </div>
+                            <div class="col-4 flex align-items-center"> 
+                                <input type="text" class="form-control mr-1" id="examName" placeholder="Giờ"
+                                formControlName="mins" style="max-width:70%">
+                               Phút
+                            </div>
+                            <div class="col-4 flex align-items-center"> 
+                                <input type="text" class="form-control mr-1" id="examName" placeholder="Giờ"
+                                formControlName="secs" style="max-width:70%">
+                               Giây
+                            </div>
+
+                        </div>
+                    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                  </div>
+                <!-- cate -->
+              </div>
+              <div class="form-group mb-2">
+                <label for="descriptions">Mô tả</label>
+                <input type="text" class="form-control mt-2" id="descriptions" placeholder="descriptions"
+                formControlName="descriptions">
+                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+              </div>
+              
+            <div class="form-group mb-2">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" formControlName="shuffleQuestion">
+                <label class="form-check-label" for="inlineCheckbox1">Đảo câu hỏi</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" formControlName="shuffleAnswer">
+                <label class="form-check-label" for="inlineCheckbox2">Đảo câu trả lời</label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="updateModal()">Save</button>
+        </div>
+      </ng-template>
+    <div id="__nuxt">
+      <div id="__layout">
+        <div class="flex flex-col font-sans">
+          <div class="fixed left-0 bottom-0 z-102 flex flex-col">
+            <div class="flex flex-col"></div>
+          </div>
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <a
+            aria-label="Skip to main content"
+            href="https://quizizz.com/admin#app-body-container"
+            class="skip-link"
+          >
+            <span class="_i18n-container">Chuyển đến nội dung</span>
+          </a>
+          <div class="flex flex-grow h-screen">
+            <app-sidebar></app-sidebar>
+            <div
+              class="flex flex-col flex-grow w-full h-screen overflow-hidden border-l border-light-1"
+            >
+              <app-header></app-header>
+              <div
+                id="app-body-container"
+                class="flex flex-grow overflow-auto bg-light-1 content overflow-auto"
+              >
+                <div data-v-470c518d="" class="w-full">
+                  <div class="card">
+                    <a (click)="back()" class="link-secondary ml-2 mt-2" style="cursor: pointer">Quay lại</a>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                     <h5 class="card-title"><b>{{ category.categoryName }} / Danh sách Exam</b></h5>
+                     <button class="btn btn-primary" (click) = "createExam()">Thêm mới exam</button>
+                        </div>
+                        <br>
+                     <!-- <div formControlNam> -->
+                     <!-- <a *ngFor=""></a> -->
+                     <div class="card-text" *ngFor = "let exam of exams">
+                        <ul>
+                          <li class="d-flex mb-3" style="list-style-type: circle;">
+                          <a style="font-size:18px">{{exam.examName}}</a>
+                            <div class="ml-auto">
+                              <button class="btn btn-outline-primary" style="margin-right: 10px"(click)="view(exam.examId)">Chi tiết</button>
+                              <button class="btn btn-outline-primary" (click)="open(content,exam)">Cập nhật</button>
+                            </div>
+                          </li>
+                      </ul>
+                     </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <script src="script.js" nonce=""></script>
+              <!-- for jsFile in serverData.asyncJsFiles-->
+              <!--   script(src="#{serverData.cdnPrefix}#{jsFile}")-->
+              <!---->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -21,10 +21,10 @@ export class QuizCategoryService {
   getById(id:any):Observable<Category>{
     return this.http.get<Category>(`${API_URL}/${id}`)
   }  
-  getRootCategory():Observable<Category[]>{
-    return this.http.get<Category[]>(`${API_URL}/rootCategory`)
+  getRootCategory():Observable<any[]>{
+    return this.http.get<any[]>(`${API_URL}/rootCategory`)
   }
   getChildCategory():Observable<Category[]>{
-    return this.http.get<Category[]>(`${API_URL}/childCategory`)
+    return this.http.get<any[]>(`${API_URL}/childCategory`)
   }
 }

@@ -1,150 +1,178 @@
+body{
+  background:#f5f5f5;
+  margin-top:20px;}
 
-.app {
-  position: relative;
-  /* padding-left: 0.5em; */
-  max-width: 60em;
-  /* background: #acbbd7 100% linear-gradient(#6a696d 0%, #504949 50%, #acbbd7 50%, #acbbd7 100%);
-  background-size: auto 10em;
-  background-repeat: repeat-x;
-  background-position: center top; */
-}
-
-header {
-  position: relative;
-  height: 8em;
-  grid-row: 1/3;
-  grid-column: 2;
-  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/154571/bla.jpg");
-  background-size: cover;
-  background-position: right center;
-}
-header a {
-  position: absolute;
-  top: var(--logo-offset);
-  left: var(--logo-offset);
-  display: block;
-  width: var(--logo-width);
-}
-header img {
-  display: block;
-  max-width: 100%;
+/* ===== Career ===== */
+.career-form {
+background-color: #4e63d7;
+border-radius: 5px;
+padding: 0 16px;
 }
 
-nav {
-  display: flex;
-  padding: 1.5em var(--var-padding);
-  grid-row: 1;
-  grid-column: 1;
-  background: #fff;
-}
-nav a {
-  display: block;
-  color: #333;
-  text-decoration: none;
-  border-bottom: 1px solid #333;
-}
-nav a + a {
-  margin-left: 2em;
-}
-nav a:hover,
-nav a:focus {
-  border-color: var(--highlight);
-  border-width: 2px;
-}
-nav a[aria-current] {
-  border-bottom: 2px solid var(--highlight);
+.career-form .form-control {
+background-color: rgba(255, 255, 255, 0.2);
+border: 0;
+padding: 12px 15px;
+color: #fff;
 }
 
-main {
-  padding: var(--var-padding);
-  grid-row: 2;
-  grid-column: 1;
-  background: #fff;
-}
-main h1 {
-  margin-top: 0;
-  font-weight: normal;
-  font-size: 1.5rem;
-}
-main h1 span {
-  display: block;
-  color: var(--highlight);
-  font-weight: bolder;
-}
-main h1 sub {
-  font-size: 0.5em;
-}
-main a {
-  color: var(--highlight);
-  text-decoration: none;
-}
-main a::after {
-  margin-left: 1.5em;
-  content: "→";
-  vertical-align: baseline;
-}
-main a:hover, main a:focus {
-  color: var(--highlight-dark);
-}
-main a:hover::after, main a:focus::after {
-  margin-left: 2em;
+.career-form .form-control::-webkit-input-placeholder {
+/* Chrome/Opera/Safari */
+color: #fff;
 }
 
-html {
-  min-height: 100vh;
-  font-family: sans-serif;
-  line-height: 1.5;
-  background: linear-gradient(45deg, #f1f0ef, #d1cac7);
-  background-repeat: no-repeat;
-  background-size: cover;
+.career-form .form-control::-moz-placeholder {
+/* Firefox 19+ */
+color: #fff;
 }
 
-body {
-  margin: 0;
+.career-form .form-control:-ms-input-placeholder {
+/* IE 10+ */
+color: #fff;
 }
 
-@media (min-width: 37.5em) {
-  :root {
-    --var-padding: 3em;
-  }
+.career-form .form-control:-moz-placeholder {
+/* Firefox 18- */
+color: #fff;
+}
 
-  body {
-    margin: 1em;
-  }
+.career-form .custom-select {
+background-color: rgba(255, 255, 255, 0.2);
+border: 0;
+padding: 12px 15px;
+color: #fff;
+width: 100%;
+border-radius: 5px;
+text-align: left;
+height: auto;
+background-image: none;
+}
 
-  .app {
-    display: grid;
-    margin: 3em auto;
-    grid-template-rows: 5em auto;
-    grid-template-columns: 1.4fr 1fr;
-    /* padding-left: 2em; */
-    background-size: auto;
-  }
-  .app::after {
-    position: absolute;
-    right: 1em;
-    left: 1em;
-    bottom: 0;
-    z-index: -1;
-    width: 95%;
-    height: 200px;
-    content: "";
-    box-shadow: 0 0 5em #7d604f;
-  }
+.career-form .custom-select:focus {
+-webkit-box-shadow: none;
+        box-shadow: none;
+}
 
-  header {
-    height: auto;
-  }
-  header a {
-    right: var(--logo-offset);
-    left: auto;
-  }
+.career-form .select-container {
+position: relative;
+}
 
-  nav {
-    justify-content: space-between;
-  }
+.career-form .select-container:before {
+position: absolute;
+right: 15px;
+top: calc(50% - 14px);
+font-size: 18px;
+color: #ffffff;
+content: '\F2F9';
+font-family: "Material-Design-Iconic-Font";
+}
 
-  main {
-    min-width: var(--main-column-width);
-  }
+.filter-result .job-box {
+-webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+        box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+border-radius: 10px;
+padding: 10px 35px;
+}
+
+ul {
+list-style: none; 
+}
+
+.list-disk li {
+list-style: none;
+margin-bottom: 12px;
+}
+
+.list-disk li:last-child {
+margin-bottom: 0;
+}
+
+.job-box .img-holder {
+height: 65px;
+width: 65px;
+background-color: #4e63d7;
+background-image: -webkit-gradient(linear, left top, right top, from(rgba(78, 99, 215, 0.9)), to(#5a85dd));
+background-image: linear-gradient(to right, rgba(78, 99, 215, 0.9) 0%, #5a85dd 100%);
+font-family: "Open Sans", sans-serif;
+color: #fff;
+font-size: 22px;
+font-weight: 700;
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-pack: center;
+    -ms-flex-pack: center;
+        justify-content: center;
+-webkit-box-align: center;
+    -ms-flex-align: center;
+        align-items: center;
+border-radius: 65px;
+}
+
+.career-title {
+background-color: #4e63d7;
+color: #fff;
+padding: 15px;
+text-align: center;
+border-radius: 10px 10px 0 0;
+background-image: -webkit-gradient(linear, left top, right top, from(rgba(78, 99, 215, 0.9)), to(#5a85dd));
+background-image: linear-gradient(to right, rgba(78, 99, 215, 0.9) 0%, #5a85dd 100%);
+}
+
+.job-overview {
+-webkit-box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+        box-shadow: 0 0 35px 0 rgba(130, 130, 130, 0.2);
+border-radius: 10px;
+}
+
+@media (min-width: 992px) {
+.job-overview {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 70px;
+}
+}
+
+.job-overview .job-detail ul {
+margin-bottom: 28px;
+}
+
+.job-overview .job-detail ul li {
+opacity: 0.75;
+font-weight: 600;
+margin-bottom: 15px;
+}
+
+.job-overview .job-detail ul li i {
+font-size: 20px;
+position: relative;
+top: 1px;
+}
+
+.job-overview .overview-bottom,
+.job-overview .overview-top {
+padding: 35px;
+}
+
+.job-content ul li {
+font-weight: 600;
+opacity: 0.75;
+border-bottom: 1px solid #ccc;
+padding: 10px 5px;
+}
+
+@media (min-width: 768px) {
+.job-content ul li {
+  border-bottom: 0;
+  padding: 0;
+}
+}
+
+.job-content ul li i {
+font-size: 20px;
+position: relative;
+top: 1px;
+}
+.mb-30 {
+  margin-bottom: 30px;
 }
