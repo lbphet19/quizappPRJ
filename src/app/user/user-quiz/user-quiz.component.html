@@ -1,137 +1,260 @@
-<div *ngFor = "let question of questions;let i = index">
-  Question {{i+1}}. {{question.questionContent}}        <button (click) = openUpdateModal(updateForm,i) class = "btn btn-primary mr-1">Update</button><button (click) = deleteQuestion(question.questionId) class = "btn btn-primary">Delete</button>
-  <br>
-  <div *ngIf = "question.questionType === 'single-choice'">
-    <div  *ngFor = "let answer of question.answers">
-      <input type ="radio"  disabled id="{{answer.answerId}}" name="{{question.questionId}}" value="{{answer.answerId}}">
-        <label for="{{answer.answerId}}">{{answer.answerContent}}</label><br>
-    </div>
-  </div>
-  <div *ngIf = "question.questionType === 'multiple-choice'">
-    <div *ngFor = "let answer of question.answers">
-      <input type="checkbox" disabled id="{{answer.answerId}}" name="answerId" value="{{answer.answerId}}">
-      <label for="{{answer.answerId}}"> {{answer.answerContent}}</label><br>
-    </div>
-  </div>
-</div>
-
-<!-- <button (click) = "submitForm()">Hoan thanh quiz</button> -->
-<!-- form add -->
-<form [formGroup] = "quizForm">
-  <div formArrayName = "questionForm">
-    <div *ngFor = "let question of this.questionFormArray().controls; let questionIndex = index">
-      <div
-      [formGroupName]="questionIndex"
-      style="border: 1px solid blue; padding: 10px; width: 1000px; margin: 5px;"
-      > 
-      <div class="row">
-        
-        <div class="col-6 flex flex-wrap align-items-center">
-          {{questionIndex+1}}.   
-       <input type = "text" (focus)="isValidating=false" class="form-control col-11" style = "margin-left:10px;width:90%" formControlName = "questionContent"/>
-       <!-- <div *ngIf="getQuestionAtIndex(questionIndex).get('questionContent')?.value === ''">Required</div> -->
-       <div *ngIf="isValidating && question.get('questionContent')?.hasError('required')" style="width: 100%;margin-top: .25rem;font-size: .875em;color: #dc3545">Dữ liệu không được bỏ trống</div>
-    </div>
-    <div class="col-5 flex align-items-center" style="max-height:38px">
-      Loại câu: <select  class="form-select" style="width:80%;margin-left:15px" formControlName = "questionType" (change)=resetAnswerStatus(questionIndex)>
-        <option value="multiple-choice">Nhiều đáp án đúng</option>
-        <option value="single-choice">Lựa chọn 1 đáp án</option>
-      </select>
-    </div>
-    <div class="col-1">
-      <button (click) = deleteQuestionAdd(questionIndex) class = "btn btn-primary">Xóa</button>
-    </div>
-    </div>
-      <br>
-      <div formArrayName = "answers">
-        <div *ngFor = "let answer of this.getAnswerAtIndex(questionIndex).controls; let answerIndex = index">
-          <div [formGroupName] = "answerIndex">
-            <div class="row p-2"> 
-            Answer {{answerIndex+1}}.
-            <div class="col-10 flex">
-              <input type = "text" formControlName = "answerContent" class="form-control"
-              /> <input type = "checkbox" formControlName = "answerIsCorrect"
-              (click) = "setAnswerStatus(answerIndex,questionIndex)" style="margin-left:5px">
-              <i class="fa fa-trash" (click) = "deleteAnswerAdd(answerIndex,questionIndex)" style="margin-left:5px
-              ;display:flex;align-items: center"
-              aria-hidden="true"></i> 
-              <i class="fa fa-arrow-up" aria-hidden="true" style="margin-left:10px
-              ;display:flex;align-items: center" *ngIf="answerIndex !== 0"  (click)="moveAnswerUp(answerIndex,questionIndex)"></i>
-              <i class="fa fa-arrow-down" aria-hidden="true" style="margin-left:5px
-              ;display:flex;align-items: center" *ngIf="answerIndex !== this.getAnswerAtIndex(questionIndex).length-1" (click)="moveAnswerDown(answerIndex,questionIndex)"></i>
-           </div>
-            <!-- set true false khi click -->
+<!DOCTYPE html>
+<!-- saved from url=(0025)https://quizizz.com/admin -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Find a Quiz - Quizizz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta hid="description" name="description" content="" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://quizizz.com/favicon.ico"
+    />
+    <meta
+      name="twitter:image"
+      content="https://cf.quizizz.com/img/q_og_generic.png"
+    />
+    <meta
+      property="og:image"
+      content="https://cf.quizizz.com/img/q_og_generic.png"
+    />
+    <meta
+      name="twitter:title"
+      content="Quizizz — The world’s most engaging learning platform"
+    />
+    <meta
+      property="og:title"
+      content="Quizizz — The world’s most engaging learning platform"
+    />
+    <meta
+      name="twitter:description"
+      content="Find and create gamified quizzes, lessons, presentations, and flashcards for students, employees, and everyone else. Get started for free!"
+    />
+    <meta
+      property="og:description"
+      content="Find and create gamified quizzes, lessons, presentations, and flashcards for students, employees, and everyone else. Get started for free!"
+    />
+    
+    <link href="https://www.googletagmanager.com/" rel="preconnect" />
+    <link
+      data-n-head="1"
+      rel="icon"
+      type="image/x-icon"
+      href="https://quizizz.com/favicon.ico"
+    />
+    <!-- <link data-n-head="1" rel="stylesheet" href="./css2.css"> -->
+    <meta
+      data-n-head="1"
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <meta
+      data-n-head="1"
+      data-hid="description"
+      name="description"
+      content=""
+    />
+    <meta
+      data-n-head="1"
+      data-hid="t-type"
+      name="twitter:image"
+      content="https://cf.quizizz.com/img/q_og_generic.png"
+    />
+  </head>
+  <body class="using-mouse">
+    
+    <div id="__nuxt">
+      <div id="__layout">
+        <div class="flex flex-col font-sans">
+          <div class="fixed left-0 bottom-0 z-102 flex flex-col">
+            <div class="flex flex-col"></div>
           </div>
-          </div>
-        </div>
-      </div>
-      <br>
-      <button (click) = "addAnswer(questionIndex)">Thêm câu trả lời</button>
-    </div>
-  </div>
-  <button class="btn-primary btn" (click) = "addQuestion()">Thêm câu hỏi</button>
-</div>
-<br>
-<input type = "submit" class="btn btn-success" (click) = "viewForm()" value="Lưu thay đổi" *ngIf="!isSubmitting">
-<button class="btn btn-primary" type="button" disabled *ngIf="isSubmitting">
-  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-  Loading...
-</button>
-</form>
-<!-- /formAdd -->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <!---->
+          <a
+            aria-label="Skip to main content"
+            href="https://quizizz.com/admin#app-body-container"
+            class="skip-link"
+          >
+            <span class="_i18n-container">Chuyển đến nội dung</span>
+          </a>
+          <div class="flex flex-grow h-screen">
+            <app-sidebar></app-sidebar>
+            <div
+              class="flex flex-col flex-grow w-full h-screen overflow-hidden border-l border-light-1"
+            >
+              <app-header></app-header>
+              <div
+                id="app-body-container"
+                class="flex flex-grow overflow-auto bg-light-1 content overflow-auto"
+              >
+                <div data-v-470c518d="" class="w-full">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="card-title">
+                        <h5><b>Quản lý câu hỏi quiz</b></h5>
+                      </div>
+                      <br>
+                      <div *ngFor = "let question of questions;let i = index">
+                        Question {{i+1}}. {{question.questionContent}}        <button (click) = openUpdateModal(updateForm,i) class = "btn btn-primary mr-1">Update</button><button (click) = deleteQuestion(question.questionId) class = "btn btn-primary">Delete</button>
+                        <br>
+                        <div *ngIf = "question.questionType === 'single-choice'">
+                          <div  *ngFor = "let answer of question.answers">
+                            <input type ="radio"  disabled id="{{answer.answerId}}" name="{{question.questionId}}" value="{{answer.answerId}}">
+                              <label for="{{answer.answerId}}">{{answer.answerContent}}</label><br>
+                          </div>
+                        </div>
+                        <div *ngIf = "question.questionType === 'multiple-choice'">
+                          <div *ngFor = "let answer of question.answers">
+                            <input type="checkbox" disabled id="{{answer.answerId}}" name="answerId" value="{{answer.answerId}}">
+                            <label for="{{answer.answerId}}"> {{answer.answerContent}}</label><br>
+                          </div>
+                        </div>
+                        <br>
+                      </div>
+                      
+                      <!-- <button (click) = "submitForm()">Hoan thanh quiz</button> -->
+                      <!-- form add -->
+                      <form [formGroup] = "quizForm">
+                        <div formArrayName = "questionForm">
+                          <div *ngFor = "let question of this.questionFormArray().controls; let questionIndex = index">
+                            <div
+                            [formGroupName]="questionIndex"
+                            style="border: 1px solid blue; padding: 10px; width: 1000px; margin: 5px;"
+                            > 
+                            <div class="row">
+                              
+                              <div class="col-6 flex flex-wrap align-items-center">
+                                {{questionIndex+1}}.   
+                             <input type = "text" (focus)="isValidating=false" class="form-control col-11" style = "margin-left:10px;width:90%" formControlName = "questionContent"/>
+                             <!-- <div *ngIf="getQuestionAtIndex(questionIndex).get('questionContent')?.value === ''">Required</div> -->
+                             <div *ngIf="isValidating && question.get('questionContent')?.hasError('required')" style="width: 100%;margin-top: .25rem;font-size: .875em;color: #dc3545">Dữ liệu không được bỏ trống</div>
+                          </div>
+                          <div class="col-5 flex align-items-center" style="max-height:38px">
+                            Loại câu: <select  class="form-select" style="width:70%;margin-left:15px" formControlName = "questionType" (change)=resetAnswerStatus(questionIndex)>
+                              <option value="multiple-choice">Nhiều đáp án đúng</option>
+                              <option value="single-choice">Lựa chọn 1 đáp án</option>
+                            </select>
+                          </div>
+                          <div class="col-1">
+                            <button (click) = deleteQuestionAdd(questionIndex) class = "btn btn-primary">Xóa</button>
+                          </div>
+                          </div>
+                            <br>
+                            <div formArrayName = "answers">
+                              <div *ngFor = "let answer of this.getAnswerAtIndex(questionIndex).controls; let answerIndex = index">
+                                <div [formGroupName] = "answerIndex">
+                                  <div class="row p-2"> 
+                                  Answer {{answerIndex+1}}.
+                                  <div class="col-10 flex">    
+                                    <input type = "text" (focus)="isValidating = false" formControlName = "answerContent" class="form-control"
+                                    /> <input type = "checkbox" formControlName = "answerIsCorrect"
+                                    (click) = "setAnswerStatus(answerIndex,questionIndex)" style="margin-left:5px">
+                                    <i class="fa fa-trash" (click) = "deleteAnswerAdd(answerIndex,questionIndex)" style="margin-left:5px
+                                    ;display:flex;align-items: center"
+                                    aria-hidden="true"></i> 
+                                    <i class="fa fa-arrow-up" aria-hidden="true" style="margin-left:10px
+                                    ;display:flex;align-items: center" *ngIf="answerIndex !== 0"  (click)="moveAnswerUp(answerIndex,questionIndex)"></i>
+                                    <i class="fa fa-arrow-down" aria-hidden="true" style="margin-left:5px
+                                    ;display:flex;align-items: center" *ngIf="answerIndex !== this.getAnswerAtIndex(questionIndex).length-1" (click)="moveAnswerDown(answerIndex,questionIndex)"></i>
 
-<!-- formUpdate -->
-<ng-template #updateForm let-modal>
-  <form [formGroup] = "questionUpdateForm">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Question update</h4>
-      <!-- click = xoa het cac du lieu da luu, patch lai value -->
-      <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      Câu hỏi: <input type = "text" (focus)="isValidatingUpdate = false" formControlName = "questionContent" class = "form-control mt-2"/>
-      <div *ngIf="isValidatingUpdate && questionUpdateForm.get('questionContent')?.hasError('required')" style="width: 100%;margin-top: .25rem;font-size: .875em;color: #dc3545">Dữ liệu không được bỏ trống</div>
-      Loại câu: <select  class="form-select mt-2 form-control"  formControlName = "questionType" (change)="resetAnswerStatus()">
-        <option value="multiple-choice">Nhiều đáp án đúng</option>
-        <option value="single-choice">Lựa chọn 1 đáp án</option>
-      </select>
-      <br>
-      <div formArrayName = "answers">
-        <div *ngFor = "let answer of this.getAnswersFromQuestionUpdateForm().controls; let answerIndex = index">
-          <div [formGroupName] = "answerIndex" class="row mt-2">
-            <div class="col-2"> 
-            Answer {{answerIndex + 1}}.
+                                 </div>
+                                 <div *ngIf="isValidating && answer.get('answerContent')?.hasError('required')" style="width: 100%;margin-top: .25rem;font-size: .875em;color: #dc3545">Dữ liệu không được bỏ trống</div>
+                                  <!-- set true false khi click -->
+                                </div>
+                                </div>
+                              </div>
+                            </div>
+                            <br>
+                            <button class="btn btn-primary" (click) = "addAnswer(questionIndex)">Thêm câu trả lời</button>
+                          </div>
+                        </div>
+                        <br>
+                        <button class="btn-primary btn" (click) = "addQuestion()">Thêm câu hỏi</button>
+                      </div>
+                      <br>
+                      <input type = "submit" class="btn btn-success" (click) = "viewForm()" value="Lưu thay đổi" *ngIf="!isSubmitting">
+                      <button class="btn btn-primary" type="button" disabled *ngIf="isSubmitting">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                      </button>
+                      </form>
+                      <!-- /formAdd -->
+                      
+                      <!-- formUpdate -->
+                      <ng-template #updateForm let-modal>
+                        <form [formGroup] = "questionUpdateForm">
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">Question update</h4>
+                            <!-- click = xoa het cac du lieu da luu, patch lai value -->
+                            <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            Câu hỏi: <input type = "text" (focus)="isValidatingUpdate = false" formControlName = "questionContent" class = "form-control mt-2"/>
+                            <div *ngIf="isValidatingUpdate && questionUpdateForm.get('questionContent')?.hasError('required')" style="width: 100%;margin-top: .25rem;font-size: .875em;color: #dc3545">Dữ liệu không được bỏ trống</div>
+                            Loại câu: <select  class="form-select mt-2 form-control"  formControlName = "questionType" (change)="resetAnswerStatus()">
+                              <option value="multiple-choice">Nhiều đáp án đúng</option>
+                              <option value="single-choice">Lựa chọn 1 đáp án</option>
+                            </select>
+                            <br>
+                            <div formArrayName = "answers">
+                              <div *ngFor = "let answer of this.getAnswersFromQuestionUpdateForm().controls; let answerIndex = index">
+                                <div [formGroupName] = "answerIndex" class="row mt-2">
+                                  <div class="col-2"> 
+                                  Answer {{answerIndex + 1}}.
+                                  </div>
+                                  <div class="col-10 flex">
+                                  <input type = "text" formControlName = "answerContent" class="form-control" (focus)="isValidatingUpdate=false"
+                                  /> <input type = "checkbox" formControlName = "answerIsCorrect"
+                                  (click) = "setAnswerStatus(answerIndex)" style="margin-left:5px">
+                                  <i class="fa fa-trash" (click) = "removeAnswer(answerIndex)" style="margin-left:5px
+                                  ;display:flex;align-items: center"
+                                  aria-hidden="true"></i> 
+                                  <i class="fa fa-arrow-up" aria-hidden="true" style="margin-left:10px
+                                  ;display:flex;align-items: center" (click)="moveAnswerUp(answerIndex)"></i>
+                                  <i class="fa fa-arrow-down" aria-hidden="true" style="margin-left:5px
+                                  ;display:flex;align-items: center" (click)="moveAnswerDown(answerIndex)"></i>
+                                </div>
+                                <div *ngIf="isValidatingUpdate && answer.get('answerContent')?.hasError('required')" style="width: 100%;margin-top: .25rem;font-size: .875em;color: #dc3545">Dữ liệu không được bỏ trống</div>
+                                  <!-- set true false khi click -->
+                                </div>
+                              </div>
+                            </div>
+                            <button (click) = "addAnswer()">Thêm câu trả lời</button>
+                          </div>
+                          <div class="modal-footer">
+                            <!-- click = save... -->
+                            <button type="button" class="btn btn-outline-dark" (click)="saveUpdateQuestion()" *ngIf="!isSubmittingUpdate">Lưu</button>
+                            <button class="btn btn-primary" type="button" disabled *ngIf="isSubmittingUpdate">
+                              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                              Loading...
+                            </button>
+                          </div>
+                        </form>
+                      
+                      </ng-template>
+                      <!-- /formUpdate -->
+                      <br>
+                      
+                     
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <script src="script.js" nonce=""></script>
+              <!-- for jsFile in serverData.asyncJsFiles-->
+              <!--   script(src="#{serverData.cdnPrefix}#{jsFile}")-->
+              <!---->
             </div>
-            <div class="col-10 flex">
-            <input type = "text" formControlName = "answerContent" class="form-control"
-            /> <input type = "checkbox" formControlName = "answerIsCorrect"
-            (click) = "setAnswerStatus(answerIndex)" style="margin-left:5px">
-            <i class="fa fa-trash" (click) = "removeAnswer(answerIndex)" style="margin-left:5px
-            ;display:flex;align-items: center"
-            aria-hidden="true"></i> 
-            <i class="fa fa-arrow-up" aria-hidden="true" style="margin-left:10px
-            ;display:flex;align-items: center" (click)="moveAnswerUp(answerIndex)"></i>
-            <i class="fa fa-arrow-down" aria-hidden="true" style="margin-left:5px
-            ;display:flex;align-items: center" (click)="moveAnswerDown(answerIndex)"></i>
-          </div>
-            <!-- set true false khi click -->
           </div>
         </div>
       </div>
-      <button (click) = "addAnswer()">Thêm câu trả lời</button>
     </div>
-    <div class="modal-footer">
-      <!-- click = save... -->
-      <button type="button" class="btn btn-outline-dark" (click)="saveUpdateQuestion()" *ngIf="!isSubmittingUpdate">Lưu</button>
-      <button class="btn btn-primary" type="button" disabled *ngIf="isSubmittingUpdate">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Loading...
-      </button>
-    </div>
-  </form>
-
-</ng-template>
-<!-- /formUpdate -->
-<br>
+  </body>
+</html>

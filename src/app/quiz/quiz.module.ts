@@ -21,6 +21,10 @@ import { CategoryCreateComponent } from './category-create/category-create.compo
 import { QuizIndexComponent } from './quiz-index/quiz-index.component';
 import { CategoryViewQuizComponent } from './category-view-quiz/category-view-quiz.component';
 import { CategoryViewExamComponent } from './category-view-exam/category-view-exam.component';
+import { UserSidebarComponent } from './user-sidebar/user-sidebar.component';
+import { HistoryComponent } from './history/history.component';
+import { AdminComponent } from './admin/admin.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -36,7 +40,11 @@ import { CategoryViewExamComponent } from './category-view-exam/category-view-ex
   CategoryCreateComponent,
   QuizIndexComponent,
   CategoryViewQuizComponent,
-  CategoryViewExamComponent],
+  CategoryViewExamComponent,
+  UserSidebarComponent,
+  HistoryComponent,
+  AdminComponent,
+  LoginComponent],
   imports: [
     CommonModule,
     QuizRoutingModule,

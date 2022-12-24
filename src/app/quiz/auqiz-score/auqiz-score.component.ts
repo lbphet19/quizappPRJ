@@ -6,7 +6,7 @@ import { AnswerService } from './../../Services/answer.service';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { QuestionService } from './../../Services/question.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-auqiz-score',
@@ -19,7 +19,8 @@ export class AuqizScoreComponent implements OnInit {
     private route:ActivatedRoute,
     private fb:FormBuilder,
     private answerService:AnswerService,
-    private examService:ExamServiceService) { }
+    private examService:ExamServiceService,
+    private router:Router) { }
     // questionTest:Question[]
     examId!:number
     questions!:Observable<Question[]>
@@ -82,6 +83,9 @@ export class AuqizScoreComponent implements OnInit {
   }
   removeAnswer(questionIndex:number,answerIndex:number){
     this.getAnswerAtIndex(questionIndex).removeAt(answerIndex)
+  }
+  backHome(){
+    this.router.navigate(['quiz','all'])
   }
 
 }

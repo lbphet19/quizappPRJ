@@ -36,6 +36,7 @@
               <div data-v-470c518d="" class="w-full row">
                 <div class="col-9">
                   <div class="card m-4">
+                    <div class="" id="timer" style="border:1px solid red; margin-right:0; margin-left:auto">00:00:00</div>
                   <ngb-carousel #myCarousel [showNavigationArrows]="false" [interval]="0">
                     <ng-template ngbSlide *ngFor = "let question of questions; let i = index" id="{{i}}">
                       <app-quiz-question
@@ -43,9 +44,10 @@
                     </app-quiz-question>
                   </ng-template>
                   </ngb-carousel>
+            
                   <div class="flex justify-between">
-                  <button type="button" class ="btn btn-sm btn-outline-secondary ml-2 mb-2 mr-auto" *ngIf="currentIndex > 0" >Câu trước</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary mr-2 mb-2 ml-auto" *ngIf="currentIndex + 1 < examSize" >Tiếp theo</button>
+                  <button type="button" (click)="jumpTo(currentIndex-1)" class ="btn btn-sm btn-outline-secondary ml-2 mb-2 mr-auto" *ngIf="currentIndex > 0" >Câu trước</button>
+                  <button type="button" (click)="jumpTo(currentIndex+1)" class="btn btn-sm btn-outline-secondary mr-2 mb-2 ml-auto" *ngIf="currentIndex + 1 < examSize" >Tiếp theo</button>
                   </div>
                 </div>
               </div>
@@ -65,7 +67,7 @@
                       </div>
                       <!-- endFor -->
                       <div class="othernav">
-                        <button class = "btn btn-primary mt-2" (click) = "submit()">Submit</button>
+                        <button class = "btn btn-primary mt-2" (click) = "submit()">Nộp bài</button>
                       </div>
                       <div class="footer"></div>
                     </div>

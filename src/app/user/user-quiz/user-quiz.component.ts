@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Location } from '@angular/common';
 import { QuizCategoryService } from 'src/app/Services/quiz-category.service';
 import { QuizService } from 'src/app/Services/quiz.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-quiz',
@@ -19,6 +20,7 @@ import { QuizService } from 'src/app/Services/quiz.service';
 })
 export class UserQuizComponent implements OnInit {
 
+  deleteQuestionId = -1
   isSubmitting = false
   isValidating = false
   isValidatingUpdate = false
@@ -87,7 +89,7 @@ export class UserQuizComponent implements OnInit {
     const answer = new FormGroup({
       questionId:new FormControl(questionId?questionId:null),
       answerId:new FormControl(answerId?answerId:null),
-      answerContent:new FormControl(answerContent?answerContent:''),
+      answerContent:new FormControl(answerContent?answerContent:'', Validators.required),
       answerIsCorrect:new FormControl(answerIsCorrect?answerIsCorrect:false)
     })
     return answer
@@ -131,16 +133,35 @@ export class UserQuizComponent implements OnInit {
     for(let answer of question.answers){
       this.getAnswersFromQuestionUpdateForm().push(new FormGroup({
         answerId:new FormControl(answer.answerId),
-        answerContent:new FormControl(answer.answerContent),
+        answerContent:new FormControl(answer.answerContent, Validators.required),
         answerIsCorrect:new FormControl(answer.answerIsCorrect)
       }))
     }
     this.updateAnswerIndex = question.answers.length-1
   }
   deleteQuestion(questionId:number){
-    //get question theo index cua listQuestion lay tu http, neu delete thi sau khi delete http cap nhat lai listQuestion
-    
-    console.log(questionId)
+    this.deleteQuestionId = questionId
+    Swal.fire({  
+      title: 'Bạn muốn xóa câu hỏi này?',  
+      text: 'Sau khi xóa sẽ không thể khôi phục được nữa!',  
+      icon: 'warning',  
+      showCancelButton: true,  
+      confirmButtonText: 'Xóa',  
+      cancelButtonText: 'Hủy bỏ'  
+    }).then((result) => {  
+      if (result.value) { 
+        this.questionService.delete(this.deleteQuestionId).subscribe(message => {
+          console.log(message)
+          Swal.fire(  
+            'Thành công',  
+            'Câu hỏi đã được xóa.',  
+            'success'  
+          )
+          this.questions.splice(this.questions.findIndex(q => q.questionId === this.deleteQuestionId),1) 
+      })
+    }
+  })
+
   }
   deleteQuestionAdd(questionIndex:number){
     this.questionFormArray().removeAt(questionIndex)

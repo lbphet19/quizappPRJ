@@ -37,7 +37,7 @@
                             name="{{question.questionId}}" value="{{answer.answerId}}"
                             [checked]="isAnswerSelected(answer.answerId)">
                               <label for="{{answer.answerId}}">{{answer.answerContent}}
-                              <span class="check" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
+                              <span class="check ml-2" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
                             </label><br>
                             
                           </div>
@@ -47,7 +47,7 @@
                             <input disabled type="checkbox" [checked]="isAnswerSelected(answer.answerId)"
                             id="{{answer.answerId}}" name="answerId" value="{{answer.answerId}}">
                             <label for="{{answer.answerId}}"> {{answer.answerContent}}
-                              <span class="check" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
+                              <span class="check ml-2" *ngIf = "isAnswerCorrect(answer.answerId)"></span>
                             </label><br>
                           </div>
                         </div>
@@ -87,7 +87,7 @@
                     </div>
                     
                   </div>
-                  <button class="btn btn-primary" style="margin-left:2em">Về trang chủ</button>
+                  <button (click)="backHome()" class="btn btn-primary" style="margin-left:2em">Về trang chủ</button>
                   
                 </div>
               </div>

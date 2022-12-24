@@ -13,9 +13,11 @@ import { CategoryCreateComponent } from './category-create/category-create.compo
 import { QuizIndexComponent } from './quiz-index/quiz-index.component';
 import { CategoryViewExamComponent } from './category-view-exam/category-view-exam.component';
 import { CategoryViewQuizComponent } from './category-view-quiz/category-view-quiz.component';
+import { HistoryComponent } from './history/history.component';
 
 const routes: Routes = [
   { path: '', component: QuizListComponent },
+  { path: 'history', component: HistoryComponent },
   {path:'detail/:id',component:QuizDetailComponent},
   {path:'detail',component:QuizDetailComponent},
   {path: 'all',component:QuizListComponent},

@@ -1,3 +1,14 @@
+<ng-template #loginContent let-modal>
+  <div class="jumbotron bg-transparent text-center">
+    <div class="card text-center">
+      <div class="modal-header">
+        <h4 id="modal-basic-title" class="modal-title">Đăng nhập với google</h4>
+        <button type="button" aria-label="Close" class="btn-close" (click)="closeModal()"></button>
+      </div>
+        <app-login></app-login>
+    </div>
+  </div>
+</ng-template>
 <div data-v-8d679f4e="">
   <div data-v-8d679f4e="" id="app-header" class="fixed border-light-1 main-header z-10 border-b">
     <nav data-v-8d679f4e="" class="bg-light text-dark-3 flex flex-row relative justify-between space-x-2 h-auto p-2">
@@ -58,7 +69,8 @@
           </span> <!----> <!----> <!----> <!----> <!---->
         </button> <div data-v-8d679f4e="" class="flex" *ngIf = "!isLoggedIn">
           <button data-v-21793d1b="" data-v-8d679f4e="" class="mr-2 flex items-center justify-center px-4 py-1 text-sm font-semibold h-auto base bg-lilac-faded text-lilac hover:text-lilac-light active:text-lilac-dark rounded secondary min-w-max relative transition-colors duration-200 ease-in-out flex">
-            <!----> <!---->  <span data-v-21793d1b="" class="title" (click) = "navigateLogin()">
+               <!-- <span data-v-21793d1b="" class="title" (click) = "navigateLogin()"> -->
+                <span data-v-21793d1b="" class="title" (click) = "open(loginContent)">
               Đăng nhập
             </span> <!----> <!----> <!----> <!----> <!---->
           </button> <button data-v-21793d1b="" data-v-8d679f4e="" class="flex items-center justify-center px-4 py-1 text-sm font-semibold h-auto base bg-lilac text-light-3 hover:bg-lilac-light active:bg-lilac-dark rounded primary min-w-max relative transition-colors duration-200 ease-in-out flex">

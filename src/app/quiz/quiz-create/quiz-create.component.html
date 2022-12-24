@@ -20,17 +20,21 @@
           <div id="app-body-container" class="flex flex-grow overflow-auto bg-light-1 content overflow-auto">
             <div data-v-470c518d="" class="w-full">
               <div data-v-470c518d="" class="w-full">
-                <div class="reactive-form">
+                
+                  <div class="card">
+                    <div class="card-body">
+                    <div class="card-title"><h5><b>Thêm mới quiz</b></h5></div>
+                    <br>
                 <form [formGroup] = "quizCreateForm">
                   <div class="form-group mb-3">
-                    <label for="quizName">Quiz name</label>
-                    <input type="text" class="form-control mt-2" id="quizName" placeholder="Enter quiz name"
+                    <label for="quizName">Tên Quiz</label>
+                    <input type="text" class="form-control mt-2" id="quizName" placeholder="Nhập tên quiz"
                     formControlName="quizName">
                     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                   </div>
                   <div>
                   <!-- cate -->
-                  Category
+                  Danh mục
                   <select class="form-select mr-sm-2" id="quizCategory"
                   style="margin-top:0.5em; margin-bottom: 1em;" formControlName = "quizCategory">
                     <option selected>Choose...</option>
@@ -40,13 +44,13 @@
                   </select>
                 </div>
                   <div class="form-group mb-3">
-                    <label for="descriptions">Descriptions</label>
-                    <input type="text" class="form-control mt-2" id="descriptions" placeholder="descriptions"
+                    <label for="descriptions">Mô tả</label>
+                    <input type="text" class="form-control mt-2" id="descriptions" placeholder="Mô tả"
                     formControlName="descriptions">
                     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                   </div>
-                  Status
-                  <label class="mr-sm-2 sr-only" for="quizStatus">Status</label>
+                  
+                  <label class="mr-sm-2" for="quizStatus">Status</label>
                   <select class="form-select mr-sm-2" id="quizStatus"
                   style = "margin-top:0.5em; margin-bottom: 1em;"
                   formControlName="quizStatus">
@@ -56,6 +60,7 @@
                   </select>
                   <button style="margin-top:20px" type="submit" class="btn btn-primary mt-2" (click) = "submit()">Tạo mới</button>
                 </form>
+              </div>
               </div>
               </div>
               <!---->

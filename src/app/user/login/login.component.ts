@@ -2,7 +2,6 @@ import { User } from './../../Model/user';
 import { TokenStorageService } from './../../Services/token-storage.service';
 import { AuthServiceService } from './../../Services/auth-service.service';
 import { Component, OnInit } from '@angular/core';
-import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
 import { Router } from '@angular/router';
 
 declare var google:any
@@ -13,15 +12,13 @@ declare var google:any
 })
 export class LoginComponent implements OnInit {
   u:any
-  user!: SocialUser;
   loggedIn:boolean = false
-  constructor(private socialAuthService: SocialAuthService,
+  constructor(
     private authService:AuthServiceService,
     private tokenService:TokenStorageService,
     private route:Router) { }
 
   ngOnInit(): void {
-    this.socialAuthService.authState.subscribe(user => {this.user = user})
   }
 
   ngAfterViewInit():void{
@@ -36,14 +33,12 @@ export class LoginComponent implements OnInit {
   }
 
   handleGoogleSignIn(response: any) {
-    console.log(response.credential);
     this.authService.signinWithGoogle(response.credential).subscribe(data =>{
-      console.log(data)
       this.tokenService.saveToken(data.accessToken)
       this.tokenService.saveUser(
         new User(data.id,data.username,data.name,data.roles,data.email)
       )
-      this.route.navigate(['quiz/all'])
+      window.location.reload()
     })
    /*  // This next is for decoding the idToken to an object if you want to see the details.
     let base64Url = response.credential.split('.')[1];
@@ -54,19 +49,7 @@ export class LoginComponent implements OnInit {
     console.log(JSON.parse(jsonPayload)); */
   }
 
-  async signInWithGoogle(){
-    let socialUser =  await this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
-    console.log(socialUser)
-    this.authService.signinWithGoogle(socialUser.idToken).subscribe(data =>{
-      console.log(data)
-      this.tokenService.saveToken(data.accessToken)
-      this.tokenService.saveUser(
-        new User(data.id,data.username,data.name,data.roles,data.email)
-      )
-    })
-    this.route.navigate(['quiz/all'])
-  }
   signOut():void{
-    this.socialAuthService.signOut()
+    // this.socialAuthService.signOut()
   }
 }

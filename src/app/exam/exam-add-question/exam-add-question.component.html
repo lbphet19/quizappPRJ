@@ -94,6 +94,7 @@
         >
         <div data-v-470c518d="" class="w-full">
           <div class="card">
+            <a (click)="back()" class="link-secondary ml-2 mt-2" style="cursor: pointer">Quay lại</a>
             <div class="card-body">
               <!-- <div *ngIf = "questions|async"> -->
                 <h1>Lựa chọn từ ngân hàng câu hỏi:</h1>
@@ -116,7 +117,18 @@
                     </div> 
                     
                   </div>
-                  
+                  <hr>
+                  <h2>Sắp xếp câu hỏi</h2>
+                  <br>
+                  <div class="flex justify-between" style="padding-top:.5rem; border-bottom: 1px solid #e6e6e6;" *ngFor="let q of selectedQuestions; let i = index">
+                      <p>{{q.questionContent}}</p> 
+                      <div class="flex">
+                      <i class="fa fa-arrow-up" aria-hidden="true" style="margin-left:10px
+                      ;display:flex;align-items: center" *ngIf="i !== 0"  (click)="moveAnswerUp(i)"></i>
+                      <i class="fa fa-arrow-down" aria-hidden="true" style="margin-left:5px
+                      ;display:flex;align-items: center" *ngIf="i !== this.selectedQuestions.length-1" (click)="moveAnswerDown(i)"></i>
+                      </div>
+                  </div>
                   <button type="submit" class="btn btn-primary mt-5" (click) = "submit($event)">Lưu</button>
                 </div>
                 

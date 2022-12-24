@@ -1,0 +1,153 @@
+<div data-v-95ff1a50="" class="main-navigation h-full md:h-auto flex flex-col bg-light-3 flex-shrink-0 filter-box-shadow">
+    <div data-v-95ff1a50="">
+      <div data-v-95ff1a50="" class="logo ml-3 mt-2 hidden md:block">
+        <a data-v-95ff1a50="" (click) = "navigateHome()" aria-current="page" class="nuxt-link-exact-active nuxt-link-active" aria-label="Quizizz" title="Quizizz">
+          <img data-v-95ff1a50="" aria-hidden="true" src="../../../assets/purple-brandmark-600x164.png" alt="logo" class="h-full p-1 w-32 object-contain">
+        </a>
+      </div>
+      <div data-v-95ff1a50="" class="user-section p-4 pb-2">
+        <div data-v-95ff1a50="">
+          <div>
+            <p class="text-sm font-semibold" style = "width: 160px;">
+              Have an account?
+            </p>
+            <!---->
+            <!---->
+            <button data-v-21793d1b="" class="flex items-center justify-center px-3 py-1 text-xs font-semibold h-6 base bg-lilac-faded text-lilac hover:text-lilac-light active:text-lilac-dark rounded secondary min-w-max relative transition-colors duration-200 ease-in-out flex flex mb-4">
+              <!---->
+              <!---->  <span data-v-21793d1b="" class="title">
+                Đăng nhập
+              </span>
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+              <!---->
+            </button>
+          </div>
+        </div>
+      </div>
+      <div data-v-95ff1a50="">
+        <!---->
+      </div>
+    </div>
+    <div data-v-95ff1a50="" class="relative mx-auto mb-7 block create-btn-container">
+      <button data-v-21793d1b="" data-v-95ff1a50=""  (click) = "create()" class="w-42 flex items-center px-4 py-2.5 text-lg font-semibold q-shadow mb-1 h-10 base bg-lilac text-light-3 hover:bg-lilac-light active:bg-lilac-dark rounded-lg special min-w-max relative transition-colors duration-200 ease-in-out flex">
+        <i data-v-21793d1b="" class="far fa-plus-circle mr-2" style="font-size: 16px;">
+        </i>
+        <!---->  <span data-v-21793d1b="" class="title">
+          Create
+        </span>
+        <!---->
+        <i data-v-21793d1b="" class="fas fa-caret-down ml-auto" style="font-size: 16px;">
+        </i>
+        <!---->
+        <!---->
+        <!---->
+      </button>
+      <button data-v-21793d1b="" data-v-95ff1a50=""  (click) = "createExam()" class="w-42 flex items-center px-4 py-2.5 text-lg font-semibold q-shadow mb-1 h-10 base bg-lilac text-light-3 hover:bg-lilac-light active:bg-lilac-dark rounded-lg special min-w-max relative transition-colors duration-200 ease-in-out flex">
+        <i data-v-21793d1b="" class="far fa-plus-circle mr-2" style="font-size: 16px;">
+        </i>
+        <!---->  <span data-v-21793d1b="" class="title">
+          Create Exam
+        </span>
+        <!---->
+        <i data-v-21793d1b="" class="fas fa-caret-down ml-auto" style="font-size: 16px;">
+        </i>
+        <!---->
+        <!---->
+        <!---->
+      </button>
+      <!---->
+    </div>
+    <div data-v-beffec82="" data-v-95ff1a50="" class="sidebar overflow-y-auto">
+      <a data-v-beffec82=""aria-current="page" class="link flex w-full items-center h-11 hover:bg-light-1 cursor-pointer text-dark-3 text-lilac font-semibold selected bg-light-1" aria-label="Explore">
+        <div data-v-beffec82="" class="icon w-4 flex justify-center mr-3 ml-4">
+          <i data-v-beffec82="" class="fas fa-map-marked-alt font-normal" style="font-size: 12px;">
+          </i>
+        </div>
+        <span class="title text-sm">
+          <span class="_i18n-container" (click)="categoryIndex()">Danh mục</span>
+        </span>
+      </a>
+      <!---->
+      <button data-v-beffec82="" aria-label="My library" class="link flex w-full items-center h-11 hover:bg-dark-5% cursor-pointer text-dark-3">
+        <div data-v-beffec82="" class="icon w-4 flex justify-center mr-3 ml-4">
+          <i data-v-beffec82="" class="fal fa-books" style="font-size: 12px;">
+          </i>
+        </div>
+        <span data-v-beffec82="" aria-hidden="true" class="title text-sm">
+          <span data-v-beffec82="" class="_i18n-container" (click) = "quizIndex()">Quiz</span>
+        </span>
+      </button>
+      <!---->
+      <button data-v-beffec82="" aria-label="reports" class="link flex w-full items-center h-11 hover:bg-dark-5% cursor-pointer text-dark-3">
+        <div data-v-beffec82="" class="icon w-4 flex justify-center mr-3 ml-4">
+          <i data-v-beffec82="" class="fal fa-analytics" style="font-size: 12px;">
+          </i>
+        </div>
+        <span data-v-beffec82="" aria-hidden="true" class="title text-sm">
+          <span data-v-beffec82="" class="_i18n-container">Báo cáo</span>
+        </span>
+      </button>
+      <button data-v-beffec82="" aria-label="classes" class="link flex w-full items-center h-11 hover:bg-dark-5% cursor-pointer text-dark-3">
+        <div data-v-beffec82="" class="icon w-4 flex justify-center mr-3 ml-4">
+          <i data-v-beffec82="" class="fal fa-users-class" style="font-size: 12px;">
+          </i>
+        </div>
+        <div data-v-beffec82="" aria-hidden="true" class="title text-sm">
+          <span data-v-beffec82="" class="_i18n-container">Các lớp học</span>
+        </div>
+      </button>
+      <button data-v-beffec82="" aria-label="settings" class="link flex w-full items-center h-11 hover:bg-dark-5% cursor-pointer text-dark-3">
+        <div data-v-beffec82="" class="icon w-4 flex justify-center mr-3 ml-4">
+          <i data-v-beffec82="" class="fal fa-cog" style="font-size: 12px;">
+          </i>
+        </div>
+        <div data-v-beffec82="" aria-hidden="true" class="title text-sm">
+          <span data-v-beffec82="" class="_i18n-container">Cài đặt</span>
+        </div>
+      </button>
+      <div data-v-beffec82="" class="max-h-0 overflow-hidden transition-all">
+        <button data-v-beffec82="" tabindex="-1" aria-label="memes" class="link flex w-full items-center h-11 hover:bg-dark-5% cursor-pointer text-dark-3">
+          <div data-v-beffec82="" class="icon w-4 flex justify-center mr-3 ml-4">
+            <i data-v-beffec82="" class="fal fa-images" style="font-size: 12px;">
+            </i>
+          </div>
+          <div data-v-beffec82="" aria-hidden="true" class="title text-sm">
+            <span data-v-beffec82="" class="_i18n-container">Memes</span>
+          </div>
+        </button>
+        <button data-v-beffec82="" tabindex="-1" aria-label="collections" class="link flex w-full items-center h-11 hover:bg-dark-5% cursor-pointer text-dark-3">
+          <div data-v-beffec82="" class="icon w-4 flex justify-center mr-3 ml-4">
+            <i data-v-beffec82="" class="fal fa-folder" style="font-size: 12px;">
+            </i>
+          </div>
+          <div data-v-beffec82="" aria-hidden="true" class="title text-sm">
+            <span data-v-beffec82="" class="_i18n-container">Bộ sưu tập</span>
+          </div>
+        </button>
+        <button data-v-beffec82="" tabindex="-1" aria-label="profile" class="link flex w-full items-center h-11 hover:bg-dark-5% cursor-pointer text-dark-3">
+          <div data-v-beffec82="" class="icon w-4 flex justify-center mr-3 ml-4">
+            <i data-v-beffec82="" class="fal fa-user-circle" style="font-size: 12px;">
+            </i>
+          </div>
+          <div data-v-beffec82="" aria-hidden="true" class="title text-sm">
+            <span data-v-beffec82="" class="_i18n-container">Hồ sơ</span>
+          </div>
+        </button>
+        <!---->
+      </div>
+      <button data-v-beffec82="" aria-label="Less" class="link flex w-full items-center h-11 hover:bg-dark-5% cursor-pointer text-dark-3">
+        <div data-v-beffec82="" class="icon w-4 flex justify-center mr-3 ml-4">
+          <i data-v-beffec82="" class="far fa-chevron-down" style="font-size: 12px;">
+          </i>
+        </div>
+        <div data-v-beffec82="" class="title text-sm">
+          More
+        </div>
+      </button>
+    </div>
+    <!---->
+  </div>
+  

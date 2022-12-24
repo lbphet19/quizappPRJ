@@ -37,12 +37,12 @@
                     <br>
                   <form [formGroup]="catForm" style="width: 80%">
                     <div class="form-group">
-                      <label for="quizName">Category name</label>
+                      <label for="quizName" class="form-label">Tên danh mục</label>
                       <input
                         type="text"
                         class="form-control"
                         id="categoryName"
-                        placeholder="Enter category name"
+                        placeholder="Nhập tên danh mục"
                         formControlName="categoryName"
                       />
                       <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
@@ -50,9 +50,9 @@
                     <!-- cate -->
                     <br />
                     <div>
-                      Danh mục cha
+                      <label for="" class="form-label"> Danh mục cha</label>
                       <select
-                        class="custom-select mr-sm-2"
+                        class="form-select mr-sm-2"
                         id="quizId"
                         style="margin-top: 0.5em; margin-bottom: 1em"
                         formControlName="id"
@@ -72,7 +72,7 @@
                       class="btn btn-primary"
                       (click)="submit($event)"
                     >
-                      Submit
+                      Lưu
                     </button>
                   </form>
                 </div>

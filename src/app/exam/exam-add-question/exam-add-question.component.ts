@@ -6,6 +6,7 @@ import { QuizService } from './../../Services/quiz.service';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ExamServiceService } from 'src/app/Services/exam-service.service';
+import { windowWhen } from 'rxjs/operators';
 
 @Component({
   selector: 'app-exam-add-question',
@@ -15,10 +16,12 @@ import { ExamServiceService } from 'src/app/Services/exam-service.service';
 export class ExamAddQuestionComponent implements OnInit {
   examId!:any
   quizId!:any
-  quizzes!:any[]
+  quizzes:any[]=[]
   questionTest!:any
   category!: any
+  selectedQuestions:any[]=[]
   //add q to exam
+  questions:any[]=[]
   questionId:any[]=[]
   constructor(private location:Location,private quizService:QuizService,
     private questionService:QuestionService, private examService:ExamServiceService,
@@ -27,14 +30,14 @@ export class ExamAddQuestionComponent implements OnInit {
   ngOnInit(): void {
     const state:any = this.location.getState()
     this.examId = this.route.snapshot.params['id']
-    this.generateQuestions(this.examId)
     this.getExamQuestions(this.examId)
     this.route.queryParams.subscribe(params => this.category = params.category)
   }
   getExamQuestions(examId:any){
-    this.examService.getQuestionIds(examId).subscribe(data =>
+    this.examService.getQuestionIds(examId).subscribe(data =>{
       this.questionId = data
-      )
+      this.generateQuestions(examId)
+    })
   }
   contains(id:any){
     return this.questionId.includes(id)
@@ -42,26 +45,51 @@ export class ExamAddQuestionComponent implements OnInit {
   generateQuestions(examId:any){
     this.examService.getQuizWithQuestions(this.examId).subscribe(data => {
       this.quizzes = data
+      this.generateSelectedQuestions()
     })
-//  this.examService.getQuizWithQuestions(this.examId).subscribe(
-//   data => console.log(data)
-//  ) 
+  }
+  generateSelectedQuestions(){
+    this.quizzes.forEach(q => this.questions.push(...q.questions))
+    const temp = this.questionId
+    this.selectedQuestions = temp.map(q => this.questions.find(ques => ques.questionId === q))
+  }
+  back(){
+    this.location.back()
   }
   onChange(questionId:any,event:any){
+  
     if(!event.target.checked){
       for(let i = 0; i < this.questionId.length;i++){
-        if(this.questionId[i] === questionId)
+        if(this.questionId[i] === questionId){
           this.questionId.splice(i,1)
+          this.selectedQuestions.splice(i,1)
+        }
       }
     }
     else{
       this.questionId.push(questionId)
+      this.selectedQuestions.push(this.questions.find(q => q.questionId === questionId))
     }
-    // console.log(questionId)
-    console.log(this.questionId)
 
   }
   // update: lay tat ca id -> check tat ca
+  moveAnswerUp(index:any){
+    let temp = this.selectedQuestions[index]
+    console.log(temp)
+    this.questionId.splice(index,1)
+    this.questionId.splice(index-1,0,temp.questionId)
+    this.selectedQuestions.splice(index,1)
+    this.selectedQuestions.splice(index-1,0,temp)
+    }
+  moveAnswerDown(index:any){
+      let temp = this.selectedQuestions[index]
+      this.questionId.splice(index,1)
+      this.questionId.splice(index+1,0,temp.questionId)
+      this.selectedQuestions.splice(index,1)
+      this.selectedQuestions.splice(index+1,0,temp)
+      }
+  
+
   submit(e:any){
     e.preventDefault()
     this.examService.addQuestion({
@@ -73,4 +101,5 @@ export class ExamAddQuestionComponent implements OnInit {
     })
 
   }
+  
 }

@@ -63,7 +63,29 @@
     />
   </head>
   <body class="using-mouse">
-    
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Cập nhật quiz</h4>
+        <button type="button" aria-label="Close" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="quizUpdateForm">
+          <div class="mb-3">
+            <label for="dateOfBirth">Tên quiz</label>
+            <div class="input-group mt-2 mb-2">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="quizName"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="updateModal()">Lưu</button>
+      </div>
+    </ng-template>
     <div id="__nuxt">
       <div id="__layout">
         <div class="flex flex-col font-sans">
@@ -108,6 +130,7 @@
                           <li class="d-flex mb-3" style="list-style-type: circle;">
                           <a style="font-size:18px">{{quiz.quizName}}</a>
                             <div class="ml-auto">
+                              <button class="btn btn-outline-primary" style="margin-right: 10px"(click)="update(content,quiz)">Cập nhật</button>
                               <button class="btn btn-outline-primary" style="margin-right: 10px"(click)="view(quiz.quizId)">Chi tiết</button>
                             </div>
                           </li>

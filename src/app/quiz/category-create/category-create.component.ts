@@ -37,12 +37,11 @@ export class CategoryCreateComponent implements OnInit {
   submit(event: any) {
     event.preventDefault();
     // console.log(this.examForm.get('quiz')?.get('quizId')?.value);    
-    const parentVal = this.catForm.get('id')?.value === "0" ? null : {id : +this.catForm.get('id')?.value}
+    const parentVal = +this.catForm.get('id')?.value === 0 ? null : {id : +this.catForm.get('id')?.value}
     const val = {
       categoryName: this.catForm.get('categoryName')?.value,
       parent: parentVal
     };
-    // console.log(val);
 
      this.quizCatService.save(val).subscribe(
       (ex) => {

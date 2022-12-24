@@ -8,10 +8,11 @@ import { ExamCreateComponent } from './exam-create/exam-create.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ExamAddQuestionComponent } from './exam-add-question/exam-add-question.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
-  declarations: [ExamComponent, ExamCreateComponent, HeaderComponent, SidebarComponent, ExamAddQuestionComponent],
+  declarations: [ExamComponent, ExamCreateComponent, HeaderComponent, SidebarComponent, ExamAddQuestionComponent, LoginComponent],
   imports: [
     CommonModule,
     ExamRoutingModule,
