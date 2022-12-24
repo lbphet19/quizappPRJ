@@ -2,6 +2,7 @@ package com.project.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ public class Answer {
 	private boolean answerIsCorrect;
 	@Column(name = "Position")
 	private int position;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 //	@JsonIgnore()
 	@JsonProperty(access =Access.WRITE_ONLY )
 	@JoinColumn(name = "QuestionId",referencedColumnName = "questionId")

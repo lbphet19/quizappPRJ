@@ -40,6 +40,7 @@ import com.project.repositories.UserRepository;
 import com.project.requestDTO.AnswerRequestDTO;
 import com.project.responseDTO.AnswerResponseDTO;
 import com.project.responseDTO.CorrectAnswerResponseDTO;
+import com.project.responseDTO.SimpleMessageDTO;
 import com.project.services.AnswerService;
 import com.project.services.QuestionService;
 import com.project.services.UserDetailsImpl;
@@ -174,6 +175,8 @@ public class QuestionController {
 //		Stream<AnswerRequestDTO> answerStream = Stream.of(answers);
 		List<AnswerRequestDTO> sortedAnswerRequestDTO = Arrays.asList(answers).stream().sorted(Comparator.comparingInt(AnswerRequestDTO::getQuestionId))
 				.collect(Collectors.toList());
+		System.out.println(sortedAnswerRequestDTO.size());
+		System.out.println(correctAnswers.size());
 		for(int i = 0; i < sortedAnswerRequestDTO.size(); i++) {
 			if(this.answerService.equalsIngnoreOrder(sortedAnswerRequestDTO.get(i).getAnswerIds(),correctAnswerIds.get(i))) {
 				CorrectAnswerResponseDTO res = new CorrectAnswerResponseDTO
@@ -237,9 +240,9 @@ public class QuestionController {
 		return new ResponseEntity<List<Question>>(question,HttpStatus.OK);
 	}
 	@DeleteMapping(value = "question/delete/{id}")
-	public ResponseEntity<String> delete(@PathVariable(name = "id") Integer id){
+	public ResponseEntity<SimpleMessageDTO> delete(@PathVariable(name = "id") Integer id){
 		String response = questionService.delete(id);
-		return new ResponseEntity<String>(response,HttpStatus.OK);
+		return new ResponseEntity<SimpleMessageDTO>(new SimpleMessageDTO(response),HttpStatus.OK);
 	}
 	@PostMapping(value = "question/delete/multiple")
 	public ResponseEntity<String> deleteMultiple(@RequestBody List<Integer> ids){

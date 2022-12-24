@@ -49,7 +49,7 @@ public class Quiz {
 	
 	
 	//author -> user tao ra quiz
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "authorId", referencedColumnName = "id")
 	@JsonIgnore
 	private User author;

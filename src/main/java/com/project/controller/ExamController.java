@@ -30,6 +30,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.project.entity.Exam;
 import com.project.entity.ExamQuestion;
 import com.project.entity.Question;
+import com.project.entity.QuestionWithPosition;
 import com.project.entity.Quiz;
 import com.project.entity.QuizCategory;
 import com.project.entity.User;
@@ -63,11 +64,10 @@ public class ExamController {
 	private UserExamScoreRepository userExamRepo;
 	private UserRepository userRepo;
 	private QuizCategoryRepository catRepo;
-	
+
 	@Autowired
-	public ExamController(ExamService examService, QuestionRepository q, 
-			ExamQuestionService examQuestionService, ExamQuestionRepository examQuestionRepo,
-			ExamRepository examRepo, UserExamScoreRepository userExamRepo,
+	public ExamController(ExamService examService, QuestionRepository q, ExamQuestionService examQuestionService,
+			ExamQuestionRepository examQuestionRepo, ExamRepository examRepo, UserExamScoreRepository userExamRepo,
 			UserRepository userRepo, QuizCategoryRepository catRepo) {
 		super();
 		this.examService = examService;
@@ -79,50 +79,54 @@ public class ExamController {
 		this.userRepo = userRepo;
 		this.catRepo = catRepo;
 	}
-	
+
 	@GetMapping("/exam")
-	public ResponseEntity<List<Exam>> findAll(){
+	public ResponseEntity<List<Exam>> findAll() {
 		return ResponseEntity.ok(this.examService.findAll());
 	}
-	
+
 	@GetMapping("/exam/{id}")
-	public ResponseEntity<Exam> getById(@PathVariable(name = "id") int id){
+	public ResponseEntity<Exam> getById(@PathVariable(name = "id") int id) {
 		Exam ex = this.examService.findById(id);
 		return ResponseEntity.ok(ex);
 //		abc
 	}
+
 	@GetMapping("/exam/category/{categoryId}")
-	public ResponseEntity<List<Exam>> getByCategoryId(@PathVariable(name = "categoryId") int id){
+	public ResponseEntity<List<Exam>> getByCategoryId(@PathVariable(name = "categoryId") int id) {
 		List<Exam> list = this.examRepo.getExamByCategoryId(id);
 		return ResponseEntity.ok(list);
 //		abc
 	}
+
 	@GetMapping("/exam/{id}/getQuestionsIds")
-	public ResponseEntity<List<Integer>> getExamQuestionIds(@PathVariable(name = "id") int id){
+	public ResponseEntity<List<Integer>> getExamQuestionIds(@PathVariable(name = "id") int id) {
 		List<Integer> res = this.examQuestionRepo.getExamQuestionIds(id);
-		return ResponseEntity.ok(res); 
+		return ResponseEntity.ok(res);
 	}
+
 	@GetMapping("/exam/{id}/getCategoryId")
-	public ResponseEntity<Integer> getExamCategoryId(@PathVariable(name = "id") int id){
+	public ResponseEntity<Integer> getExamCategoryId(@PathVariable(name = "id") int id) {
 		int res = this.examRepo.getExamCategoryId(id);
-		return ResponseEntity.ok(res); 
+		return ResponseEntity.ok(res);
 	}
+
 //	{id}: lay quiz + questions
 	@GetMapping("/exam/{id}/getQuestions")
-	public ResponseEntity<Set<QuizWithQuestionsDTO>> getQuestionsByExamId(@PathVariable(name = "id") int id){
+	public ResponseEntity<Set<QuizWithQuestionsDTO>> getQuestionsByExamId(@PathVariable(name = "id") int id) {
 		Exam ex = this.examRepo.findById(id).get();
 		Set<QuizWithQuestionsDTO> res = this.examRepo.getQuestionsByCatId(ex.getQuizCategory().getId());
-		return ResponseEntity.ok(res); 
+		return ResponseEntity.ok(res);
 	}
-	
+
 	@GetMapping("/exam/{id}/getTest")
-	public ResponseEntity<List<Quiz>> getTest(@PathVariable(name = "id") int id){
+	public ResponseEntity<List<Quiz>> getTest(@PathVariable(name = "id") int id) {
 		Exam ex = this.examRepo.findById(id).get();
 		System.out.println(ex.getQuizCategory().getId());
 		List<Quiz> res = this.examRepo.getTest(ex.getQuizCategory().getId());
-		return ResponseEntity.ok(res); 
+		return ResponseEntity.ok(res);
 	}
-	
+
 	@GetMapping(value = "/exam/home")
 	public ResponseEntity<Object> getExamByCatAtHomepage() {
 		Sort sortQuiz = Sort.by("examName");
@@ -140,83 +144,113 @@ public class ExamController {
 		}
 		return ResponseEntity.ok(listResult);
 	}
-	
+
 	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/exam/{id}/getQuestion")
-	public ResponseEntity<ExamWithTimeAndQuestionsDTO> getQuestionByExamId(@PathVariable(name = "id") int id){
+	public ResponseEntity<ExamWithTimeAndQuestionsDTO> getQuestionByExamId(@PathVariable(name = "id") int id) {
 //		lay thong tin user -> set thoi gian vao lam bai
 		Authentication authenication = SecurityContextHolder.getContext().getAuthentication();
 		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authenication.getPrincipal();
 		List<UserExamScore> userExamScore = userExamRepo.findUserLastAttempt(id, userDetailsImpl.getId());
-		
-		List<Question> questions = this.examQuestionRepo.getQuestionByExamId(id);
-		if(userExamScore.size() > 0) {
-//			dang lam bai do
-			return ResponseEntity.ok(new ExamWithTimeAndQuestionsDTO(userExamScore.get(0).getEndTime() 
-			- LocalDateTime.now().toEpochSecond(ZoneOffset.UTC), questions));
+
+		Exam ex = this.examRepo.findById(id).get();
+
+		List<Integer> questionIds = this.examQuestionRepo.getExamQuestionIds(id);
+		List<Question> questions = this.questionRepo.findQuestionByListIds(questionIds);
+		List<Question> sortedQuestions = new LinkedList<>();
+		if (!ex.isShuffleQuestion()) {
+			for (Integer qid : questionIds) {
+				sortedQuestions.add(questions.stream().filter(q -> q.getQuestionId() == qid).findFirst().get());
+			}
 		}
-		else {
-			Exam ex = examRepo.findById(id).get();
+		if (userExamScore.size() > 0) {
+//			dang lam bai do
+			return ResponseEntity.ok(new ExamWithTimeAndQuestionsDTO(
+					userExamScore.get(0).getEndTime() - LocalDateTime.now().toEpochSecond(ZoneOffset.UTC), ex.isShuffleQuestion() ? questions : sortedQuestions));
+		} else {
 			User user = userRepo.findById(userDetailsImpl.getId()).get();
 			long now = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
-			UserExamScore insert = new UserExamScore(ex,user,now,now + ex.getTime(),null,"proccessing");
+			UserExamScore insert = new UserExamScore(ex, user, now, now + ex.getTime(), null, "proccessing");
 			this.userExamRepo.save(insert);
-			return ResponseEntity.ok(new ExamWithTimeAndQuestionsDTO(ex.getTime(), questions));
+			return ResponseEntity.ok(new ExamWithTimeAndQuestionsDTO(ex.getTime(), ex.isShuffleQuestion() ? questions : sortedQuestions));
 		}
-		
+
 	}
-	
+
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	@GetMapping("/exam/{id}/getQuestionForResult")
-	public ResponseEntity<List<Question>> getQuestionForResult(@PathVariable(name = "id") int id){
+	public ResponseEntity<List<Question>> getQuestionForResult(@PathVariable(name = "id") int id) {
 		List<Question> questions = this.examQuestionRepo.getQuestionByExamId(id);
 		return ResponseEntity.ok(questions);
 	}
-	
+
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	@PostMapping("/exam")
-	public ResponseEntity<Exam> save(@RequestBody Exam ex){
+	public ResponseEntity<Exam> save(@RequestBody Exam ex) {
 		Exam insertEx = this.examService.save(ex);
 		return ResponseEntity.ok(insertEx);
 	}
-	
+
 	@PutMapping("/exam")
-	public ResponseEntity<Exam> update(@RequestBody Exam ex){
+	public ResponseEntity<Exam> update(@RequestBody Exam ex) {
 		Exam updateEx = this.examService.update(ex);
 		return ResponseEntity.ok(updateEx);
 	}
-	
+
 	@DeleteMapping("/exam/{id}")
-	public ResponseEntity<String> delete(@PathVariable(name = "id") int id){
+	public ResponseEntity<String> delete(@PathVariable(name = "id") int id) {
 		return ResponseEntity.ok(this.examService.delete(id));
 	}
-	
+
 	@PostMapping("/exam/addQuestion")
-	public ResponseEntity<List<ExamQuestion>> postQuestion(@RequestBody ExamQuestionRequestDTO dto){
-		 List<Integer> inserts = new LinkedList<>();
-		 List<Integer> deletes = new LinkedList<>();
-		 List<Integer> oldIds = this.examQuestionRepo.getExamQuestionIds(dto.getExamId());
-		 List<Integer> newIds = dto.getQuestionId();
-		 for(int i: newIds) {
-			 if(oldIds.size() == 0 || !oldIds.contains(i)) {
+	public ResponseEntity<List<ExamQuestion>> postQuestion(@RequestBody ExamQuestionRequestDTO dto) {
+		List<QuestionWithPosition> inserts = new LinkedList<>();
+		List<QuestionWithPosition> updates = new LinkedList<>();
+		List<Integer> deletes = new LinkedList<>();
+		List<Integer> oldIds = this.examQuestionRepo.getExamQuestionIds(dto.getExamId());
+		List<Integer> newIds = dto.getQuestionId();
+		int index = 1;
+//		 index to track the position
+		for (int i : newIds) {
+			if (oldIds.size() == 0 || !oldIds.contains(i)) {
 //				 them vao
-				 inserts.add(i);
-			 }
-		 }
-		 for(int i: oldIds) {
-			 if(newIds.size() == 0 || !newIds.contains(i)) {
+				inserts.add(new QuestionWithPosition(i, index++));
+			} else {
+				updates.add(new QuestionWithPosition(i, index++));
+			}
+		}
+		for (int i : oldIds) {
+			if (newIds.size() == 0 || !newIds.contains(i)) {
 //				 them vao
-				 deletes.add(i);
-			 }
-		 }
-		 List<Question> ques = this.questionRepo.findAllById(inserts);
-		 Exam ex = this.examService.findById(dto.getExamId());
-		 List<ExamQuestion> listExQues = ques.stream().map(q -> {
-			 return new ExamQuestion(q, ex);
-		 }).collect(Collectors.toList());
-		 if(deletes.size() > 0) {
-			 this.examQuestionRepo.deleteExQuesById(dto.getExamId(), deletes);
-		 }
-		 return ResponseEntity.ok(this.examQuestionService.saveAll(listExQues));
+				deletes.add(i);
+			}
+		}
+		Exam ex = this.examService.findById(dto.getExamId());
+		List<Question> ques = this.questionRepo.findAllById(inserts.stream().map(el -> el.getQuestionId()).toList());
+
+		List<ExamQuestion> listExQues = new LinkedList<>();
+		for (Question q : ques) {
+			QuestionWithPosition qp = inserts.stream().filter(el -> el.getQuestionId() == q.getQuestionId()).findFirst()
+					.get();
+			listExQues.add(new ExamQuestion(q, ex, qp.getPosition()));
+		}
+		List<Integer> updateIds = this.examQuestionRepo.getExamQuestionIdsByQuestionId(
+				updates.stream().map(el -> el.getQuestionId()).toList(), ex.getExamId());
+		System.out.println(updateIds.size());
+		List<ExamQuestion> listExamQuestionUpdate = this.examQuestionRepo.findAllById(updateIds);
+		for (ExamQuestion eq : listExamQuestionUpdate) {
+			QuestionWithPosition qp = updates.stream()
+					.filter(el -> el.getQuestionId() == eq.getQuestion().getQuestionId()).findFirst().get();
+			eq.setPosition(qp.getPosition());
+		}
+//		
+		if (updates.size() > 0) {
+			this.examQuestionRepo.saveAll(listExamQuestionUpdate);
+		}
+		if (deletes.size() > 0) {
+			this.examQuestionRepo.deleteExQuesById(dto.getExamId(), deletes);
+		}
+
+		return ResponseEntity.ok(this.examQuestionService.saveAll(listExQues));
 	}
 }

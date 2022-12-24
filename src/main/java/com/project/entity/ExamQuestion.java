@@ -26,6 +26,8 @@ public class ExamQuestion {
 	private Exam exam;
 //	quiz co nhieu question
 	
+	@Column(name="position")
+	private int position;
 	
 	
 	public int getExamQuestionId() {
@@ -47,6 +49,14 @@ public class ExamQuestion {
 		this.exam = exam;
 	}
 	
+	
+	
+	public int getPosition() {
+		return position;
+	}
+	public void setPosition(int position) {
+		this.position = position;
+	}
 	public ExamQuestion() {
 		super();
 	}
@@ -54,6 +64,12 @@ public class ExamQuestion {
 		super();
 		this.question = question;
 		this.exam = exam;
+	}
+	public ExamQuestion(Question question, Exam exam, int position) {
+		super();
+		this.question = question;
+		this.exam = exam;
+		this.position = position;
 	}
 	
 	

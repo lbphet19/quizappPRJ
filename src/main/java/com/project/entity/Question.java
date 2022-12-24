@@ -34,12 +34,12 @@ public class Question {
 	@Column(name = "questionType")
 	private String questionType;
 //	type : checkbox, radio, text...
-	@OneToMany(mappedBy = "question",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "question",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@OrderBy("position ASC")
 	private List<Answer> answers = new ArrayList<Answer>();
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "QuizId",referencedColumnName = "quizId")
 	private Quiz quiz;
 	public int getQuestionId() {

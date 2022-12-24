@@ -67,6 +67,7 @@ public class QuizServiceImp implements QuizService{
 
 	@Override
 	public Quiz update(Quiz updateQuiz) {
+		System.out.println(updateQuiz.getQuizId());
 		// TODO Auto-generated method stub
 		Quiz quiz = quizRepo.findById(updateQuiz.getQuizId()).get();
 		quiz.setQuizName(updateQuiz.getQuizName());
