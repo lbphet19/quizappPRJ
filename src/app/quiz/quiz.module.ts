@@ -25,6 +25,7 @@ import { UserSidebarComponent } from './user-sidebar/user-sidebar.component';
 import { HistoryComponent } from './history/history.component';
 import { AdminComponent } from './admin/admin.component';
 import { LoginComponent } from './login/login.component';
+import { QuizSearchComponent } from './quiz-search/quiz-search.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { LoginComponent } from './login/login.component';
   UserSidebarComponent,
   HistoryComponent,
   AdminComponent,
-  LoginComponent],
+  LoginComponent,
+  QuizSearchComponent],
   imports: [
     CommonModule,
     QuizRoutingModule,

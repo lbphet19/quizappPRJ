@@ -61,7 +61,7 @@
     <!---->
   </div>
   <div data-v-beffec82="" data-v-95ff1a50="" class="sidebar overflow-y-auto">
-    <a data-v-beffec82="" aria-current="page" class="link flex w-full items-center h-11 hover:bg-light-1 cursor-pointer text-dark-3 text-lilac font-semibold selected bg-light-1" aria-label="Explore">
+    <a data-v-beffec82="" *ngIf="hasRole('ROLE_ADMIN')" aria-current="page" class=" flex w-full items-center h-11 text-decoration-none cursor-pointer text-dark-3 selected" aria-label="Explore">
       <div data-v-beffec82="" class="icon w-4 flex justify-center mr-3 ml-4">
         <i data-v-beffec82="" class="fas fa-map-marked-alt font-normal" style="font-size: 12px;">
         </i>
@@ -71,7 +71,7 @@
       </span>
     </a>
     <!---->
-    <button data-v-beffec82="" aria-label="My library" class="link flex w-full items-center h-11 hover:bg-dark-5% cursor-pointer text-dark-3">
+    <button *ngIf="hasRole('ROLE_ADMIN')" data-v-beffec82="" aria-label="My library" class="link flex w-full items-center h-11 hover:bg-dark-5% cursor-pointer text-dark-3">
       <div data-v-beffec82="" class="icon w-4 flex justify-center mr-3 ml-4">
         <i data-v-beffec82="" class="fal fa-books" style="font-size: 12px;">
         </i>

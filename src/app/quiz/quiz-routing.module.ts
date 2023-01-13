@@ -14,6 +14,7 @@ import { QuizIndexComponent } from './quiz-index/quiz-index.component';
 import { CategoryViewExamComponent } from './category-view-exam/category-view-exam.component';
 import { CategoryViewQuizComponent } from './category-view-quiz/category-view-quiz.component';
 import { HistoryComponent } from './history/history.component';
+import { QuizSearchComponent } from './quiz-search/quiz-search.component';
 
 const routes: Routes = [
   { path: '', component: QuizListComponent },
@@ -30,7 +31,7 @@ const routes: Routes = [
   {path:'index',component:QuizIndexComponent},
   {path:'category/:id/viewExam',component:CategoryViewExamComponent},
   {path:'category/:id/viewQuiz',component:CategoryViewQuizComponent},
-
+  {path:'quiz/search',component:QuizSearchComponent},
 ];
 
 @NgModule({

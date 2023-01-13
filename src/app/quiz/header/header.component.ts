@@ -5,6 +5,7 @@ import { TokenStorageService } from './../../Services/token-storage.service';
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { QuizCategoryService } from 'src/app/Services/quiz-category.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,8 @@ export class HeaderComponent implements OnInit, DoCheck{
 
   constructor(private authService:AuthServiceService,
     private TokenStorageService:TokenStorageService,
-    private router:Router, private modalService: NgbModal) { }
+    private router:Router, private modalService: NgbModal,
+    private catService:QuizCategoryService) { }
 
   isLoggedIn!:boolean
   user!:User
@@ -30,6 +32,9 @@ export class HeaderComponent implements OnInit, DoCheck{
     if(this.isLoggedIn === true){
       this.user = this.TokenStorageService.getUser()
     }
+  }
+  search(event:any){
+    this.router.navigate(['quiz','search'],{queryParams:{search:event.target.value}})
   }
   logout(){
     this.TokenStorageService.signOut()

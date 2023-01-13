@@ -18,6 +18,9 @@ export class QuizCategoryService {
   get():Observable<Category[]>{
     return this.http.get<Category[]>(`${API_URL}`)
   }  
+  search(name:any):Observable<any[]>{
+    return this.http.get<any[]>(`${API_URL}/search?search=${name}`)
+  }  
   getById(id:any):Observable<Category>{
     return this.http.get<Category>(`${API_URL}/${id}`)
   }  

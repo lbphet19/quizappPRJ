@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { TokenStorageService } from 'src/app/Services/token-storage.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  constructor(private router:Router, private tokenService: TokenStorageService) { }
 
   ngOnInit(): void {
   }
@@ -26,5 +27,8 @@ export class SidebarComponent implements OnInit {
   }
   navigateHome(){
     this.router.navigate(['quiz','all'])
+  }
+  hasRole(name:any){
+    return Object.keys(this.tokenService.getUser()).length > 0 ? this.tokenService.getUser().roles.includes(name) : false
   }
 }

@@ -35,6 +35,9 @@ export class HeaderComponent implements OnInit, DoCheck{
     this.TokenStorageService.signOut()
     window.location.reload()
   }
+  search(event:any){
+    this.router.navigate(['quiz','search'],{queryParams:{search:event.target.value}})
+  }
   navigateLogin(){
     this.router.navigate(['auth','login'])
   }

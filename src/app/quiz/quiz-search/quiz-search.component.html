@@ -63,29 +63,7 @@
     />
   </head>
   <body class="using-mouse">
-    <ng-template #content let-modal>
-      <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Cập nhật quiz</h4>
-        <button type="button" aria-label="Close" class="btn-close" (click)="closeModal()"></button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="quizUpdateForm">
-          <div class="mb-3">
-            <label for="dateOfBirth">Tên quiz</label>
-            <div class="input-group mt-2 mb-2">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="quizName"
-              />
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="updateModal()">Lưu</button>
-      </div>
-    </ng-template>
+    
     <div id="__nuxt">
       <div id="__layout">
         <div class="flex flex-col font-sans">
@@ -116,27 +94,46 @@
               >
                 <div data-v-470c518d="" class="w-full">
                   <div class="card">
-                    <a (click)="back()" class="link-secondary ml-2 mt-2" style="cursor: pointer;">Quay lại</a>
                     <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                     <h5 class="card-title"><b>{{category.categoryName }} / Danh sách Quiz</b></h5>
-                     <button class="btn btn-primary" (click) = "createQuiz()">Thêm mới quiz</button>
-                        </div>
-                        <br>
-                     <!-- <div formControlNam> -->
-                     <!-- <a *ngFor=""></a> -->
-                     <div class="card-text" *ngFor = "let quiz of quizList">
-                        <ul>
-                          <li class="d-flex mb-3" style="list-style-type: circle;">
-                          <a style="font-size:18px">{{quiz.quizName}}</a>
-                            <div class="ml-auto">
-                              <button class="btn btn-outline-primary" style="margin-right: 10px"(click)="update(content,quiz)">Cập nhật</button>
-                              <button class="btn btn-outline-primary" style="margin-right: 10px"(click)="view(quiz.quizId)">Chi tiết</button>
+                        <div class="d-flex justify-content-center" *ngIf="isLoading">
+                            <div class="spinner-border" role="status">
+                              <span class="sr-only">Loading...</span>
                             </div>
-                          </li>
-                      </ul>
-                     </div>
-                     <div *ngIf="quizList.length === 0"> Chưa có quiz</div>
+                          </div>
+                          <div class="flex flex-wrap" style="gap:32px">
+                          <a style="text-decoration: none; width:18rem" *ngFor = "let child of categories" (click) = "navigate(child.id)" class="rounded-xl bg-light-3 m-2 text-left ring-1 ring-dark-10% flex-shrink-0 mb-4 md:mb-8 cursor-pointer hover:shadow-lg h-60 md:h-72 max-w-56 md:max-w-72" title="Luyện tập " aria-label="Luyện tập , 17 Slides">
+                                      
+                                      
+                            <div class="overflow-hidden rounded-t-xl h-full">
+                              <!-- <div *ngIf = "child.quizImage !== null">
+                                <img [src]="quiz.quizImage" alt="../../../assets/images/quiz-img-test.jfif" class="w-44 md:w-60 h-28 md:h-40 object-cover">
+                              </div>
+                              <div *ngIf = "quiz.quizImage === null"> -->
+                                <img src = "https://cdn.pixabay.com/photo/2021/02/03/05/37/question-mark-5976736_960_720.png" class="w-44 md:w-60 h-28 md:h-40 object-cover">
+                             
+                              <div aria-hidden="true" class="px-2.5 pt-2.5 pb-3.5 flex flex-col h-30">
+                                <div class="flex items-center">
+                                  <div data-v-61563e2e="" class="bg-light-1 text-dark-3 lozenge inline-flex items-center text-tn font-semibold rounded-full px-1.5 ">
+                                    <!---->
+                                    <!---->
+                                    <span data-v-61563e2e="" class="">QUIZ</span>
+                                  </div>
+                                  
+                                  <!---->
+                                </div>
+                                <div title="{{child.categoryName}} " class="mt-2 mb-4 text-sm md:text-base text-dark-2 font-semibold" style="text-decoration: none;">
+                                  {{child.categoryName}}
+                                </div>
+                                <div class="flex text-tn md:text-xs text-dark-4 font-semibold mt-auto">
+                                  <div class="mr-1.5 ml-1.5">
+                                    <!-- By {{quiz.authorName}} -->
+                                    By ...
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                          </div>
                     </div>
                   </div>
                 </div>
