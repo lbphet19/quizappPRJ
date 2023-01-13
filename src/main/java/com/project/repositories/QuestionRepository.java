@@ -18,7 +18,7 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	List<Question> findQuestionByQuizId(int quizId);
 	
 	
-	@Query("SELECT q FROM Question q LEFT JOIN FETCH q.answers "
+	@Query("SELECT DISTINCT q FROM Question q LEFT JOIN FETCH q.answers "
 			+ "WHERE q.questionId IN ?1")
 	List<Question> findQuestionByListIds(Collection<Integer> ids);
 	//test
