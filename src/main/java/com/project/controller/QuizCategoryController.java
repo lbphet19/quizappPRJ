@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.entity.QuizCategory;
 import com.project.repositories.QuizCategoryRepository;
@@ -35,6 +36,10 @@ public class QuizCategoryController {
 	@GetMapping("/category")
 	public ResponseEntity<List<QuizCategory>> get(){
 		return ResponseEntity.ok(this.quizCatService.findAll());
+	}
+	@GetMapping("/category/search")
+	public ResponseEntity<List<QuizCategory>> search(@RequestParam(name = "search",required = false)String search){
+		return ResponseEntity.ok(this.quizCatRepo.search(search));
 	}
 	@GetMapping("/category/{id}")
 	public ResponseEntity<QuizCategory> getById(@PathVariable(name = "id") int catId){
